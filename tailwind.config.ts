@@ -12,6 +12,9 @@ const config: Config = {
       fontFamily: {
         roboto: ["var(--font-roboto)"],
       },
+      screens: {
+        "max-1280": { max: "1280px" },
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":

@@ -35,7 +35,7 @@ export const Description = () => {
   ];
 
   return (
-    <div className="py-8 bg-white">
+    <div className="py-8 bg-white px-0 max-1280:px-2">
       <div className="container mx-auto">
         <div className="font-bold sm:text-2xl text-lg text-center pt-5 relative after:absolute after:content-[''] after:left-0 after:right-0 after:top-0 after:w-11 after:h-2 after:rounded-2xl after:bg-gradient-to-r after:from-[#F89D1B] after:to-[#F37A20] after:mx-auto mb-[30px] ">
           Topmass - Website tìm việc uy tín, chất lượng cho <br />

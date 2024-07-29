@@ -1,6 +1,6 @@
 export const HomeTop = () => {
   return (
-    <div className="relative">
+    <div className="relative px-0 max-1280:px-2">
       <div>
         <img src="/imgs/bg-top.png" alt="" className="w-full h-auto" />
       </div>
