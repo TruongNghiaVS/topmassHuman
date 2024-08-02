@@ -46,21 +46,25 @@ export const Header = () => {
           </div>
           <div className="flex">
             <div className="flex items-center mr-[50px]">
-              <Link href="#" className="text-xs mr-[30px]">
+              <Link
+                href="http://192.168.1.2:3000"
+                target="_blank"
+                className="text-xs mr-[30px]"
+              >
                 Dành cho ứng viên <br />
                 <div className="text-sm leading-[14px] pt-2 inline block font-medium">
                   Tìm việc làm
                 </div>
               </Link>
-              <Link href="#" className="text-xs ">
+              <div className="text-xs text-default cursor-pointer">
                 Nhà tuyển dụng
                 <br />
                 <div className="text-sm leading-[14px] pt-2 inline block font-medium">
                   Đăng tin tuyển dụng
                 </div>
-              </Link>
+              </div>
             </div>
-            <div className=" flex items-center">
+            <div className=" flex items-center hidden">
               <div className="relative">
                 <BellIcon className="text-[#F37A20] mr-3 w-6" />
                 <div className="absolute content-[''] text-xs text-center w-4 h-4 top-[-4px] right-2 rounded-full bg-[#C40202] text-white">
@@ -77,7 +81,7 @@ export const Header = () => {
               </div>
               <ChevronDownIcon className="text-[#F37A20] mr-3 w-6" />
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center hidden">
               <div className="grid mr-2">
                 <div className="text-[8px]">Bạn đang có</div>
                 <div className="w-full bg-gradient-to-r text-base from-[#F89E1B] to-[#F37A20] rounded-lg text-center text-white">
