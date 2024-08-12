@@ -20,6 +20,7 @@ export const Menu = () => {
     {
       title: "HR Center",
       subMenu: [],
+      link: "/hr-center/dashboard",
       border: true,
       active: false,
       image: false,
@@ -50,7 +51,7 @@ export const Menu = () => {
               className="group/title mx-4 normal-case whitespace-nowrap after:transition-all after:transition-height after:ease-in-out after:duration-300 justify-center h-[76px] relative after:absolute after:content-[''] after:top-[calc(100%-3px)] hover:after:top-[calc(100%-3px)] after:left-0 after:w-full after:h-0 hover:after:h-[3px] after:bg-default flex items-center"
             >
               <Link
-                href="#"
+                href={item.link ? item.link : "#"}
                 className={`"text-[#3B4358] no-underline font-medium p-[3px] 
                   ${item.active && "text-default"} 
                   ${
