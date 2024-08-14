@@ -7,6 +7,8 @@ import { Footer } from "@/partial/footer";
 import { Header } from "@/partial/header";
 import { usePathname } from "next/navigation";
 import { GlobalProvider } from "./global-context";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const roboto = localFont({
   src: [
@@ -39,8 +41,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const path = usePathname();
-  const pathValidated = ["/dang-ky", "/dang-nhap", "/quen-mat-khau"];
+  let path = usePathname();
+  if (path.includes("/hr-center")) {
+    path = "/hr-center";
+  }
+  const pathValidated = [
+    "/dang-ky",
+    "/dang-nhap",
+    "/quen-mat-khau",
+    "/hr-center",
+  ];
   return (
     <html lang="en">
       <body className={`${roboto.variable} font-roboto `}>
@@ -51,6 +61,7 @@ export default function RootLayout({
             </div>
           )}
           {children}
+          <ToastContainer autoClose={1000} />
           {!pathValidated.includes(path) && <Footer />}
         </GlobalProvider>
       </body>

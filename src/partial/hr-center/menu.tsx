@@ -1,22 +1,8 @@
 import { DocumentTextIcon } from "@heroicons/react/16/solid";
 import Link from "next/link";
 
-export const Menu = () => {
+export const MenuHrCenter = () => {
   const navItems = [
-    {
-      title: "Giới Thiệu",
-      subMenu: [],
-      border: false,
-      active: true,
-      image: false,
-    },
-    {
-      title: "Dịch Vụ",
-      subMenu: [],
-      border: false,
-      active: false,
-      image: false,
-    },
     {
       title: "HR Center",
       subMenu: [],
@@ -26,14 +12,22 @@ export const Menu = () => {
       image: false,
     },
     {
-      title: "Đổi (CV)",
+      title: "Đăng tin",
       subMenu: [],
-      border: true,
+      border: false,
       active: false,
-      image: true,
+      image: false,
     },
     {
-      title: "Liên Hệ",
+      title: "Đổi (CV)",
+      subMenu: [],
+      border: false,
+      active: false,
+      image: true,
+      bg: true,
+    },
+    {
+      title: "Tìm CV",
       subMenu: [],
       border: false,
       active: false,
@@ -43,7 +37,7 @@ export const Menu = () => {
 
   return (
     <>
-      <div className="w-full">
+      <div className="w-full text-white">
         <ul className="xl:flex hidden p-0">
           {navItems.map((item) => (
             <li
@@ -52,14 +46,14 @@ export const Menu = () => {
             >
               <Link
                 href={item.link ? item.link : "#"}
-                className={`"text-[#3B4358] no-underline font-medium p-[3px] 
-                  ${item.active && "text-default"} 
+                className={`"text-[#3B4358] no-underline text-lg font-medium p-[3px] 
+                   ${item.bg && "bg-[#595757] rounded-2xl"}
                   ${
                     item.border &&
                     "rounded-2xl bg-gradient-to-r from-[#F89E1B] to-[#F37A20]"
                   } "`}
               >
-                <div className="bg-white rounded-2xl px-1 inline-flex items-center">
+                <div className={` rounded-2xl px-1 inline-flex items-center`}>
                   {item.title}{" "}
                   {item.image && (
                     <img

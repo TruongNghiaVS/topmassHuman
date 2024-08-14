@@ -1,5 +1,8 @@
 "use client";
 
+import { HeaderHrCenter } from "@/partial/hr-center/header";
+import MenuLeft from "@/partial/hr-center/menu-left";
+
 export default function HrCenterLayout({
   children,
 }: Readonly<{
@@ -8,8 +11,13 @@ export default function HrCenterLayout({
   const pathValidated = ["/dang-ky", "/dang-nhap", "/quen-mat-khau"];
   return (
     <main>
-      <div>menu</div>
-      {children}
+      <HeaderHrCenter />
+      <div className="flex">
+        <MenuLeft />
+        <div className="px-6 py-3 bg-[#E8EDF2] w-full min-h-screen">
+          {children}
+        </div>
+      </div>
     </main>
   );
 }
