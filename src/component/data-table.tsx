@@ -50,7 +50,11 @@ const CustomTable: React.FC<CustomTableProps> = ({ data, header }) => {
               />
             </th>
             {header.map((item) => {
-              return <th className="p-4">{item} </th>;
+              return (
+                <th key={item} className="p-4">
+                  {item}{" "}
+                </th>
+              );
             })}
           </tr>
         </thead>
