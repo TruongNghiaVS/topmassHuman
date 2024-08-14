@@ -1,88 +1,83 @@
 "use client";
 
-import React from "react";
-import { useTable, Column } from "react-table";
+import { useState } from "react";
 
-type LibraryItem = {
+interface RowData {
   id: number;
-  title: string;
-  author: string;
-  year: number;
-  genre: string;
-};
+  name: string;
+  email: string;
+}
 
-type LibraryTableProps = {
-  data: LibraryItem[];
-};
+interface CustomTableProps {
+  data: RowData[];
+  header: string[];
+}
 
-const LibraryTable: React.FC<LibraryTableProps> = ({ data }) => {
-  const columns = React.useMemo<Column<LibraryItem>[]>(
-    () => [
-      {
-        Header: "Title",
-        accessor: "title",
-      },
-      {
-        Header: "Author",
-        accessor: "author",
-      },
-      {
-        Header: "Year",
-        accessor: "year",
-      },
-      {
-        Header: "Genre",
-        accessor: "genre",
-      },
-    ],
-    []
-  );
+const CustomTable: React.FC<CustomTableProps> = ({ data, header }) => {
+  const [selectedRows, setSelectedRows] = useState<number[]>([]);
+  const [selectAll, setSelectAll] = useState<boolean>(false);
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-  } = useTable({
-    columns,
-    data,
-  });
+  const handleSelectAll = () => {
+    if (selectAll) {
+      setSelectedRows([]);
+    } else {
+      setSelectedRows(data.map((row) => row.id));
+    }
+    setSelectAll(!selectAll);
+  };
+
+  const handleRowSelect = (id: number) => {
+    if (selectedRows.includes(id)) {
+      setSelectedRows(selectedRows.filter((rowId) => rowId !== id));
+    } else {
+      setSelectedRows([...selectedRows, id]);
+    }
+    if (selectedRows.length + 1 == data.length) setSelectAll(true);
+    if (selectedRows.length - 1 == 0) setSelectAll(false);
+  };
 
   return (
     <div className="overflow-x-auto">
-      <table {...getTableProps()} className="min-w-full bg-white">
-        <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th
-                  {...column.getHeaderProps()}
-                  className="py-2 px-4 border-b text-left"
-                >
-                  {column.render("Header")}
-                </th>
-              ))}
+      <table className="min-w-full text-sm text-left text-gray-500">
+        <thead className="bg-gray-100 text-gray-700">
+          <tr>
+            <th className="p-4">
+              <input
+                type="checkbox"
+                checked={selectAll}
+                onChange={handleSelectAll}
+                className="cursor-pointer"
+              />
+            </th>
+            {header.map((item) => {
+              return <th className="p-4">{item} </th>;
+            })}
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-gray-200">
+          {data.map((row) => (
+            <tr
+              key={row.id}
+              className={`hover:bg-gray-100 ${
+                selectedRows.includes(row.id) ? "bg-blue-50" : "bg-white"
+              }`}
+            >
+              <td className="p-4">
+                <input
+                  type="checkbox"
+                  checked={selectedRows.includes(row.id)}
+                  onChange={() => handleRowSelect(row.id)}
+                  className="cursor-pointer"
+                />
+              </td>
+              <td className="p-4">{row.name}</td>
+              <td className="p-4">{row.email}</td>
             </tr>
           ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => (
-                  <td {...cell.getCellProps()} className="py-2 px-4 border-b">
-                    {cell.render("Cell")}
-                  </td>
-                ))}
-              </tr>
-            );
-          })}
         </tbody>
       </table>
     </div>
   );
 };
 
-export default LibraryTable;
+export default CustomTable;

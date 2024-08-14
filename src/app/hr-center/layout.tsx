@@ -14,9 +14,7 @@ export default function HrCenterLayout({
       <HeaderHrCenter />
       <div className="flex">
         <MenuLeft />
-        <div className="px-6 py-3 bg-[#E8EDF2] w-full min-h-screen">
-          {children}
-        </div>
+        <div className=" bg-[#E8EDF2] w-full min-h-screen">{children}</div>
       </div>
     </main>
   );

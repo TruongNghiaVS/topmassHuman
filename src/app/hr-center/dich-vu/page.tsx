@@ -10,7 +10,7 @@ import {
 
 export default function Service() {
   return (
-    <div className="sm:mx-6">
+    <div className="sm:mx-6 px-6 py-3">
       <div>
         <div className="flex ">
           <div className="font-normal text-default relative after:absolute after:right-0 after:top-0 after:bottom-0 after:w-[1px] after:bg-[#F37A20] after:h-[70%] after:bg-black after:my-auto pr-3 mr-3">

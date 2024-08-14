@@ -10,7 +10,7 @@ import { EnvelopeIcon, PhoneIcon } from "@heroicons/react/24/outline";
 
 export default function DashBoard() {
   return (
-    <div>
+    <div className="px-6 py-3">
       <div className="font-normal text-xl">Bảng tin</div>
       <div className="mt-4 grid sm:grid-cols-2 grid-cols-1 gap-4">
         <div>

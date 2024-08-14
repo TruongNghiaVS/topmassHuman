@@ -1,5 +1,9 @@
+"use client";
+
 import numeral from "numeral";
 import { CardBootstrapIcon } from "@/theme/icons/cardBootstrapIcon";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 interface IMassPointProps {
   item: {
@@ -11,6 +15,15 @@ interface IMassPointProps {
 }
 
 export const MassPoint = ({ item }: IMassPointProps) => {
+  const router = useRouter();
+  const handleAddToCard = () => {
+    toast.success("Thêm vào giỏ hàng thành công");
+  };
+
+  const buyItem = () => {
+    router.push("/hr-center/gio-hang");
+  };
+
   return (
     <div className="rounded-lg bg-white p-4">
       <div className="flex items-center justify-between">
@@ -27,10 +40,16 @@ export const MassPoint = ({ item }: IMassPointProps) => {
         Combo áp dụng đến hết ngày {item.date}{" "}
       </div>
       <div className="mt-2 flex items-center space-x-2">
-        <button className="py-2 text-[10px] flex justify-center items-center flex-1 rounded border border-[#F37A20] text-default">
+        <button
+          className="py-2 text-[10px] flex justify-center items-center flex-1 rounded border border-[#F37A20] text-default"
+          onClick={handleAddToCard}
+        >
           <CardBootstrapIcon className="w-4 text-default" /> Thêm vào giỏ hàng
         </button>
-        <button className="py-2 text-[10px] flex justify-center items-center flex-1 rounded  bg-[#F37A20] text-white">
+        <button
+          className="py-2 text-[10px] flex justify-center items-center flex-1 rounded  bg-[#F37A20] text-white"
+          onClick={buyItem}
+        >
           Mua ngay
         </button>
       </div>
