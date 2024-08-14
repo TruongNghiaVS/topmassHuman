@@ -75,7 +75,6 @@ export default function Card() {
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>, id: number) => {
-    console.log("___");
     const newValue = parseInt(e.target.value, 10);
     const idx = data.findIndex((row) => row.id === id);
     if (data[idx]) data[idx].count = newValue;

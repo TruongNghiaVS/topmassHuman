@@ -23,3 +23,17 @@ export interface ITmSelect extends InputHTMLAttributes<HTMLSelectElement> {
   options: Option[];
   placeholder?: string;
 }
+
+export interface ITmRadioProps {
+  name: string;
+  control: Control<any>;
+  options: Option[];
+  classNameCustom?: string;
+}
+
+export interface SearchSelectProps {
+  name: string;
+  control: Control<any>;
+  options: Option[];
+  placeholder?: string;
+}
