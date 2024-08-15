@@ -55,8 +55,8 @@ export const Header = () => {
   useEffect(() => {
     const handleScroll = () => {
       if (headerRef.current) {
-        const offsetTop = headerRef.current.offsetTop;
-        if (window.scrollY > offsetTop + 20) {
+        const offsetTop = headerRef.current.clientHeight;
+        if (window.scrollY > offsetTop) {
           setIsFixed(true);
         } else {
           setIsFixed(false);

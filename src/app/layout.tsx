@@ -53,7 +53,7 @@ export default function RootLayout({
   ];
   return (
     <html lang="en">
-      <body className={`${roboto.variable} font-roboto `}>
+      <body className={`${roboto.variable} font-roboto  min-h-screen `}>
         <GlobalProvider>
           {!pathValidated.includes(path) && (
             <div className="relative z-[10]">

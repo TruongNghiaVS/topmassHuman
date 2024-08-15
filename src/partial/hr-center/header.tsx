@@ -12,12 +12,12 @@ export const HeaderHrCenter = () => {
   const headerRef = useRef<HTMLDivElement | null>(null);
   const [isFixed, setIsFixed] = useState(false);
   const { globalParam, setGlobalParam } = useGlobalContext();
+  const [sectionHeight, setSectionHeight] = useState<number>(0);
 
   useEffect(() => {
     const handleScroll = () => {
       if (headerRef.current) {
-        const offsetTop = headerRef.current.offsetTop;
-        if (window.scrollY > offsetTop + 50) {
+        if (window.scrollY > headerRef.current.clientHeight) {
           setIsFixed(true);
         } else {
           setIsFixed(false);

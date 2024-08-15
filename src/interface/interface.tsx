@@ -16,3 +16,16 @@ export interface IRegister {
 export interface IResetpassword {
   email: string;
 }
+
+export interface IChangePassword {
+  old_password: string;
+  password: string;
+  confirm_password: string;
+}
+
+export interface IUpdateInfomation {
+  avatar?: File;
+  username?: string;
+  gender?: string;
+  phone?: string;
+}

@@ -15,6 +15,11 @@ export interface ITmInput extends InputHTMLAttributes<HTMLInputElement> {
   type?: string;
 }
 
+export interface IUpload extends InputHTMLAttributes<HTMLInputElement> {
+  name: string;
+  control: Control<any>;
+}
+
 export interface ITmSelect extends InputHTMLAttributes<HTMLSelectElement> {
   name: string;
   control: Control<any>;

@@ -118,11 +118,25 @@ export const massPoint = [
     description: "Tích lũy được 50 tia sét với giá ưu đãi",
     date: "13/08/2024",
   },
-
   {
     title: "Combo 100",
     price: 2000000,
     description: "Tích lũy được 100 tia sét với giá ưu đãi",
     date: "13/08/2024",
+  },
+];
+
+export const gender = [
+  {
+    value: "0",
+    label: "Không xác định",
+  },
+  {
+    value: "1",
+    label: "Nam",
+  },
+  {
+    value: "2",
+    label: "Nữ",
   },
 ];
