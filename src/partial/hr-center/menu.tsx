@@ -29,6 +29,7 @@ export const MenuHrCenter = () => {
     {
       title: "Tìm CV",
       subMenu: [],
+      link: "/hr-center/tim-cv",
       border: false,
       active: false,
       image: false,

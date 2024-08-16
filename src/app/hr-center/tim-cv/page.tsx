@@ -29,13 +29,9 @@ export default function SearchCV() {
   ];
 
   const options = [
-    { value: "react", label: "React" },
-    { value: "nextjs", label: "Next.js" },
-    { value: "typescript", label: "TypeScript" },
-    { value: "tailwind", label: "TailwindCSS" },
-    { value: "tailwind1", label: "TailwindCSS1" },
-    { value: "tailwind2", label: "TailwindCSS2" },
-    { value: "tailwind3", label: "TailwindCSS3" },
+    { value: "Tp.Hồ Chí Minh", label: "Tp.Hồ Chí Minh" },
+    { value: "Hà Nội", label: "Hà Nội" },
+    { value: "Hải Phòng", label: "Hải Phòng" },
   ];
 
   const list = [1, 2, 3, 4, 5];
