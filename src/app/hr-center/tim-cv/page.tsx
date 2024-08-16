@@ -54,7 +54,7 @@ export default function SearchCV() {
                 placeholder="Nhập từ khoá"
               />
             </div>
-            <div className="mt-2">Từ khoá cần tìm</div>
+            <div className="mt-2">Tỉnh thành</div>
             <div className="mt-2">
               <CustomMultipleSelectSearchForm
                 name="location"

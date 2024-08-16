@@ -1,12 +1,19 @@
-import CKEditorInput from "@/component/hook-form/ck-editor";
 import TmInput from "@/component/hook-form/input";
 import AvatarUpload from "@/component/hook-form/upload-avatar";
 import { IUpdateCompany } from "@/interface/interface";
 import { yupResolver } from "@hookform/resolvers/yup";
+import dynamic from "next/dynamic";
 import { Dispatch, SetStateAction } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import * as yup from "yup";
+
+const CustomCKEditor = dynamic(
+  () => {
+    return import("../../../../component/hook-form/ck-editor");
+  },
+  { ssr: false }
+);
 
 interface IEditCompanyProps {
   setEdit: Dispatch<SetStateAction<boolean>>;
@@ -132,7 +139,7 @@ export default function EditInfomationCompany({ setEdit }: IEditCompanyProps) {
           </div>
         </div>
         <div className="mt-2">
-          <CKEditorInput name="content" control={control} />
+          <CustomCKEditor name="content" control={control} />
         </div>
         <button
           type="submit"

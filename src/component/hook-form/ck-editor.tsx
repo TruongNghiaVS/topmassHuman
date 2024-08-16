@@ -1,19 +1,24 @@
 import React from "react";
-import { useController } from "react-hook-form";
+import { useController, Control } from "react-hook-form";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { CKEditorInputProps } from "./interface/interface";
 
-const CKEditorInput: React.FC<CKEditorInputProps> = ({ ...props }) => {
+interface CustomCKEditorProps {
+  name: string;
+  control: Control<any>;
+}
+
+const CustomCKEditor: React.FC<CustomCKEditorProps> = ({ name, control }) => {
   const {
     field: { onChange, value },
     fieldState: { error },
-  } = useController(props);
-  const editorConfiguration = {
-    height: `80px`, // 20px per row height as an example
-  };
+  } = useController({
+    name,
+    control,
+  });
+
   return (
-    <div className="h-[150px]">
+    <div className="my-4">
       <CKEditor
         editor={ClassicEditor}
         data={value || ""}
@@ -22,9 +27,9 @@ const CKEditorInput: React.FC<CKEditorInputProps> = ({ ...props }) => {
           onChange(data);
         }}
       />
-      {error && <p style={{ color: "red" }}>{error.message}</p>}
+      {error && <p className="text-red-500 text-sm">{error.message}</p>}
     </div>
   );
 };
 
-export default CKEditorInput;
+export default CustomCKEditor;
