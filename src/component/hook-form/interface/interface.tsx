@@ -1,5 +1,5 @@
 import { InputHTMLAttributes } from "react";
-import { Control } from "react-hook-form";
+import { Control, UseControllerProps } from "react-hook-form";
 
 export type Option = {
   label: string;
@@ -18,6 +18,7 @@ export interface ITmInput extends InputHTMLAttributes<HTMLInputElement> {
 export interface IUpload extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   control: Control<any>;
+  classNameImg?: string;
 }
 
 export interface ITmSelect extends InputHTMLAttributes<HTMLSelectElement> {
@@ -41,4 +42,8 @@ export interface SearchSelectProps {
   control: Control<any>;
   options: Option[];
   placeholder?: string;
+}
+
+export interface CKEditorInputProps extends UseControllerProps {
+  control: Control<any>;
 }

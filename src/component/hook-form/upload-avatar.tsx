@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 import { IUpload } from "./interface/interface";
 import { useController } from "react-hook-form";
 
-const AvatarUpload: React.FC<IUpload> = ({ name, control }) => {
+const AvatarUpload: React.FC<IUpload> = ({ name, control, classNameImg }) => {
   const {
     field: { value, onChange, onBlur },
     fieldState: { error },
@@ -37,12 +37,12 @@ const AvatarUpload: React.FC<IUpload> = ({ name, control }) => {
   };
 
   return (
-    <div className="">
+    <div className="sm:block grid justify-center">
       {preview ? (
         <img
           src={preview as string}
           alt="Avatar Preview"
-          className="rounded-full w-28 h-28"
+          className={`rounded-full w-28 h-28 ${classNameImg}`}
         />
       ) : (
         <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center">
@@ -53,7 +53,7 @@ const AvatarUpload: React.FC<IUpload> = ({ name, control }) => {
       <button
         type="button"
         onClick={handleClick}
-        className="mt-2 text-sm mt-2 text-default hover:underline"
+        className="mt-2 text-sm mt-2 text-default sm:text-start text-center hover:underline"
       >
         Thay đổi
       </button>

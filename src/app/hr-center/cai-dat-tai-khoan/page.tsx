@@ -8,6 +8,8 @@ import {
 import { useState } from "react";
 import ChangePassword from "./setting/change-password";
 import UpdateInfomation from "./setting/update-infomation";
+import BusinessRegistration from "./setting/business-registration";
+import InfomationCompany from "./setting/infomation-company";
 
 export default function SettingAccount() {
   const left = [
@@ -24,12 +26,12 @@ export default function SettingAccount() {
     {
       title: "Giấy đăng ký doanh nghiệp",
       icon: <IdentificationIcon className="w-4 mr-2 text-default" />,
-      tab: "Giấy đăng ký doanh nghiệp",
+      tab: <BusinessRegistration />,
     },
     {
       title: "Thông tin công ty",
       icon: <UserCircleIcon className="w-4 mr-2 text-default" />,
-      tab: "Thông tin công ty",
+      tab: <InfomationCompany />,
     },
   ];
   const [active, setActive] = useState<number>(0);
@@ -37,7 +39,7 @@ export default function SettingAccount() {
   return (
     <div className="px-6 py-3 bg-white min-h-screen">
       <div className="grid sm:grid-cols-12 gap-4">
-        <div className="col-span-4 p-2 bg-[#F9F6F2]">
+        <div className="sm:col-span-4 p-2 bg-[#F9F6F2]">
           {left.map((item, index) => {
             return (
               <button
@@ -52,11 +54,7 @@ export default function SettingAccount() {
             );
           })}
         </div>
-        <div className="sm:col-span-8">
-          <div className="bg-white p-4 rounded-lg">
-            {left[active] && left[active].tab}
-          </div>
-        </div>
+        <div className="sm:col-span-8">{left[active] && left[active].tab}</div>
       </div>
     </div>
   );

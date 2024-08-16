@@ -49,13 +49,13 @@ export default function UpdateInfomation() {
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="text-base mb-4">Cập nhật thông tin cá nhân</div>
-        <div className="">
-          <div>
+        <div className="sm:block grid justify-center">
+          <div className="">
             <AvatarUpload name="avatar" control={control} />
           </div>
           <div className="mt-2">Email: test@vietstargroup.vn</div>
         </div>
-        <div className="grid grid-cols-2 gap-4 mt-4">
+        <div className="sm:grid grid-cols-2 gap-4 mt-4">
           <div className="mb-4">
             <div>Họ và tên</div>
             <TmInput

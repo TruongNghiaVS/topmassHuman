@@ -29,3 +29,27 @@ export interface IUpdateInfomation {
   gender?: string;
   phone?: string;
 }
+
+export interface ICompanyBusiness {
+  company_business?: File;
+}
+
+export interface IUpdateCompany {
+  logo?: File;
+  banner?: File;
+  code?: string;
+  name?: string;
+  website?: string;
+  activity?: string;
+  scale?: string;
+  location?: string;
+  email?: string;
+  phone_number?: string;
+  content?: string;
+}
+
+export interface ISupportSetting {
+  files?: FileList;
+  title: string;
+  description: string;
+}
