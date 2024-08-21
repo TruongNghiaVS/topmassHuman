@@ -52,7 +52,7 @@ export default function DetailCampaign() {
               <PencilSquareIcon className="w-4 mr-2" /> Tạo tin đăng
             </Link>
             <Link
-              href="/hr-center/them-moi-chien-dich"
+              href="/hr-center/chien-dich-tuyen-dung/them-moi-chien-dich"
               className="rounded px-4 py-1 bg-[#F37A20] text-white flex"
             >
               <PlusCircleIcon className="w-4 mr-2" /> Thêm mới chiến dịch
