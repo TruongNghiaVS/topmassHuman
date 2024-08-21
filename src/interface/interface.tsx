@@ -53,3 +53,7 @@ export interface ISupportSetting {
   title: string;
   description: string;
 }
+
+export interface ICampaign {
+  name: string;
+}

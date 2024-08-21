@@ -11,6 +11,7 @@ const TmSelect: React.FC<ITmSelect> = ({
   options,
   placeholder = "Select an option...",
   className,
+  classNameCustom,
 }) => {
   const {
     field: { value, onChange },
@@ -21,7 +22,7 @@ const TmSelect: React.FC<ITmSelect> = ({
   });
 
   return (
-    <div>
+    <div className={classNameCustom}>
       <div className="relative flex items-center">
         <label className="block text-gray-700 mb-2">{label}</label>
         {icon && <div className="absolute left-3">{icon}</div>}

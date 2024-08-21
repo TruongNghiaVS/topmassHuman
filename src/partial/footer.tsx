@@ -41,6 +41,7 @@ export const Footer = () => {
                   src="/imgs/logo-new.svg"
                   width={100}
                   height={100}
+                  priority={true}
                   alt=""
                   className="w-[180px] "
                 ></Image>

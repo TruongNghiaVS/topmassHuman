@@ -9,6 +9,7 @@ const TmInput: React.FC<ITmInput> = ({
   placeholder = "",
   type = "text",
   className,
+  classNameCustom,
 }) => {
   const {
     field: { value, onChange, onBlur },
@@ -19,7 +20,7 @@ const TmInput: React.FC<ITmInput> = ({
   });
 
   return (
-    <div>
+    <div className={classNameCustom}>
       <div className="relative flex items-center">
         {icon && <div className="absolute left-3">{icon}</div>}
         <input

@@ -13,6 +13,7 @@ export interface ITmInput extends InputHTMLAttributes<HTMLInputElement> {
   icon?: any;
   placeholder?: string;
   type?: string;
+  classNameCustom?: string;
 }
 
 export interface IUpload extends InputHTMLAttributes<HTMLInputElement> {
@@ -28,6 +29,7 @@ export interface ITmSelect extends InputHTMLAttributes<HTMLSelectElement> {
   icon?: any;
   options: Option[];
   placeholder?: string;
+  classNameCustom?: string;
 }
 
 export interface ITmRadioProps {

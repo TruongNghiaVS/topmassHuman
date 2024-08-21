@@ -1,7 +1,10 @@
 "use client";
 
+import { MassHiring } from "@/component/mass-hiring";
+import { massLabel } from "@/mockup-data/data";
 import { TrashIcon } from "@heroicons/react/16/solid";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import numeral from "numeral";
 import { ChangeEvent, useState } from "react";
 
@@ -79,6 +82,12 @@ export default function Card() {
     const idx = data.findIndex((row) => row.id === id);
     if (data[idx]) data[idx].count = newValue;
     console.log(data[idx]);
+  };
+
+  const router = useRouter();
+
+  const handleBuy = () => {
+    router.push("/hr-center/thanh-toan");
   };
 
   return (
@@ -212,8 +221,21 @@ export default function Card() {
                 của Topmass
               </div>
             </div>
+            <div className="mt-4 text-center">
+              <button
+                className="bg-[#F37A20] text-white px-3 py-1 rounded-2xl"
+                onClick={handleBuy}
+              >
+                Thanh toán
+              </button>
+            </div>
           </div>
         </div>
+      </div>
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 mt-6">
+        {massLabel.map((item) => {
+          return <MassHiring key={item.title} item={item} />;
+        })}
       </div>
     </div>
   );

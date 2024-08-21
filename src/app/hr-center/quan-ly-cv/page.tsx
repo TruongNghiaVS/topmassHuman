@@ -128,7 +128,7 @@ export default function ManagerCV() {
         />
       </div>
       <div className="mt-4 bg-white">
-        <div className="overflow-x-auto col-span-2">
+        <div className="overflow-x-auto ">
           <table className="min-w-full text-sm text-left text-gray-500">
             <thead className="bg-gray-100 text-gray-700">
               <tr>
@@ -136,7 +136,7 @@ export default function ManagerCV() {
                   return (
                     <th
                       key={item}
-                      className="p-4 whitespace-nowrap lg:min-w-fit min-w-[200px] font-medium uppercase"
+                      className="p-4 whitespace-nowrap lg:min-w-fit sm:min-w-fit min-w-[200px] font-medium uppercase"
                     >
                       {item}{" "}
                     </th>
