@@ -272,3 +272,50 @@ export const recruimentNews = [
     ratio_cv: "25%",
   },
 ];
+
+export const campaignForm = [
+  { value: "Chiến dịch 1", label: "Chiến dịch 1" },
+  { value: "Chiến dịch 2", label: "Chiến dịch 2" },
+  { value: "Chiến dịch 3", label: "Chiến dịch 1" },
+  { value: "Chiến dịch 4", label: "Chiến dịch 1" },
+  { value: "Chiến dịch 5", label: "Chiến dịch 1" },
+];
+
+export const locations = [
+  { value: 0, label: "TP.HCM" },
+  { value: 1, label: "Quận 1" },
+  { value: 2, label: "Quận 2" },
+  { value: 3, label: "Quận 3" },
+  { value: 4, label: "Quận 4" },
+  { value: 5, label: "Quận 5" },
+  { value: 6, label: "Quận 6" },
+  { value: 7, label: "Quận 7" },
+  { value: 8, label: "Quận 8" },
+  { value: 9, label: "Quận 9" },
+  { value: 10, label: "Quận 10" },
+  { value: 11, label: "TP.Thủ Đức" },
+  { value: 12, label: "TP.HCM" },
+  { value: 13, label: "TP.HCM" },
+  { value: 14, label: "TP.HCM" },
+  { value: 15, label: "TP.HCM" },
+  { value: 16, label: "TP.HCM" },
+  { value: 17, label: "TP.HCM" },
+  { value: 18, label: "TP.HCM" },
+  { value: 19, label: "TP.HCM" },
+  { value: 20, label: "TP.HCM" },
+];
+
+export const salaryOptions = [
+  { value: "VNĐ", label: "VNĐ" },
+  { value: "USD", label: "USD" },
+];
+
+export const dayOfWeek = [
+  { value: "Thứ 2", label: "Thứ 2" },
+  { value: "Thứ 3", label: "Thứ 3" },
+  { value: "Thứ 4", label: "Thứ 4" },
+  { value: "Thứ 5", label: "Thứ 5" },
+  { value: "Thứ 6", label: "Thứ 6" },
+  { value: "Thứ 7", label: "Thứ 7" },
+  { value: "Chủ nhật", label: "Chủ nhật" },
+];

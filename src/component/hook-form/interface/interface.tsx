@@ -3,7 +3,7 @@ import { Control, UseControllerProps } from "react-hook-form";
 
 export type Option = {
   label: string;
-  value: string;
+  value: any;
 };
 
 export interface ITmInput extends InputHTMLAttributes<HTMLInputElement> {
@@ -14,6 +14,12 @@ export interface ITmInput extends InputHTMLAttributes<HTMLInputElement> {
   placeholder?: string;
   type?: string;
   classNameCustom?: string;
+}
+
+export interface ITmInputNumber extends ITmInput {
+  min?: number;
+  max?: number;
+  step?: number;
 }
 
 export interface IUpload extends InputHTMLAttributes<HTMLInputElement> {

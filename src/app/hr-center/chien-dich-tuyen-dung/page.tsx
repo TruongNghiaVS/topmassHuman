@@ -31,7 +31,7 @@ export default function RecruimentCampaign() {
         <div>Quản lý chiến dịch tuyển dụng</div>
         <div className="flex sm:space-x-2 sm:flex-row flex-col space-y-2 sm:space-y-0">
           <Link
-            href="/hr-center/chien-dich-tuyen-dung/tao-moi"
+            href="/hr-center/chien-dich-tuyen-dung/tao-tin-dang"
             className="rounded px-4 py-1 bg-[#F37A20] text-white flex"
           >
             <PencilSquareIcon className="w-4 mr-2" /> Tạo tin đăng

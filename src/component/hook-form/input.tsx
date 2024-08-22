@@ -1,5 +1,5 @@
 import React from "react";
-import { useController, Control } from "react-hook-form";
+import { useController } from "react-hook-form";
 import { ITmInput } from "./interface/interface";
 
 const TmInput: React.FC<ITmInput> = ({
