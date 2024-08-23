@@ -7,8 +7,35 @@ import {
   UserIcon,
 } from "@heroicons/react/16/solid";
 import { EnvelopeIcon, PhoneIcon } from "@heroicons/react/24/outline";
+import { Chart } from "@/component/chart";
 
 export default function DashBoard() {
+  const data = {
+    labels: [
+      "20/08/2024",
+      "21/08/2024",
+      "22/08/2024",
+      "23/08/2024",
+      "24/08/2024",
+    ],
+    datasets: [
+      {
+        label: "Lượt xem",
+        data: [120, 100, 150, 80, 120, 160],
+        fill: false,
+        borderColor: "#DAFFD7",
+        tension: 0.1,
+      },
+      {
+        label: "Lượt ứng tuyển",
+        data: [140, 120, 100, 130, 100, 150],
+        fill: false,
+        borderColor: "#F37A20",
+        tension: 0.1,
+      },
+    ],
+  };
+
   return (
     <div className="px-6 py-3">
       <div className="font-normal text-xl">Bảng tin</div>
@@ -70,6 +97,9 @@ export default function DashBoard() {
               <div className="my-6 text-[#AF0000]">CV ứng tuyển mới</div>
             </div>
           </div>
+          <div className="mt-4">
+            <Chart data={data} />
+          </div>
         </div>
         <div className="rounded-lg bg-white p-4">
           <div className="rounded-lg p-4 flex bg-[#BFBFBF] items-center ">
@@ -105,47 +135,53 @@ export default function DashBoard() {
                 <div className="text-xs">Hạn dùng: </div>
                 <div className="text-[#0F7A00] ">13/08/2024</div>
               </div>
+            </div>
+          </div>
+          <div className="mt-6">
+            <div className="grid sm:grid-cols-3 grid-cols-1 items-center gap-4">
               <div className="rounded-lg bg-[#FFE39C] h-full p-4 flex items-center text-[#C65000]">
-                Bạn có <img src="/imgs/arrow.svg" alt="" className="w-4 ml-4" />
+                Tia sét
+                <img src="/imgs/arrow.svg" alt="" className="w-4 ml-4" />
               </div>
-              <div className="rounded-lg bg-[#FFE39C] h-full p-4">
-                <div className="text-xs">Bạn có: </div>
-                <div className="text-[#C65000] text-base">500 tia set</div>
+              <div className="rounded-lg h-full p-4 bg-[#FFE39C] ">
+                <div className="text-xs">Bạn còn: </div>
+                <div className="text-[#C65000] ">5 lượt đăng tin</div>
               </div>
-              <div className="rounded-lg bg-[#FFE39C] h-full p-4">
-                <div className="text-[8px]">
-                  Nạp tiền hoặc làm nhiệm vụ để có thật nhiều tia sét
-                </div>
-                <div className="flex justify-center">
-                  <div className="inline-flex p-1 rounded-lg text-white bg-gradient-to-r from-[#F89E1B] to-[#F37A20] text-white items-center">
-                    <div className="relative border-b border-white mr-1 text-xs">
-                      Thêm tích luỹ
-                    </div>
-                    <img src="/imgs/pig.png" alt="" className="w-3.5 h-3.5" />
-                  </div>
-                </div>
+              <div className="rounded-lg h-full p-4 bg-[#FFE39C] ">
+                <div className="text-xs">Hạn dùng: </div>
+                <div className="text-[#C65000] ">13/08/2024</div>
               </div>
             </div>
           </div>
-          <div className="my-6 text-lg font-medium">Dịch vụ đã mua</div>
-          <div className="grid sm:grid-cols-2 gap-4">
-            <div className="p-4 border border-[#F37A20] rounded-xl flex items-center">
-              <div className="font-regular text-base mr-2 whitespace-nowrap">
-                BANNER TOP
+          <div className="mt-6">
+            <div className="grid sm:grid-cols-3 grid-cols-1 items-center gap-4">
+              <div className="rounded-lg bg-sky-100 h-full p-4 flex items-center text-sky-600">
+                Tia sét
+                <img src="/imgs/arrow.svg" alt="" className="w-4 ml-4" />
               </div>
-              <div className="text-[8px]">
-                Trải nghiệm gói đăng tin tuyển dụng, hiện thị tại vị trí nổi bật
-                trong việc làm danh cho bạn , giá dùng thử hấp dẫn
+              <div className="rounded-lg h-full p-4 bg-sky-100 ">
+                <div className="text-xs">Bạn còn: </div>
+                <div className="text-sky-600 ">5 lượt đăng tin</div>
+              </div>
+              <div className="rounded-lg h-full p-4 bg-sky-100 ">
+                <div className="text-xs">Hạn dùng: </div>
+                <div className="text-sky-600 ">13/08/2024</div>
               </div>
             </div>
-            <div className="flex items-center justify-between px-4">
-              <div className="text-center">
-                <div className="text-[8px]">Số lượng</div>
-                <div className="text-base">4</div>
+          </div>
+          <div className="mt-6">
+            <div className="grid sm:grid-cols-3 grid-cols-1 items-center gap-4">
+              <div className="rounded-lg bg-amber-200 h-full p-4 text-amber-600">
+                Banner Top
               </div>
-              <button className="px-4 py-2 text-white bg-[#F37A20] rounded-lg">
-                Kích hoạt
-              </button>
+              <div className="rounded-lg h-full p-4 bg-amber-200">
+                <div className="text-xs">Bạn còn: </div>
+                <div className="text-amber-600 ">5 </div>
+              </div>
+              <div className="rounded-lg h-full p-4 bg-amber-200">
+                <div className="text-xs">Hạn dùng: </div>
+                <div className="text-amber-600 ">13/08/2024</div>
+              </div>
             </div>
           </div>
         </div>

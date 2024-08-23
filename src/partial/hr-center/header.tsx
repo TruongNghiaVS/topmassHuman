@@ -80,12 +80,14 @@ export const HeaderHrCenter = () => {
                   alt=""
                   className="w-6 h-auto mr-3"
                 />
-                <div
-                  className={` flex items-center px-5 py-2 rounded-2xl bg-[#595757]`}
-                >
-                  <CardBootstrapIcon className="w-6 text-default mr-2 text-white" />
-                  <div className=" text-white">Giỏ hàng</div>
-                </div>
+                <Link href="/hr-center/gio-hang">
+                  <div
+                    className={` flex items-center px-5 py-2 rounded-2xl bg-[#595757]`}
+                  >
+                    <CardBootstrapIcon className="w-6 text-default mr-2 text-white" />
+                    <div className=" text-white">Giỏ hàng</div>
+                  </div>
+                </Link>
                 <div
                   className={` flex items-center px-5 py-1 rounded-2xl bg-[#595757]`}
                 >
