@@ -107,15 +107,12 @@ export default function DetailCampaign() {
                 <tr key={idx} className={`hover:bg-gray-100 text-center`}>
                   <td className="p-4 text-left">
                     <div>{row.tag}</div>
-                    <div className="flex justify-between items-center">
-                      {row.name}
-                      <Link href="/hr-center/chien-dich-tuyen-dung/1/test">
-                        <PencilIcon className="w-6 p-1 rounded-full bg-[#E3E3E3]" />
-                      </Link>
-                    </div>
-                    <div className="inline-block bg-[#DAFFD7] text-[#137F04] px-2 py-1 rounded-lg">
-                      Xem cv ứng tuyển
-                    </div>
+                    <div className="">{row.name}</div>
+                    <Link href="/hr-center/chien-dich-tuyen-dung/1/test">
+                      <div className="inline-block bg-[#DAFFD7] text-[#137F04] px-2 py-1 rounded-lg">
+                        Xem cv ứng tuyển
+                      </div>
+                    </Link>
                   </td>
                   <td className="font-normal p-4">
                     <label className="inline-flex items-center cursor-pointer">

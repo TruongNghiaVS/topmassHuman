@@ -14,35 +14,41 @@ export const TimeWorkingForm = ({ control, name }: ILocationForm) => {
   return (
     <div>
       {fields.map((field, index) => (
-        <div key={field.id} className="flex space-x-4 items-start mt-4">
+        <div key={field.id} className="flex space-x-4 items-start mt-4 ">
           <ClockIcon className="w-7 text-default" />
-          <TmSelect
-            classNameCustom="flex-1"
-            placeholder="Chọn ngày"
-            name={`${name}.${index}.day_from`}
-            control={control}
-            options={dayOfWeek}
-          />
-          <div>-</div>
-          <TmSelect
-            classNameCustom="flex-1"
-            placeholder="Chọn ngày"
-            name={`${name}.${index}.day_to`}
-            control={control}
-            options={dayOfWeek}
-          />
-          <TmInput
-            classNameCustom="flex-1"
-            name={`${name}.${index}.time_from`}
-            control={control}
-            type="time"
-          />
-          <TmInput
-            classNameCustom="flex-1"
-            name={`${name}.${index}.time_to`}
-            control={control}
-            type="time"
-          />
+          <div className="w-full flex sm:space-x-4 sm:flex-row flex-col space-y-2 sm:space-y-0">
+            <div className="w-full flex space-x-4 ">
+              <TmSelect
+                classNameCustom="w-full"
+                placeholder="Chọn ngày"
+                name={`${name}.${index}.day_from`}
+                control={control}
+                options={dayOfWeek}
+              />
+              <div>-</div>
+              <TmSelect
+                classNameCustom="w-full"
+                placeholder="Chọn ngày"
+                name={`${name}.${index}.day_to`}
+                control={control}
+                options={dayOfWeek}
+              />
+            </div>
+            <div className="w-full flex space-x-4 ">
+              <TmInput
+                classNameCustom="flex-1"
+                name={`${name}.${index}.time_from`}
+                control={control}
+                type="time"
+              />
+              <TmInput
+                classNameCustom="flex-1"
+                name={`${name}.${index}.time_to`}
+                control={control}
+                type="time"
+              />
+            </div>
+          </div>
           <button
             onClick={() => {
               remove(index);

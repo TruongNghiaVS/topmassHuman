@@ -34,7 +34,7 @@ export default function ManagerCV() {
     "Ứng viên",
     "Chiến dịch",
     "Thông tin liên hệ",
-    "Insights",
+    "Thời gian mở",
     "Trạng thái",
   ];
 
@@ -103,15 +103,6 @@ export default function ManagerCV() {
               control={control}
               options={options}
               placeholder="Nguồn cv"
-            />
-          </div>
-          <div className="flex-1">
-            <TmSelect
-              className="w-full"
-              name="test"
-              control={control}
-              options={options}
-              placeholder="Tất cả nhãn"
             />
           </div>
         </div>
@@ -185,10 +176,6 @@ export default function ManagerCV() {
                     </div>
                   </td>
                   <td className="p-4 ">
-                    <div className="flex mt-1">
-                      <ShoppingBagIcon className="w-4 mr-2" />
-                      CV đề xuất
-                    </div>
                     <div className="flex mt-1">
                       <ClockIcon className="w-4 mr-2" />
                       14/08/2024 15:45

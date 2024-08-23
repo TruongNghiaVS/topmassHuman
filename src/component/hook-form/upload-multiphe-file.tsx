@@ -8,7 +8,11 @@ import {
   TrashIcon,
 } from "@heroicons/react/16/solid";
 
-const CustomUploadMulti: React.FC<IUpload> = ({ name, control }) => {
+const CustomUploadMulti: React.FC<IUpload> = ({
+  name,
+  control,
+  title = "Tải CV lên từ máy tính, chọn hoặc kéo thả",
+}) => {
   const {
     field: { value, onChange, onBlur },
     fieldState: { error },
@@ -89,7 +93,7 @@ const CustomUploadMulti: React.FC<IUpload> = ({ name, control }) => {
         {value && value[0].name}
         <div className="sm:flex justify-center items-center grid ">
           <CloudArrowUpIcon className="w-6 text-default font-semibold sm:mx-0 mx-auto" />
-          <div>Tải CV lên từ máy tính, chọn hoặc kéo thả</div>
+          <div>{title}</div>
         </div>
         <div className="text-center mt-4">
           Dung lượng tối đa 5MB, định dạng: Jpeg, JPG, PNG, PDF

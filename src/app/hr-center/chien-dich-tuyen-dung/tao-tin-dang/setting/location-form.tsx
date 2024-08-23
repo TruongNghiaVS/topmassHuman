@@ -18,21 +18,22 @@ export const LocationForm = ({ control, name }: ILocationForm) => {
   return (
     <div className="mt-4">
       {fields.map((field, index) => (
-        <div key={field.id} className="flex  space-x-2 items-start mb-2">
-          <TmSelect
-            placeholder="Chọn quận huyện"
-            classNameCustom="flex-1"
-            name={`${name}.${index}.district`}
-            control={control}
-            options={locations}
-          />
-          <TmInput
-            classNameCustom="flex-1"
-            placeholder="Nhập địa chỉ làm việc cụ thể"
-            name={`${name}.${index}.detail_location`}
-            control={control}
-          />
-
+        <div key={field.id} className="flex space-x-2 items-start mb-2 ">
+          <div className="flex-1 flex sm:space-x-2 items-start mb-2 sm:flex-row flex-col space-y-2 sm:space-y-0">
+            <TmSelect
+              placeholder="Chọn quận huyện"
+              classNameCustom="w-full"
+              name={`${name}.${index}.district`}
+              control={control}
+              options={locations}
+            />
+            <TmInput
+              classNameCustom="w-full"
+              placeholder="Nhập địa chỉ làm việc cụ thể"
+              name={`${name}.${index}.detail_location`}
+              control={control}
+            />
+          </div>
           <button
             type="button"
             onClick={() => {

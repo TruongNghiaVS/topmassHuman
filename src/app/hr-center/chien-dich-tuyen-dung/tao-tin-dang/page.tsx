@@ -26,6 +26,7 @@ import * as yup from "yup";
 import { TimeWorkingForm } from "./setting/time-working-form";
 import dynamic from "next/dynamic";
 import { toast } from "react-toastify";
+import { EmailsForm } from "./setting/emails.form";
 
 const CustomCKEditor = dynamic(
   () => {
@@ -72,6 +73,7 @@ interface IFormCreateNew {
   skill?: string;
   username: string;
   phone: string;
+  emails: { email: string }[];
 }
 
 const schema = yup.object().shape({
@@ -103,8 +105,8 @@ const schema = yup.object().shape({
           .min(1, "Phải có ít nhất 1 thông tin quận huyện"),
       })
     )
+    .min(1, "Phải có ít nhất 1 khu vực")
     .required("Vui lòng chọn khu vực"),
-
   time_working: yup
     .array()
     .of(
@@ -115,6 +117,7 @@ const schema = yup.object().shape({
         time_to: yup.string().required("Vui lòng chọn thời gian kết thúc"),
       })
     )
+    .min(1, "Phải có ít nhất 1 đoạn thời gian")
     .required("Vui lòng chọn thời gian làm việc"),
   aggrement: yup.boolean(),
   salary_from: yup.number().when("aggrement", ([aggrement], schema) => {
@@ -138,6 +141,19 @@ const schema = yup.object().shape({
     .string()
     .required("Bắt buộc nhập số điện thoại")
     .matches(/^[0-9]{10}$/, "Số điện thoại phải là 10 ký tự"),
+  emails: yup
+    .array()
+    .of(
+      yup.object().shape({
+        email: yup
+          .string()
+          .required("Bắt buộc nhập email")
+          .email("Sai format email "),
+      })
+    )
+    .min(1, "Tối thiểu 1 email")
+    .max(5, "Tối đa 5 email")
+    .required("Vui nhập email"),
 });
 
 export default function CreateNew() {
@@ -187,6 +203,7 @@ export default function CreateNew() {
       skill: "",
       username: "",
       phone: "",
+      emails: [{ email: "" }],
     },
   });
 
@@ -196,14 +213,15 @@ export default function CreateNew() {
   });
 
   const onSubmit: SubmitHandler<IFormCreateNew> = (data) => {
+    console.log(errors);
     toast.success("Đăng tin thành công");
     console.log(data);
   };
 
   return (
     <div className="bg-white min-h-screen">
-      <div className="p-4 border-b flex justify-between">
-        <div className="bg-white flex whitespace-nowrap space-x-4 items-center">
+      <div className="p-4 border-b flex justify-between sm:flex-row flex-col space-y-2 sm:space-y-0">
+        <div className="bg-white flex whitespace-nowrap space-x-4 items-center ">
           <Link
             href="/hr-center/chien-dich-tuyen-dung"
             className="flex rounded-2xl py-1 px-2 bg-[#BFBFBF]"
@@ -220,7 +238,7 @@ export default function CreateNew() {
           <PlusCircleIcon className="w-4 mr-2" /> Thêm mới chiến dịch
         </Link>
       </div>
-      <div className="mt-4 px-40">
+      <div className="mt-4 lg:px-40 px-2">
         <div className="font-medium">Thông tin chung</div>
         <form
           action=""
@@ -370,7 +388,7 @@ export default function CreateNew() {
                 </div>
               </div>
             </div>
-            <div className="flex space-x-2 mt-4">
+            <div className="flex sm:space-x-2 mt-4 sm:flex-row flex-col space-y-2 sm:space-y-0">
               <div className="flex-1">
                 <div className="font-medium">
                   Kinh nghiệm <span className="text-[#dc2f2f]">*</span>
@@ -431,6 +449,11 @@ export default function CreateNew() {
             <div>
               <TimeWorkingForm control={control} name={`time_working`} />
             </div>
+            {errors && errors.emails && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.emails.message}
+              </p>
+            )}
           </div>
           <div className="mt-4">
             <div className="font-medium">Giới tính</div>
@@ -487,6 +510,21 @@ export default function CreateNew() {
                 </div>
               </div>
             </div>
+          </div>
+          <div className="mt-4">
+            <div className="font-medium">
+              Email nhận hồ sơ (
+              <span className="font-normal">tối đa 5 email</span>){" "}
+              <span className="text-[#dc2f2f]">*</span>
+            </div>
+            <div>
+              <EmailsForm control={control} name="emails" />
+            </div>
+            {errors && errors.emails && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.emails.message}
+              </p>
+            )}
           </div>
           <div className="mt-4 flex space-x-4 justify-end">
             <button className="bg-[#137F04] text-white rounded flex space-x-1 items-center px-3 py-1 text-base">

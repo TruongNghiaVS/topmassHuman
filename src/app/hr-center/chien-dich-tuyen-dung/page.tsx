@@ -82,7 +82,10 @@ export default function RecruimentCampaign() {
                 <tr key={idx} className={`hover:bg-gray-100 text-center`}>
                   <td className="p-4">
                     <div>
-                      <Link href="/hr-center/chien-dich-tuyen-dung/1">
+                      <Link
+                        href="/hr-center/chien-dich-tuyen-dung/1"
+                        className=" hover:text-default"
+                      >
                         {row.name}
                       </Link>
                     </div>

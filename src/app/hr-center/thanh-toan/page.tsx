@@ -4,14 +4,22 @@ import { Bank } from "./setting/bank";
 import { Momo } from "./setting/momo";
 import { massLabel } from "@/mockup-data/data";
 import { MassHiring } from "@/component/mass-hiring";
+import Modal from "@/component/modal";
 
 export default function Payment() {
-  const [active, setActive] = useState<number>(1);
+  const [active, setActive] = useState<number>(0);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const closeModal = () => {
+    setIsOpen(false);
+    setActive(0);
+  };
 
   return (
     <div className="px-6 py-3">
-      <div className="grid sm:grid-cols-3 gap-4">
-        <div className="bg-white rounded-lg sm:col-span-2 col-span-1">
+      <div className="">
+        {/**grid sm:grid-cols-3 gap-4 */}
+        <div className="bg-white rounded-lg sm:col-span-2 col-span-1 min-h-screen">
           <div className=" text-center grid justify-center py-4">
             <img src="/imgs/payment.png" alt="" className="w-auto " />
           </div>
@@ -36,10 +44,10 @@ export default function Payment() {
           </div>
           <div className="mt-4 sm:flex grid gap-4 sm:space-x-6 justify-center">
             <button
-              className={`border border-[#F37A20] rounded-lg py-1 w-[200px] w-[200px]  flex items-center justify-center h-[50px] ${
-                active === 1 && "border-b-[6px]"
-              } `}
-              onClick={() => setActive(1)}
+              className={`border border-[#F37A20] rounded-lg py-1 w-[200px] w-[200px]  flex items-center justify-center h-[50px]`}
+              onClick={() => {
+                setActive(1), setIsOpen(true);
+              }}
             >
               <img src="/imgs/vietbank.png" alt="" className="w-10 " />
             </button>
@@ -47,16 +55,20 @@ export default function Payment() {
               className={`border border-[#F37A20] rounded-lg py-1 w-[200px] w-[200px]  flex items-center justify-center h-[50px] ${
                 active === 2 && "border-b-[6px]"
               } `}
-              onClick={() => setActive(2)}
+              onClick={() => {
+                setActive(2), setIsOpen(true);
+              }}
             >
               <img src="/imgs/momo.png" alt="" className="w-10" />
             </button>
           </div>
           <div className="mt-4 text-center">
-            {active === 1 ? <Bank /> : <Momo />}
+            <Modal isOpen={isOpen} onClose={closeModal}>
+              {active === 1 ? <Bank /> : <Momo />}
+            </Modal>
           </div>
         </div>
-        <div className=" rounded-lg col-span-1">
+        {/* <div className=" rounded-lg col-span-1">
           {massLabel.map((item) => {
             return (
               <div key={item.title} className="mt-2">
@@ -64,7 +76,7 @@ export default function Payment() {
               </div>
             );
           })}
-        </div>
+        </div> */}
       </div>
     </div>
   );

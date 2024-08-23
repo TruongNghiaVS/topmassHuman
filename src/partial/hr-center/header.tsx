@@ -55,16 +55,6 @@ export const HeaderHrCenter = () => {
           </div>
           <div className="flex">
             <div className="flex items-center mr-[50px] text-white">
-              <Link
-                href="http://192.168.1.2:3000"
-                target="_blank"
-                className="text-xs mr-[30px]"
-              >
-                Dành cho ứng viên <br />
-                <div className="text-sm leading-[14px] pt-2 inline block font-medium">
-                  Tìm việc làm
-                </div>
-              </Link>
               <div
                 className={`text-xs text-default cursor-pointer ${
                   globalParam && "hidden"

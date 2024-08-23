@@ -113,7 +113,7 @@ export const Header = () => {
                   Nhà tuyển dụng
                   <br />
                   <div className="text-sm leading-[14px] pt-2 inline block font-medium">
-                    Đăng tin tuyển dụng
+                    Đăng nhập/đăng ký
                   </div>
                 </button>
               </div>

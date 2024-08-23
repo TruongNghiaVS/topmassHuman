@@ -82,7 +82,11 @@ export default function SupportForm() {
             <TmInput control={control} placeholder="Mô tả" name="description" />
           </div>
           <div>
-            <CustomUploadMulti name="files" control={control} />
+            <CustomUploadMulti
+              name="files"
+              title="Tải tệp hoặc File từ máy tính"
+              control={control}
+            />
           </div>
           <button
             type="submit"
