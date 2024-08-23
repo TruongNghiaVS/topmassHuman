@@ -56,3 +56,11 @@ export interface SearchSelectProps {
 export interface CKEditorInputProps extends UseControllerProps {
   control: Control<any>;
 }
+
+export interface ITmTextareaProps {
+  name: string;
+  control: Control<any>;
+  label?: string;
+  placeholder?: string;
+  rows?: number;
+}

@@ -3,6 +3,11 @@ export interface ILogin {
   password: string;
 }
 
+export interface IResetPassword {
+  confirm_password: string;
+  password: string;
+}
+
 export interface IRegister {
   last_name?: string;
   first_name?: string;
@@ -56,4 +61,12 @@ export interface ISupportSetting {
 
 export interface ICampaign {
   name: string;
+}
+
+export interface IContact {
+  name: string;
+  email: string;
+  phone: string;
+  title: string;
+  content: string;
 }
