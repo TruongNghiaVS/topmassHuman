@@ -319,3 +319,61 @@ export const dayOfWeek = [
   { value: "Thứ 7", label: "Thứ 7" },
   { value: "Chủ nhật", label: "Chủ nhật" },
 ];
+
+export const news = [
+  {
+    img: "nhung-cong-viec-lam-tai-nha-anh-dai-dien_626.png",
+    title: "Những công việc làm tại nhà kiếm tiền nhanh trong 2023",
+    slug: "nhung-cong-viec",
+  },
+  {
+    img: "nhung-cong-viec-lam-tai-nha-anh-dai-dien_626.png",
+    title: "Những công việc làm tại nhà kiếm tiền nhanh trong 2023",
+    slug: "nhung-cong-viec",
+  },
+  {
+    img: "nhung-cong-viec-lam-tai-nha-anh-dai-dien_626.png",
+    title: "Những công việc làm tại nhà kiếm tiền nhanh trong 2023",
+    slug: "nhung-cong-viec",
+  },
+  {
+    img: "nhung-cong-viec-lam-tai-nha-anh-dai-dien_626.png",
+    title: "Những công việc làm tại nhà kiếm tiền nhanh trong 2023",
+    slug: "nhung-cong-viec",
+  },
+  {
+    img: "nhung-cong-viec-lam-tai-nha-anh-dai-dien_626.png",
+    title: "Những công việc làm tại nhà kiếm tiền nhanh trong 2023",
+    slug: "nhung-cong-viec",
+  },
+  {
+    img: "nhung-cong-viec-lam-tai-nha-anh-dai-dien_626.png",
+    title: "Những công việc làm tại nhà kiếm tiền nhanh trong 2023",
+    slug: "nhung-cong-viec",
+  },
+  {
+    img: "nhung-cong-viec-lam-tai-nha-anh-dai-dien_626.png",
+    title: "Những công việc làm tại nhà kiếm tiền nhanh trong 2023",
+    slug: "nhung-cong-viec",
+  },
+  {
+    img: "nhung-cong-viec-lam-tai-nha-anh-dai-dien_626.png",
+    title: "Những công việc làm tại nhà kiếm tiền nhanh trong 2023",
+    slug: "nhung-cong-viec",
+  },
+  {
+    img: "nhung-cong-viec-lam-tai-nha-anh-dai-dien_626.png",
+    title: "Những công việc làm tại nhà kiếm tiền nhanh trong 2023",
+    slug: "nhung-cong-viec",
+  },
+  {
+    img: "nhung-cong-viec-lam-tai-nha-anh-dai-dien_626.png",
+    title: "Những công việc làm tại nhà kiếm tiền nhanh trong 2023",
+    slug: "nhung-cong-viec",
+  },
+  {
+    img: "nhung-cong-viec-lam-tai-nha-anh-dai-dien_626.png",
+    title: "Những công việc làm tại nhà kiếm tiền nhanh trong 2023",
+    slug: "nhung-cong-viec",
+  },
+];

@@ -1,43 +1,79 @@
 import { DocumentTextIcon } from "@heroicons/react/16/solid";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export const Menu = () => {
+  const path = usePathname();
+
   const navItems = [
     {
       title: "Giới Thiệu",
       subMenu: [],
       border: false,
-      active: true,
-      image: false,
+      patch_check: "/gioi-thieu",
     },
     {
       title: "Dịch Vụ",
-      subMenu: [],
+      subMenu: [
+        {
+          title: "Bí Quyết Tìm Việc",
+          slug: "/dich-vu/bi-quyet-tim-viec",
+          icon: (
+            <DocumentTextIcon className="text-default mr-2 text-[15px] leading-4 w-6" />
+          ),
+        },
+        {
+          title: "Thị Trường - Xu Hướng",
+          slug: "/dich-vu/thi-truong-xu-huong",
+          icon: (
+            <DocumentTextIcon className="text-default mr-2 text-[15px] leading-4 w-6" />
+          ),
+        },
+        {
+          title: "Góc Thư Giản",
+          slug: "/dich-vu/goc-thu-gian",
+          icon: (
+            <DocumentTextIcon className="text-default mr-2 text-[15px] leading-4 w-6" />
+          ),
+        },
+        {
+          title: "Tiện Ích",
+          slug: "/dich-vu/tien-ich",
+          icon: (
+            <DocumentTextIcon className="text-default mr-2 text-[15px] leading-4 w-6" />
+          ),
+        },
+        {
+          title: "Góc Báo Chí",
+          slug: "/dich-vu/goc-bao-chi",
+          icon: (
+            <DocumentTextIcon className="text-default mr-2 text-[15px] leading-4 w-6" />
+          ),
+        },
+      ],
       border: false,
-      active: false,
-      image: false,
+      patch_check: "/dich-vu",
     },
     {
       title: "HR Center",
       subMenu: [],
       link: "/hr-center/bang-tin",
       border: true,
-      active: false,
-      image: false,
+      patch_check: "/hr-center",
     },
     {
       title: "Đổi (CV)",
       subMenu: [],
       border: true,
-      active: false,
       image: true,
+      patch_check: "/doi-cv",
     },
     {
       title: "Liên Hệ",
+      link: "/lien-he",
       subMenu: [],
       border: false,
-      active: false,
-      image: false,
+      patch_check: "/lien-he",
     },
   ];
 
@@ -53,7 +89,7 @@ export const Menu = () => {
               <Link
                 href={item.link ? item.link : "#"}
                 className={`"text-[#3B4358] no-underline font-medium p-[3px] 
-                  ${item.active && "text-default"} 
+                  ${path.includes(item.patch_check) ? "text-default" : ""}
                   ${
                     item.border &&
                     "rounded-2xl bg-gradient-to-r from-[#F89E1B] to-[#F37A20]"
@@ -70,7 +106,9 @@ export const Menu = () => {
                   )}
                 </div>
               </Link>
-              {item.subMenu.length > 0 && <SubMenu subMenu={item.subMenu} />}
+              {item.subMenu.length > 0 && (
+                <SubMenu pathCheck={path} subMenu={item.subMenu} />
+              )}
             </li>
           ))}
         </ul>
@@ -79,25 +117,38 @@ export const Menu = () => {
   );
 };
 
-type prop = {
-  subMenu: string[];
+export type ISubmenuProps = {
+  subMenu: {
+    title: string;
+    slug: string;
+    icon: any;
+    border?: boolean;
+    after?: any;
+  }[];
+  pathCheck: string;
 };
 
-export const SubMenu = ({ subMenu }: prop) => {
+export const SubMenu = ({ subMenu, pathCheck }: ISubmenuProps) => {
   return (
     <>
-      <ul className="group/subMenu overflow-hidden border-[#d9dbe9] h-0 transition-all ease-in-out duration-300 text-sm leading-[19px] absolute top-[calc(100%+20px)] left-0 bg-white min-w-[250px] py-[5px] z-[-1] group-hover/title:z-[11] group-hover/title:h-auto shadow-md opacity-0 group-hover/title:opacity-100 group-hover/title:top-full">
+      <ul className="p-2 rounded-lg group/subMenu overflow-hidden border-[#d9dbe9] h-0 transition-all ease-in-out duration-300 text-sm leading-[19px] absolute top-[calc(100%+20px)] left-0 bg-white min-w-[250px] py-[5px] z-[-1] group-hover/title:z-[11] group-hover/title:h-auto shadow-md opacity-0 group-hover/title:opacity-100 group-hover/title:top-full">
         {subMenu.map((item) => (
           <li
-            key={item}
-            className="group/item normal-case whitespace-nowrap hover:bg-[#e4e4e4] p-0"
+            key={item.title}
+            className={`group/item normal-case whitespace-nowrap my-2 bg-[#e4e4e4] p-0 rounded `}
           >
             <Link
-              href="#"
-              className="group/submenu font-medium text-[#3B4358] no-underline group-hover/item:text-default px-[15px] py-3 flex "
+              href={item.slug}
+              className={`group/submenu font-medium text-[#3B4358] no-underline group-hover/item:text-default px-[15px] py-3 flex items-center relative  ${
+                pathCheck.includes(item.slug) && "text-default"
+              }  ${
+                item.border &&
+                "mb-4 after:absolute after:content-[''] after:left-0 after:bottom-[-8px] after:right-0 after:w-full after:h-[1px] after:bg-[#e4e4e4]"
+              }`}
             >
-              <DocumentTextIcon className="text-default mr-2 text-[15px] leading-4 w-6" />
-              {item}
+              {item.icon}
+              {item.title}
+              {item?.after}
             </Link>
           </li>
         ))}

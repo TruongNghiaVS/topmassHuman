@@ -8,26 +8,68 @@ import {
 
 export const Footer = () => {
   const topMass = [
-    "Giới thiệu",
-    "Tuyển dụng",
-    "Liên hệ",
-    "Chính sách bảo mật",
-    "Điều khoản dịch vụ",
+    {
+      title: "Giới thiệu",
+      link: "/new/1",
+    },
+    {
+      title: "Tuyển dụng",
+      link: "/new/1",
+    },
+    {
+      title: "Liên hệ",
+      link: "/lien-he",
+    },
+    {
+      title: "Chính sách bảo mật",
+      link: "/hr-center/chinh-sach-bao-mat",
+    },
+    {
+      title: "Điều khoản dịch vụ",
+      link: "/new/1",
+    },
   ];
 
   const cv = [
-    "Quản lý hồ sơ",
-    "Hướng dẫn viết CV",
-    "Thư viện CV mẫu",
-    "CV theo ngành nghề",
+    {
+      title: "Quản lý hồ sơ",
+      link: "/new/1",
+    },
+    {
+      title: "Hướng dẫn viết CV",
+      link: "/new/1",
+    },
+    {
+      title: "Thư viện CV mẫu",
+      link: "/new/1",
+    },
+    {
+      title: "CV theo ngành nghề",
+      link: "/new/1",
+    },
   ];
 
   const blog = [
-    "Việc làm tốt nhất",
-    "Việc làm cho sinh viên",
-    "Việc làm online",
-    "Việc làm lương cao",
-    "Việc làm tài chính",
+    {
+      title: "Việc làm tốt nhất",
+      link: "/new/1",
+    },
+    {
+      title: "Việc làm cho sinh viên",
+      link: "/new/1",
+    },
+    {
+      title: "Việc làm online",
+      link: "/new/1",
+    },
+    {
+      title: "Việc làm lương cao",
+      link: "/new/1",
+    },
+    {
+      title: "Việc làm tài chính",
+      link: "/new/1",
+    },
   ];
 
   return (
@@ -87,30 +129,30 @@ export const Footer = () => {
               <div className="md:grid grid-cols-3">
                 <div className="col-span-1 mb-2">
                   <div className="text-lg font-bold">Về Topmass</div>
-                  {topMass.map((value: string) => {
+                  {topMass.map((item) => {
                     return (
-                      <div className="font-normal" key={value}>
-                        {value}
+                      <div className="font-normal" key={item.title}>
+                        <Link href={item.link}>{item.title}</Link>
                       </div>
                     );
                   })}
                 </div>
                 <div className="col-span-1 mb-2">
                   <div className="text-lg font-bold">Tạo CV Chuyên Nghiệp</div>
-                  {cv.map((value: string) => {
+                  {cv.map((item) => {
                     return (
-                      <div className="font-normal" key={value}>
-                        {value}
+                      <div className="font-normal" key={item.title}>
+                        <Link href={item.link}>{item.title}</Link>
                       </div>
                     );
                   })}
                 </div>
                 <div className="col-span-1 mb-2">
                   <div className="text-lg font-bold">Blog tuyển dụng</div>
-                  {blog.map((value: string) => {
+                  {blog.map((item) => {
                     return (
-                      <div className="font-normal" key={value}>
-                        {value}
+                      <div className="font-normal" key={item.title}>
+                        <Link href={item.link}>{item.title}</Link>
                       </div>
                     );
                   })}

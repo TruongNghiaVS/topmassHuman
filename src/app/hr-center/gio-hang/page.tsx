@@ -6,7 +6,15 @@ import { TrashIcon } from "@heroicons/react/16/solid";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import numeral from "numeral";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
+
+interface IData {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  count: number;
+}
 
 const data = [
   {
@@ -45,43 +53,49 @@ const header = [
 
 export default function Card() {
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
-  const [selectAll, setSelectAll] = useState<boolean>(false);
+  const [arrayData, setArrayData] = useState<IData[]>(data);
 
-  const handleSelectAll = () => {
-    if (selectAll) {
-      setSelectedRows([]);
+  const isAllSelected = selectedRows.length === data.length;
+
+  const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked) {
+      setSelectedRows(data.map((item) => item.id));
     } else {
-      setSelectedRows(data.map((row) => row.id));
+      setSelectedRows([]);
     }
-    setSelectAll(!selectAll);
   };
 
   const handleRowSelect = (id: number) => {
     if (selectedRows.includes(id)) {
-      setSelectedRows(selectedRows.filter((rowId) => rowId !== id));
+      setSelectedRows(selectedRows.filter((selectedId) => selectedId !== id));
     } else {
       setSelectedRows([...selectedRows, id]);
     }
-    if (selectedRows.length + 1 == data.length) setSelectAll(true);
-    if (selectedRows.length - 1 == 0) setSelectAll(false);
   };
 
   const decrement = (id: number) => {
-    const idx = data.findIndex((row) => row.id === id);
-    if (data[idx]) data[idx].count = data[idx].count - 1;
-    if (data[idx] && data[idx].count < 0) data[idx].count = 0;
+    setArrayData((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id ? { ...item, count: item.count - 1 } : item
+      )
+    );
   };
 
   const increment = (id: number) => {
-    const idx = data.findIndex((row) => row.id === id);
-    if (data[idx]) data[idx].count = data[idx].count + 1;
+    setArrayData((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id ? { ...item, count: item.count + 1 } : item
+      )
+    );
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>, id: number) => {
-    const newValue = parseInt(e.target.value, 10);
-    const idx = data.findIndex((row) => row.id === id);
-    if (data[idx]) data[idx].count = newValue;
-    console.log(data[idx]);
+    const newValue = parseInt(e.target.value, 10) || 0;
+    setArrayData((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id ? { ...item, count: newValue } : item
+      )
+    );
   };
 
   const router = useRouter();
@@ -89,6 +103,17 @@ export default function Card() {
   const handleBuy = () => {
     router.push("/hr-center/thanh-toan");
   };
+
+  const calculateTotalPrice = () => {
+    return selectedRows.reduce((total, id) => {
+      const selectedItem = arrayData.find((item) => item.id === id);
+      return (
+        total + (selectedItem ? selectedItem.price * selectedItem.count : 0)
+      );
+    }, 0);
+  };
+
+  const totalPrice = calculateTotalPrice();
 
   return (
     <div className="px-6 py-3">
@@ -100,7 +125,7 @@ export default function Card() {
                 <th className="p-4">
                   <input
                     type="checkbox"
-                    checked={selectAll}
+                    checked={isAllSelected}
                     onChange={handleSelectAll}
                     className="cursor-pointer"
                   />
@@ -115,7 +140,7 @@ export default function Card() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
-              {data.map((row) => (
+              {arrayData.map((row) => (
                 <tr
                   key={row.id}
                   className={`hover:bg-gray-100 ${
@@ -150,10 +175,13 @@ export default function Card() {
                       </button>
                       <input
                         type="number"
-                        value={row.count}
-                        onChange={(e) => handleChange(e, row.id)}
+                        defaultValue={row.count}
+                        onChange={(e) => {
+                          handleChange(e, row.id);
+                        }}
                         className="w-16 text-center border border-gray-300 rounded"
                       />
+                      <div>{row.count}</div>
                       <button
                         type="button"
                         onClick={() => increment(row.id)}
@@ -181,15 +209,21 @@ export default function Card() {
           <div className="p-4">
             <div className="flex justify-between mt-4">
               <div>Tổng giá trị đơn hàng</div>
-              <div>2.000.000 VNĐ</div>
+              <div>
+                {totalPrice ? numeral(totalPrice).format("0,0") : 0} VNĐ
+              </div>
             </div>
             <div className="flex justify-between mt-4">
               <div>Tổng tiền chưa bao gồm VAT</div>
-              <div>2.000.000 VNĐ</div>
+              <div>
+                {totalPrice ? numeral(totalPrice).format("0,0") : 0} VNĐ
+              </div>
             </div>
             <div className="flex justify-between mt-4">
               <div>VAT (8%)</div>
-              <div>200.000 VND</div>
+              <div>
+                {totalPrice ? numeral(totalPrice * 0.08).format("0,0") : 0} VND
+              </div>
             </div>
             <div className="flex space-x-2 items-center mt-4">
               <div>Mã ưu đãi</div>
@@ -202,7 +236,9 @@ export default function Card() {
                 <div>Tổng số tiền thanh toán</div>
                 <div className="text-xs">Đã bao gồm (VAT)</div>
               </div>
-              <div className="text-lg">2.200.000 VND</div>
+              <div className="text-lg">
+                {totalPrice ? numeral(totalPrice * 0.92).format("0,0") : 0} VND
+              </div>
             </div>
             <div className="flex  py-2 px-4 rounded bg-[#FFF3E3] justify-between mt-4">
               <div>Số tia sét nhận được</div>
