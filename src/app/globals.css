@@ -28,4 +28,21 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+
+  .modal-overlay ::-webkit-scrollbar {
+    width: 10px;
+    height: 20px;
+  }
+
+  .modal-overlay ::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: #f7f4ed;
+  }
+
+  .modal-overlay ::-webkit-scrollbar-thumb {
+    background: #E37A20;
+    border-radius: 100vh;
+    border: 3px solid #f6f7ed;
+  }
+
 }

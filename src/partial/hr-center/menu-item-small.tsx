@@ -49,7 +49,7 @@ export const MenuItemSmall = () => {
       icon: <ClockIcon className="w-6" />,
     },
     {
-      link: "thong-báo",
+      link: "thong-bao",
       icon: <BellIcon className="w-6" />,
     },
     {

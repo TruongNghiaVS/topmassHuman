@@ -27,6 +27,7 @@ export interface IUpload extends InputHTMLAttributes<HTMLInputElement> {
   control: Control<any>;
   classNameImg?: string;
   title?: string;
+  classNameCustomShowFile?: string;
 }
 
 export interface ITmSelect extends InputHTMLAttributes<HTMLSelectElement> {
@@ -63,4 +64,10 @@ export interface ITmTextareaProps {
   label?: string;
   placeholder?: string;
   rows?: number;
+}
+
+export interface ITmCheckBox extends InputHTMLAttributes<HTMLInputElement> {
+  name: string;
+  control: Control<any>;
+  label: any;
 }

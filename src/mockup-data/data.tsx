@@ -377,3 +377,33 @@ export const news = [
     slug: "nhung-cong-viec",
   },
 ];
+
+export const positions = [
+  {
+    label: "Nhân viên",
+    value: "Nhân viên",
+  },
+  {
+    label: "Quản lý",
+    value: "Quản lý",
+  },
+  {
+    label: "Trưởng phòng",
+    value: "Trưởng phòng",
+  },
+];
+
+export const year_experiences = [
+  {
+    label: "Dưới 1 năm",
+    value: "Dưới 1 năm",
+  },
+  {
+    label: "1 - 3 năm",
+    value: "1 - 3 năm",
+  },
+  {
+    label: "Trên 3 năm",
+    value: "Trên 3 năm",
+  },
+];

@@ -309,7 +309,6 @@ export default function CreateNew() {
                   className="absolute right-1 top-1"
                   onClick={() => {
                     remove(index);
-                    delete fields[index];
                   }}
                 >
                   <XMarkIcon className="w-6" />

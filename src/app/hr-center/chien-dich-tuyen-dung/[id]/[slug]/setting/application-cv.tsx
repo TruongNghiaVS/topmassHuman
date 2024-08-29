@@ -26,7 +26,7 @@ export const ApplicationCV = () => {
 
   return (
     <div>
-      <div className="mt-4 flex sm:space-x-2 space-y-2 sm:space-y-0 px-2 flex-col sm:flex-row">
+      <div className="mt-4 flex sm:space-x-2 space-y-2 sm:space-y-0 px-2 flex-col sm:flex-row items-end">
         <TmInput
           name="name"
           icon={<MagnifyingGlassIcon className="w-4" />}
@@ -34,30 +34,36 @@ export const ApplicationCV = () => {
           placeholder="Tìm kiếm ứng viên, tên, số điện thoại"
           classNameCustom="flex-1"
         />
-        <div className="flex-1 flex space-x-2">
-          <TmSelect
-            control={control}
-            name="cv"
-            classNameCustom="flex-1"
-            placeholder="Tất cả"
-            options={[
-              { label: "Đã xem", value: "Đã xem" },
-              { label: "Chưa xem", value: "Chưa xem" },
-            ]}
-          />
-          <TmSelect
-            control={control}
-            name="status"
-            classNameCustom="flex-1"
-            placeholder="Tất cả"
-            options={[
-              { label: "Phù hợp", value: "Phù hợp" },
-              { label: "Chưa phù hợp", value: "Chưa phù hợp" },
-              { label: "Pending", value: "Pending" },
-              { label: "Mời phỏng vấn", value: "Mời phỏng vấn" },
-              { label: "Nhận việc", value: "Nhận việc" },
-            ]}
-          />
+        <div className="flex-1 flex space-x-2 ">
+          <div className="flex-1">
+            <div className="text-xs">Hiển thị</div>
+            <TmSelect
+              control={control}
+              name="cv"
+              classNameCustom="flex-1"
+              placeholder="Tất cả"
+              options={[
+                { label: "Đã xem", value: "Đã xem" },
+                { label: "Chưa xem", value: "Chưa xem" },
+              ]}
+            />
+          </div>
+          <div className="flex-1">
+            <div className="text-xs">Trạng thái</div>
+            <TmSelect
+              control={control}
+              name="status"
+              classNameCustom="flex-1"
+              placeholder="Tất cả"
+              options={[
+                { label: "Phù hợp", value: "Phù hợp" },
+                { label: "Chưa phù hợp", value: "Chưa phù hợp" },
+                { label: "Pending", value: "Pending" },
+                { label: "Mời phỏng vấn", value: "Mời phỏng vấn" },
+                { label: "Nhận việc", value: "Nhận việc" },
+              ]}
+            />
+          </div>
         </div>
       </div>
       <div className="mt-4">
@@ -80,9 +86,14 @@ export const ApplicationCV = () => {
             <tbody className="divide-y divide-gray-200 text-xs">
               {data.map((row, idx) => (
                 <tr key={idx} className={`hover:bg-gray-100 text-center`}>
-                  <td className="p-4 text-left">
+                  <td className="p-4">
                     <div className="mt-1">{row.name}</div>
-                    <div className="text-[#FFB600] mt-1">{row.cv_name}</div>
+                    <div className="text-[#FFB600] mt-1">
+                      {row.cv_name}
+                      <span className="ml-2 px-1 rounded-xl bg-[#DAFFD7] text-[#137F04]">
+                        đã xem
+                      </span>
+                    </div>
                     <div className="bg-[#DAFFD7] text-[#137F04] inline-flex px-3 py-1  mt-1 rounded-xl">
                       Mức độ phù hợp: 87%
                     </div>

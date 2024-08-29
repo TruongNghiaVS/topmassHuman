@@ -25,6 +25,7 @@ export const MenuHrCenter = () => {
       active: false,
       image: true,
       bg: true,
+      link: "/doi-cv",
     },
     {
       title: "Tìm CV",

@@ -14,7 +14,7 @@ export default function MenuLeft() {
     <div>
       <div
         className={`xl:block hidden relative ${
-          isOpen ? "w-[300px]" : "w-[80px]"
+          isOpen ? "w-[320px]" : "w-[80px]"
         } transition-all duration-300  
                 ease-out p-4`}
       >

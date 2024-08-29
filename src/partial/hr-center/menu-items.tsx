@@ -71,7 +71,7 @@ export const MenuItem = () => {
       icon: <EnvelopeIcon className="w-4" />,
     },
     {
-      title: "Chính sách bảo mật",
+      title: "Chính sách bảo mật và quy định sử dụng",
       link: "chinh-sach-bao-mat",
       icon: <ShieldExclamationIcon className="w-4" />,
     },

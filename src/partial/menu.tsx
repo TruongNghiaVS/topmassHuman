@@ -67,6 +67,7 @@ export const Menu = () => {
       border: true,
       image: true,
       patch_check: "/doi-cv",
+      link: "/doi-cv",
     },
     {
       title: "Liên Hệ",

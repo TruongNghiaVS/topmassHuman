@@ -70,3 +70,12 @@ export interface IContact {
   title: string;
   content: string;
 }
+
+export interface IChangeCv {
+  name: string;
+  candidate_position: string;
+  position: string;
+  year_experience: string;
+  is_approve: boolean;
+  files?: FileList;
+}

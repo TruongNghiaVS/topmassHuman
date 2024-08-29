@@ -12,6 +12,7 @@ const CustomUploadMulti: React.FC<IUpload> = ({
   name,
   control,
   title = "Tải CV lên từ máy tính, chọn hoặc kéo thả",
+  classNameCustomShowFile,
 }) => {
   const {
     field: { value, onChange, onBlur },
@@ -35,8 +36,6 @@ const CustomUploadMulti: React.FC<IUpload> = ({
     filesArray.forEach((file) => {
       dataTransfer.items.add(file);
     });
-    console.log(filesArray);
-    console.log(dataTransfer);
     return dataTransfer.files;
   };
 
@@ -90,7 +89,6 @@ const CustomUploadMulti: React.FC<IUpload> = ({
         onDrop={handleDrop}
         onClick={handleButtonClick}
       >
-        {value && value[0].name}
         <div className="sm:flex justify-center items-center grid ">
           <CloudArrowUpIcon className="w-6 text-default font-semibold sm:mx-0 mx-auto" />
           <div>{title}</div>
@@ -103,24 +101,27 @@ const CustomUploadMulti: React.FC<IUpload> = ({
         <div style={{ color: "red", margin: "8px 0" }}>{error?.message}</div>
       )}
 
-      <div className="flex space-2 items-center whitespace-nowrap flex-wrap  mt-4">
-        {files &&
-          files.map((item) => {
+      {files.length > 0 && (
+        <div
+          className={`flex space-2 items-center whitespace-nowrap flex-wrap  mt-4 ${classNameCustomShowFile}`}
+        >
+          {files.map((item) => {
             return (
-              <div key={item.name} className="flex text-base items-center mr-4">
-                <DocumentTextIcon className="w-6 text-default" />
+              <div key={item.name} className="flex text-sm items-center mr-4">
+                <DocumentTextIcon className="w-4 text-default" />
                 <div className="mx-2">{item.name}</div>
                 <button
                   type="button"
                   onClick={() => handleRemoveFile(item)}
                   style={{ marginLeft: "10px" }}
                 >
-                  <TrashIcon className="w-6 text-default" />
+                  <TrashIcon className="w-4 text-default" />
                 </button>
               </div>
             );
           })}
-      </div>
+        </div>
+      )}
 
       <input
         ref={fileInputRef}
