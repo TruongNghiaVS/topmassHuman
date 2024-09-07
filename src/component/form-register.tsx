@@ -1,63 +1,88 @@
 "use client";
 
 import { SubmitHandler, useForm } from "react-hook-form";
-import { StarIcon } from "@heroicons/react/16/solid";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
 import TmInput from "./hook-form/input";
 import { IRegister } from "@/interface/interface";
-import TmSelect from "./hook-form/select";
-import { areaCode } from "@/mockup-data/data";
-
-const FlagStarVN = () => {
-  return (
-    <div className="py-1 px-2 bg-[#D32F2F] border">
-      <StarIcon className="text-[#EBA432] w-3" />
-    </div>
-  );
-};
+import { useLoading } from "@/app/context/loading";
+import { axiosInstanceNotToken } from "@/utils/axios";
+import { toast } from "react-toastify";
+import { AxiosError } from "axios";
+import { REGISTER } from "@/utils/api-url";
 
 const schema = yup.object().shape({
-  last_name: yup.string(),
-  first_name: yup.string(),
-  first_phone: yup.string(),
-  phone_number: yup
+  name: yup.string().required("Vui lòng nhập họ và tên"),
+  phone: yup
     .string()
-    .required("Bắt buộc nhập số điện thoại")
+    .required("Vui lòng nhập số điện thoại")
     .matches(/^[0-9]{10}$/, "Số điện thoại phải là 10 ký tự"),
-  email: yup
-    .string()
-    .email("Sai format email ")
-    .required("Bắt buộc nhập email"),
+  email: yup.string().email("Sai format email ").required("Vui lòngnhập email"),
   password: yup
     .string()
-    .required("Bắt buộc nhập password")
+    .required("Vui lòng nhập mật khẩu")
     .min(6, "Tối thiểu 6 ký tự")
     .max(50, "Tối đa 50 ký tự")
     .matches(/^(?=.*[A-Z])(?=.*\d)/, "Phải có 1 ký tự in hoa và 1 chữ số"),
-  is_used: yup
-    .boolean()
-    .required("Please check")
-    .oneOf([true], "Vui lòng chọn xác nhận với thoả thuận"),
+  taxCode: yup
+    .string()
+    .required("Vui lòng nhập mã số thuế")
+    .matches(/^\d+$/, "mã số thuế phải là chữ số")
+    .min(10, "Mã số thuế tối thiểu 10 ký tự")
+    .max(12, "Mã số thuế tối đa 12 ký tự"),
 });
 
 export const FormRegister = () => {
-  const { handleSubmit, control } = useForm<IRegister>({
+  const { setLoading } = useLoading();
+
+  const { handleSubmit, control, reset } = useForm<IRegister>({
     resolver: yupResolver(schema),
     defaultValues: {
-      last_name: "",
-      first_name: "",
-      first_phone: "0",
-      phone_number: "",
+      name: "",
+      phone: "",
       email: "",
       password: "",
-      is_used: false,
+      taxCode: "",
     },
   });
 
-  const onSubmit: SubmitHandler<IRegister> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<IRegister> = async (data) => {
+    setLoading(true);
+    try {
+      const response: any = await axiosInstanceNotToken.post(REGISTER, data);
+      if (response && response.success) {
+        toast.success("Đăng ký thành công");
+        reset({
+          name: "",
+          phone: "",
+          email: "",
+          password: "",
+          taxCode: "",
+        });
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        toast.error(
+          (props: any) => {
+            return props.data.dataError.map((itemError: any) => {
+              return (
+                <div key={itemError.errorCode}>
+                  {itemError.errorCode} : {itemError.errorMesage}
+                </div>
+              );
+            });
+          },
+          {
+            data: {
+              dataError: error.response?.data.dataEror,
+            },
+          }
+        );
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -69,51 +94,22 @@ export const FormRegister = () => {
         Cùng xây dựng một hệ sinh thái tuyển dụng nhân sự cùng với nguồn ứng
         viên khổng lồ từ Topmass
       </div>
-      <div className="grid grid-cols-2 gap-x-8 mb-8">
-        <div className="col-span-1">
-          <button className="flex items-center justify-center border border-solid border-[#8E8D8D] w-full py-2 bg-[#F9F9F9] rounded">
-            <img src="/imgs/facebook.png" alt="" className="w-6 mr-2" />
-            <div className="text-xs font-normal">Với tài khoản Facebook</div>
-          </button>
-        </div>
-        <div className="col-span-1">
-          <button className="flex items-center justify-center border border-solid border-[#8E8D8D] w-full py-2 bg-[#F9F9F9] rounded">
-            <img src="/imgs/google.png" alt="" className="w-6 mr-2" />
-            <div className="text-xs font-normal">Với tài khoản Google</div>
-          </button>
-        </div>
-      </div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="sm:grid grid-cols-2 gap-x-8 mb-8">
-          <div className="col-span-1">
-            <div className="">Tên</div>
-            <TmInput name="last_name" control={control} />
+        <div className=" mb-4">
+          <div className="">
+            Họ và tên <span className="text-[#dc2f2f]">*</span>
           </div>
-          <div className="col-span-1">
-            <div className="col-span-1">
-              <div className="">Họ</div>
-              <TmInput control={control} name="first_name" />
-            </div>
-          </div>
+          <TmInput control={control} name="name" />
         </div>
-        <div className="mb-8">
+        <div className="mb-4">
           <div className="">
             Số điện thoại <span className="text-[#dc2f2f]">*</span>
           </div>
-          <div className="flex">
-            <TmSelect
-              control={control}
-              name="first_phone"
-              icon={<FlagStarVN />}
-              className="py-2.5 pr-2 mr-2"
-              options={areaCode}
-            />
-            <div className="flex-grow">
-              <TmInput control={control} name="phone_number" />
-            </div>
+          <div className="flex-grow">
+            <TmInput control={control} name="phone" />
           </div>
         </div>
-        <div className="mb-8">
+        <div className="mb-4">
           <div>
             Email <span className="text-[#dc2f2f]">*</span>
           </div>
@@ -124,9 +120,9 @@ export const FormRegister = () => {
             type="email"
           />
         </div>
-        <div className="mb-8">
+        <div className="mb-4">
           <div>
-            Password <span className="text-[#dc2f2f]">*</span>
+            Mật khẩu <span className="text-[#dc2f2f]">*</span>
           </div>
           <TmInput
             control={control}
@@ -135,12 +131,17 @@ export const FormRegister = () => {
             type="password"
           />
         </div>
-
+        <div className="mb-4">
+          <div>
+            Mã số thuế <span className="text-[#dc2f2f]">*</span>
+          </div>
+          <TmInput control={control} placeholder="Mã số thuế" name="taxCode" />
+        </div>
         <button
           type="submit"
           className="w-full py-3 text-white bg-[#FF7D55] rounded-lg text-base font-bold"
         >
-          Hoàn tất
+          Đăng ký
         </button>
       </form>
       <div className="text-[#8E8D8D] font-normal text-base mt-8 text-center pb-4 ">

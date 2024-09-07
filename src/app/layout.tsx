@@ -6,9 +6,10 @@ import localFont from "next/font/local";
 import { Footer } from "@/partial/footer";
 import { Header } from "@/partial/header";
 import { usePathname } from "next/navigation";
-import { GlobalProvider } from "./global-context";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { LoadingProvider } from "./context/loading";
+import GlobalLoadingIndicator from "@/component/loading-component";
 
 const roboto = localFont({
   src: [
@@ -54,7 +55,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${roboto.variable} font-roboto  min-h-screen `}>
-        <GlobalProvider>
+        <LoadingProvider>
+          <GlobalLoadingIndicator />
           {!pathValidated.includes(path) && (
             <div className="relative z-[10]">
               <Header />
@@ -63,7 +65,7 @@ export default function RootLayout({
           {children}
           <ToastContainer autoClose={1000} />
           {!pathValidated.includes(path) && <Footer />}
-        </GlobalProvider>
+        </LoadingProvider>
       </body>
     </html>
   );

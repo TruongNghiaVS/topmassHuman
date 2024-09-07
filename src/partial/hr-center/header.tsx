@@ -4,17 +4,22 @@ import Link from "next/link";
 import { BellIcon, UserIcon, ChevronDownIcon } from "@heroicons/react/16/solid";
 
 import { useEffect, useRef, useState } from "react";
-import { useGlobalContext } from "@/app/global-context";
 import { MenuHrCenter } from "./menu";
 import { CardBootstrapIcon } from "@/theme/icons/cardBootstrapIcon";
+import useSWR from "swr";
+import { getToken } from "@/utils/token";
+import { DropdownUser } from "../header";
 
 export const HeaderHrCenter = () => {
   const headerRef = useRef<HTMLDivElement | null>(null);
   const [isFixed, setIsFixed] = useState(false);
-  const { globalParam, setGlobalParam } = useGlobalContext();
-  const [sectionHeight, setSectionHeight] = useState<number>(0);
+  const [isLogin, setIsLogin] = useState(false);
+  const { data: token } = useSWR("token", getToken, { refreshInterval: 500 });
 
   useEffect(() => {
+    if (token) {
+      setIsLogin(true);
+    }
     const handleScroll = () => {
       if (headerRef.current) {
         if (window.scrollY > headerRef.current.clientHeight) {
@@ -31,7 +36,7 @@ export const HeaderHrCenter = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [token]);
 
   return (
     <>
@@ -57,7 +62,7 @@ export const HeaderHrCenter = () => {
             <div className="flex items-center mr-[50px] text-white">
               <div
                 className={`text-xs text-default cursor-pointer ${
-                  globalParam && "hidden"
+                  isLogin && "hidden"
                 }`}
               >
                 Nhà tuyển dụng
@@ -67,7 +72,7 @@ export const HeaderHrCenter = () => {
                 </div>
               </div>
             </div>
-            <div className={`hidden  ${globalParam && "!block"}  `}>
+            <div className={`hidden  ${isLogin && "!block"}  `}>
               <div className={`items-center flex space-x-4`}>
                 <div className="relative">
                   <BellIcon className="text-[#F37A20] mr-3 w-6" />
@@ -101,11 +106,15 @@ export const HeaderHrCenter = () => {
                     <img src="/imgs/arrow.svg" alt="" className="w-4" />
                   </div>
                 </div>
-                <div className="flex items-center">
-                  <div className="inline-block p-0.5 rounded-full bg-[#F37A20]">
+                <div className="flex items-center relative group/title">
+                  <div
+                    className="inline-block p-0.5 rounded-full bg-[#F37
+                  A20]"
+                  >
                     <UserIcon className="text-white w-6" />
                   </div>
                   <ChevronDownIcon className="text-[#F37A20] w-6" />
+                  <DropdownUser pathCheck="" setIsLogin={setIsLogin} />
                 </div>
               </div>
             </div>

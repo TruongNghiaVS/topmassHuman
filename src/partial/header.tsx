@@ -2,47 +2,28 @@
 
 import { Menu } from "./menu";
 import Link from "next/link";
-import { BellIcon, UserIcon, ChevronDownIcon } from "@heroicons/react/16/solid";
+import {
+  BellIcon,
+  UserIcon,
+  ChevronDownIcon,
+  ArrowLeftStartOnRectangleIcon,
+} from "@heroicons/react/16/solid";
 
 import { useEffect, useRef, useState } from "react";
 import Modal from "@/component/modal";
-import { FacebookBootstrapIcon } from "@/theme/icons/facebookBootstrapIcon";
-import TmInput from "@/component/hook-form/input";
-import * as yup from "yup";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { ILogin } from "@/interface/interface";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { LoginForm } from "@/component/login";
+import useSWR from "swr";
+import { getToken, removeToken } from "@/utils/token";
+import { IDropdownMenu } from "@/interface/interface";
+import { usePathname, useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import { useGlobalContext } from "@/app/global-context";
 
 export const Header = () => {
   const headerRef = useRef<HTMLDivElement | null>(null);
   const [isFixed, setIsFixed] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { globalParam, setGlobalParam } = useGlobalContext();
-
-  const schema = yup.object().shape({
-    email: yup
-      .string()
-      .required("Bắt buộc nhập email")
-      .email("Sai format email "),
-    password: yup.string().required("Bắt buộc nhập password"),
-  });
-
-  const { handleSubmit, control } = useForm<ILogin>({
-    resolver: yupResolver(schema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
-
-  const onSubmit: SubmitHandler<ILogin> = (data) => {
-    setGlobalParam(true);
-    setIsModalOpen(false);
-    toast.success("Đăng nhập thành công");
-    console.log(data);
-  };
+  const [isLogin, setIsLogin] = useState(false);
+  const { data: token } = useSWR("token", getToken, { refreshInterval: 500 });
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -53,6 +34,9 @@ export const Header = () => {
   };
 
   useEffect(() => {
+    if (token) {
+      setIsLogin(true);
+    }
     const handleScroll = () => {
       if (headerRef.current) {
         const offsetTop = headerRef.current.clientHeight;
@@ -70,7 +54,7 @@ export const Header = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [token]);
 
   return (
     <>
@@ -106,7 +90,7 @@ export const Header = () => {
               </Link>
               <div
                 className={`text-xs text-default cursor-pointer ${
-                  globalParam && "hidden"
+                  isLogin && "hidden"
                 }`}
               >
                 <button onClick={openModal}>
@@ -118,7 +102,7 @@ export const Header = () => {
                 </button>
               </div>
             </div>
-            <div className={`items-center hidden ${globalParam && "!flex"}`}>
+            <div className={`items-center hidden ${isLogin && "!flex"}`}>
               <div className="relative">
                 <BellIcon className="text-[#F37A20] mr-3 w-6" />
                 <div className="absolute content-[''] text-xs text-center w-4 h-4 top-[-4px] right-2 rounded-full bg-[#C40202] text-white">
@@ -130,12 +114,15 @@ export const Header = () => {
                 alt=""
                 className="w-6 h-auto mr-3"
               />
-              <div className="inline-block p-0.5 rounded-full bg-[#F37A20] mr-1">
-                <UserIcon className="text-white w-6" />
+              <div className="flex reflex items-center relative group/title ">
+                <div className="inline-block p-0.5 rounded-full bg-[#F37A20] mr-1">
+                  <UserIcon className="text-white w-6" />
+                </div>
+                <ChevronDownIcon className="text-[#F37A20] mr-3 w-6" />
+                <DropdownUser pathCheck="" setIsLogin={setIsLogin} />
               </div>
-              <ChevronDownIcon className="text-[#F37A20] mr-3 w-6" />
             </div>
-            <div className={` hidden items-center ${globalParam && "!flex"}`}>
+            <div className={` hidden items-center ${isLogin && "!flex"}`}>
               <div className="grid mr-2">
                 <div className="text-[8px]">Bạn đang có</div>
                 <div className="w-full bg-gradient-to-r text-base from-[#F89E1B] to-[#F37A20] rounded-lg text-center text-white">
@@ -149,65 +136,43 @@ export const Header = () => {
           </div>
         </div>
       </section>
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <div className="">
-          <div className="text-xl font-bold text-default">
-            Đăng nhập để tiếp tục
-          </div>
-          <div className="sm:flex grid gap-y-2 justify-center sm:justify-start mt-5 sm:mx-10 flex-row">
-            <button className="flex px-4 py-2 bg-[#F1F2F4] sm:mr-20 rounded">
-              <img src="/imgs/google.png" alt="" className="w-6 mr-2" /> với tài
-              khoản google
-            </button>
-            <button className="flex px-4 py-2 bg-[#F1F2F4] rounded">
-              <FacebookBootstrapIcon className="w-6 mr-2 text-[#1094F4]" /> với
-              tài khoản Facebook
-            </button>
-          </div>
-          <div className="text-center text-base font-bold mt-4 text-default">
-            Hoặc đăng nhập bằng Email
-          </div>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="mt-4 px-4">
-              <div className="font-normal">Email</div>
-              <TmInput control={control} name="email" type="email" />
-            </div>
-            <div className="mt-4 px-4">
-              <div className="font-normal">Password</div>
-              <TmInput control={control} name="password" type="password" />
-            </div>
-            <div className="mt-2 text-right">
-              <Link href="/quen-mat-khau" className="text-[#F37A20]">
-                Quên mật khẩu?
-              </Link>
-            </div>
-            <div className="flex border-t mt-4 pt-4 justify-between items-center">
-              <div className="mr-2">
-                Chưa có tài khoản{" "}
-                <Link href="/dang-ky" className="text-[#F37A20]">
-                  Đăng ký
-                </Link>
-              </div>
-              <div>
-                <div className="flex">
-                  <button
-                    className="px-4 py-2 bg-[#F1F2F4] rounded mr-2"
-                    onClick={closeModal}
-                  >
-                    Huỷ
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-4 py-2 bg-[#FF7D55] rounded text-white"
-                  >
-                    Đăng nhập
-                  </button>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        className="md:min-w-[700px] max-h-[60vh] overflow-auto relative"
+      >
+        <LoginForm onClose={closeModal} />
       </Modal>
     </>
+  );
+};
+
+export const DropdownUser = ({
+  subMenu,
+  pathCheck,
+  setIsLogin,
+}: IDropdownMenu) => {
+  const path = usePathname();
+  const router = useRouter();
+  return (
+    <ul className="p-2 rounded-lg group/subMenu overflow-hidden border-[#d9dbe9] h-0 transition-all ease-in-out duration-300 text-sm leading-[19px] absolute top-[calc(100%+20px)] right-0 bg-white min-w-[250px] py-[5px] z-[-1] group-hover/title:z-[11] group-hover/title:h-auto shadow-md opacity-0 group-hover/title:opacity-100 group-hover/title:top-full">
+      <li
+        className={`group/item normal-case whitespace-nowrap my-2 bg-[#e4e4e4] p-0 rounded`}
+        onClick={() => {
+          removeToken();
+          setIsLogin(false);
+          toast.success("Đăng xuất thành công");
+          router.push("/");
+        }}
+      >
+        <Link
+          href="#"
+          className={`group/submenu font-medium text-[#3B4358] no-underline group-hover/item:text-default px-[15px] py-3 flex items-center relative`}
+        >
+          <ArrowLeftStartOnRectangleIcon className="text-default mr-2 text-[15px] leading-4 w-6" />
+          Đăng xuất
+        </Link>
+      </li>
+    </ul>
   );
 };

@@ -25,7 +25,7 @@ const TmInput: React.FC<ITmInput> = ({
         {icon && <div className="absolute left-3">{icon}</div>}
         <input
           type={type}
-          value={value}
+          defaultValue={value}
           onChange={onChange}
           onBlur={onBlur}
           placeholder={placeholder}

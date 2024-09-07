@@ -1,5 +1,7 @@
+import { Dispatch, SetStateAction } from "react";
+
 export interface ILogin {
-  email: string;
+  userName: string;
   password: string;
 }
 
@@ -9,13 +11,11 @@ export interface IResetPassword {
 }
 
 export interface IRegister {
-  last_name?: string;
-  first_name?: string;
-  first_phone?: string;
-  phone_number: string;
+  name: string;
+  phone: string;
   email: string;
   password: string;
-  is_used: boolean;
+  taxCode: string;
 }
 
 export interface IResetpassword {
@@ -78,4 +78,24 @@ export interface IChangeCv {
   year_experience: string;
   is_approve: boolean;
   files?: FileList;
+}
+
+export interface ILoginForm {
+  onClose?: () => void;
+}
+
+export type IDropdownMenu = {
+  subMenu?: {
+    title: string;
+    slug: string;
+    icon: any;
+    border?: boolean;
+    after?: any;
+  }[];
+  pathCheck: string;
+  setIsLogin: Dispatch<SetStateAction<boolean>>;
+};
+
+export interface IConfirmResetPassword {
+  password: string;
 }
