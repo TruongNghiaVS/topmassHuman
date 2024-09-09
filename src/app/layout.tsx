@@ -10,6 +10,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { LoadingProvider } from "./context/loading";
 import GlobalLoadingIndicator from "@/component/loading-component";
+import { Suspense } from "react";
 
 const roboto = localFont({
   src: [
@@ -57,14 +58,16 @@ export default function RootLayout({
       <body className={`${roboto.variable} font-roboto  min-h-screen `}>
         <LoadingProvider>
           <GlobalLoadingIndicator />
-          {!pathValidated.includes(path) && (
-            <div className="relative z-[10]">
-              <Header />
-            </div>
-          )}
-          {children}
-          <ToastContainer autoClose={1000} />
-          {!pathValidated.includes(path) && <Footer />}
+          <Suspense>
+            {!pathValidated.includes(path) && (
+              <div className="relative z-[10]">
+                <Header />
+              </div>
+            )}
+            {children}
+            <ToastContainer autoClose={1000} />
+            {!pathValidated.includes(path) && <Footer />}
+          </Suspense>
         </LoadingProvider>
       </body>
     </html>

@@ -8,7 +8,6 @@ import * as yup from "yup";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { AuthorizeLayout } from "@/component/authorize";
-import { useGlobalContext } from "../global-context";
 import { ILogin, IResetPassword } from "@/interface/interface";
 
 export default function Login() {
@@ -33,13 +32,10 @@ export default function Login() {
   const router = useRouter();
 
   const onSubmit: SubmitHandler<IResetPassword> = (data) => {
-    setGlobalParam(true);
     toast.success("Lấy lại mật khẩu thành công!");
 
     console.log(data);
   };
-
-  const { globalParam, setGlobalParam } = useGlobalContext();
 
   return (
     <div>
