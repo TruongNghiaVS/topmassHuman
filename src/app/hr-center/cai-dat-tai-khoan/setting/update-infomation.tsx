@@ -1,18 +1,38 @@
 "use client";
+import { useLoading } from "@/app/context/loading";
 import TmInput from "@/component/hook-form/input";
 import TmSelect from "@/component/hook-form/select";
 import AvatarUpload from "@/component/hook-form/upload-avatar";
-import { IUpdateInfomation } from "@/interface/interface";
+import {
+  IUpdateInfomation,
+  IUpdateInformationProps,
+} from "@/interface/interface";
 import { gender } from "@/mockup-data/data";
+import { UPDATE_INFOMATION, UPLOAD_IMG } from "@/utils/api-url";
+import axiosInstance, { axiosInstanceImg } from "@/utils/axios";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 
-export default function UpdateInfomation() {
+export default function UpdateInfomation({
+  currentUser,
+  mutate,
+}: IUpdateInformationProps) {
+  const [avatarLink, setAvatarLink] = useState("");
+  const { setLoading } = useLoading();
+
+  useEffect(() => {
+    if (currentUser) {
+      setAvatarLink(currentUser.avatarLink);
+    }
+  }, [currentUser]);
+
   const schema = yup.object().shape({
     avatar: yup
       .mixed<File>()
+      .required("Vui lòng chọn ảnh đại diện")
       .test(
         "fileType",
         "Unsupported file type",
@@ -26,23 +46,55 @@ export default function UpdateInfomation() {
         "File size is too large",
         (value) => !value || (value && value.size <= 5 * 1024 * 1024) // 2MB
       ),
-    username: yup.string(),
-    gender: yup.string(),
+    name: yup.string(),
+    gender: yup.number(),
     phone: yup.string(),
   });
 
   const { handleSubmit, control } = useForm<IUpdateInfomation>({
     resolver: yupResolver(schema),
     defaultValues: {
-      username: "test",
-      gender: "",
-      phone: "0345678901",
+      avatar: undefined,
+      fullName: currentUser?.name || "",
+      gender: currentUser?.gender || 0,
+      phone: currentUser?.phone || "",
     },
   });
 
-  const onSubmit: SubmitHandler<IUpdateInfomation> = (data) => {
-    toast.success("Đổi mật khẩu thành công!");
-    console.log(data);
+  const onSubmit: SubmitHandler<IUpdateInfomation> = async (data) => {
+    if (data.avatar) {
+      try {
+        setLoading(true);
+        const response = await axiosInstanceImg.post(UPLOAD_IMG, {
+          file: data.avatar,
+        });
+        if (response.data) {
+          setAvatarLink(response.data.fullLink);
+          toast.success("Cập nhật hình ảnh thành công");
+          try {
+            setLoading(true);
+            const dataUpdate = await axiosInstance.post(UPDATE_INFOMATION, {
+              fullName: data.fullName,
+              gender: data.gender,
+              phone: data.phone,
+              avatarLink: response.data.shortLink,
+            });
+            if (dataUpdate) {
+              toast.success("Cập nhật thông tin thành công");
+              mutate();
+            }
+          } catch (error) {
+            toast.error("Cập nhật thông tin thất bại");
+          } finally {
+            setLoading(false);
+          }
+        }
+      } catch (error) {
+        toast.error("Cập nhật hình ảnh thất bại");
+      } finally {
+        setLoading(false);
+      }
+    }
   };
 
   return (
@@ -51,18 +103,18 @@ export default function UpdateInfomation() {
         <div className="text-base mb-4">Cập nhật thông tin cá nhân</div>
         <div className="sm:block grid justify-center">
           <div className="">
-            <AvatarUpload name="avatar" control={control} />
+            <AvatarUpload
+              name="avatar"
+              control={control}
+              avatarLink={avatarLink}
+            />
           </div>
-          <div className="mt-2">Email: test@vietstargroup.vn</div>
+          <div className="mt-2">Email: {currentUser?.email}</div>
         </div>
         <div className="sm:grid grid-cols-2 gap-4 mt-4">
           <div className="mb-4">
-            <div>Họ và tên</div>
-            <TmInput
-              control={control}
-              placeholder="Họ và tên"
-              name="username"
-            />
+            <div>Tên</div>
+            <TmInput control={control} placeholder="Tên" name="fullName" />
           </div>
           <div className="mb-4">
             <div>Giới tính</div>
@@ -74,10 +126,10 @@ export default function UpdateInfomation() {
             />
           </div>
           <div className="mb-4">
-            <div>Số diện thoại</div>
+            <div>Số điện thoại</div>
             <TmInput
               control={control}
-              placeholder="Số diện thoại"
+              placeholder="Số điện thoại"
               name="phone"
             />
           </div>

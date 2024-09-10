@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
+import { KeyedMutator } from "swr";
 
 export interface ILogin {
   userName: string;
@@ -23,16 +24,17 @@ export interface IResetpassword {
 }
 
 export interface IChangePassword {
-  old_password: string;
+  currentPassword: string;
   password: string;
   confirm_password: string;
 }
 
 export interface IUpdateInfomation {
-  avatar?: File;
-  username?: string;
-  gender?: string;
+  avatar: File;
+  fullName?: string;
+  gender?: number;
   phone?: string;
+  avatarLink?: string;
 }
 
 export interface ICompanyBusiness {
@@ -42,15 +44,17 @@ export interface ICompanyBusiness {
 export interface IUpdateCompany {
   logo?: File;
   banner?: File;
-  code?: string;
-  name?: string;
+  taxCode?: string;
+  fullName?: string;
   website?: string;
-  activity?: string;
-  scale?: string;
-  location?: string;
+  relId?: string;
+  capacity?: string;
+  addressInfo?: string;
+  phone?: string;
+  shortDes?: string;
+  logoLink?: string;
+  coverLink?: string;
   email?: string;
-  phone_number?: string;
-  content?: string;
 }
 
 export interface ISupportSetting {
@@ -98,4 +102,54 @@ export type IDropdownMenu = {
 
 export interface IConfirmResetPassword {
   password: string;
+}
+
+export interface ICurrentUser {
+  phone: string;
+  name: string;
+  gender: number;
+  isBlock: false;
+  email: string;
+  level: 1;
+  status: string;
+  statusText: string;
+  avatarLink: string;
+  authenticationLevelText: string;
+  companyInfo: {
+    taxCode: string;
+    website: string;
+    capacity: string;
+    relId: string;
+    fullName: string;
+    addressInfo: string;
+    phone: string;
+    shortDes: string;
+    logoLink: string;
+    coverLink: string;
+    email: string;
+  };
+  businessLicenseInfo: {
+    linkFile: string;
+    statusText: string;
+    statusCode: 0;
+    note: string;
+  };
+}
+
+export interface IUpdateInformationProps {
+  currentUser: ICurrentUser;
+  mutate: KeyedMutator<any>;
+}
+
+export interface IReal {
+  text: string;
+  typeData: string;
+  code: string;
+  status: string;
+  deleted: string;
+  id: string;
+  createAt: string;
+  createdBy: string;
+  updateAt: string;
+  updatedBy: string;
 }

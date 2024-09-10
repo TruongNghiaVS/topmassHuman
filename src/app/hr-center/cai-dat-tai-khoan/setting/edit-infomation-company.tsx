@@ -1,6 +1,14 @@
+import { useLoading } from "@/app/context/loading";
 import TmInput from "@/component/hook-form/input";
+import TmSelect from "@/component/hook-form/select";
 import AvatarUpload from "@/component/hook-form/upload-avatar";
-import { IUpdateCompany } from "@/interface/interface";
+import {
+  IReal,
+  IUpdateCompany,
+  IUpdateInformationProps,
+} from "@/interface/interface";
+import { UPDATE_COMPANY, UPLOAD_IMG } from "@/utils/api-url";
+import axiosInstance, { axiosInstanceImg, fetcher } from "@/utils/axios";
 import { yupResolver } from "@hookform/resolvers/yup";
 import dynamic from "next/dynamic";
 import { Dispatch, SetStateAction } from "react";
@@ -15,11 +23,18 @@ const CustomCKEditor = dynamic(
   { ssr: false }
 );
 
-interface IEditCompanyProps {
+interface IEditCompanyProps extends IUpdateInformationProps {
   setEdit: Dispatch<SetStateAction<boolean>>;
+  listRels: IReal[];
 }
 
-export default function EditInfomationCompany({ setEdit }: IEditCompanyProps) {
+export default function EditInfomationCompany({
+  setEdit,
+  currentUser,
+  mutate,
+  listRels,
+}: IEditCompanyProps) {
+  const { setLoading } = useLoading();
   const schema = yup.object().shape({
     logo: yup
       .mixed<File>()
@@ -51,35 +66,82 @@ export default function EditInfomationCompany({ setEdit }: IEditCompanyProps) {
         "File size is too large",
         (value) => !value || (value && value.size <= 5 * 1024 * 1024) // 2MB
       ),
-    code: yup.string(),
-    name: yup.string(),
+    taxCode: yup
+      .string()
+      .matches(/^\d+$/, "mã số thuế phải là chữ số")
+      .min(10, "Mã số thuế tối thiểu 10 ký tự")
+      .max(12, "Mã số thuế tối đa 12 ký tự"),
+    fullName: yup.string(),
     website: yup.string(),
-    activity: yup.string(),
-    scale: yup.string(),
-    location: yup.string(),
-    email: yup.string(),
-    phone_number: yup.string(),
+    relId: yup.string(),
+    capacity: yup.string(),
+    addressInfo: yup.string(),
+    phone: yup.string(),
+    shortDes: yup.string(),
+    email: yup.string().email("Sai format email"),
   });
 
   const { handleSubmit, control } = useForm<IUpdateCompany>({
     resolver: yupResolver(schema),
+
     defaultValues: {
-      code: "0123456789",
-      name: "Công ty Cổ phần Tập đoàn Vietstar ",
-      website: "Vietstargroup.vn",
-      activity: "Tài chính, nhân sự",
-      scale: "100-200 nhân viên",
-      location: "54/31 Phổ Quang, Phường 02, Tân Bình. TP HCM",
-      email: "Support@vietstargroup.vn",
-      phone_number: "0123456789",
-      content: "",
+      taxCode: currentUser.companyInfo.taxCode || "",
+      fullName: currentUser.companyInfo.fullName || "",
+      website: currentUser.companyInfo.website || "",
+      relId: currentUser.companyInfo.relId || "",
+      capacity: currentUser.companyInfo.capacity || "",
+      addressInfo: currentUser.companyInfo.addressInfo || "",
+      phone: currentUser.companyInfo.phone,
+      shortDes: currentUser.companyInfo.shortDes || "",
+      email: currentUser.companyInfo.email || "",
     },
   });
 
-  const onSubmit: SubmitHandler<IUpdateCompany> = (data) => {
-    toast.success("Cập nhật thông tin công ty thành công!");
-    setEdit(false);
-    console.log(data);
+  const onSubmit: SubmitHandler<IUpdateCompany> = async (data) => {
+    if (data.logo) {
+      try {
+        setLoading(true);
+        const response = await axiosInstanceImg.post(UPLOAD_IMG, {
+          file: data.logo,
+        });
+        data.logoLink = response.data.shortLink;
+        toast.success("Cập nhật ảnh đại diện thành công");
+      } catch (error) {
+        toast.error("Cập nhật ảnh đại diện thất bại");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    if (data.banner) {
+      try {
+        setLoading(true);
+        const response = await axiosInstanceImg.post(UPLOAD_IMG, {
+          file: data.banner,
+        });
+        data.coverLink = response.data.shortLink;
+        toast.success("Cập nhật ảnh bìa thành công");
+      } catch (error) {
+        toast.error("Cập nhật ảnh bìa thất bại");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    try {
+      setLoading(true);
+      const response = await axiosInstance.post(UPDATE_COMPANY, data);
+      if (response) {
+        toast.success("Cập nhật thông tin công ty thành công");
+        mutate();
+        setTimeout(() => {
+          setEdit(false);
+        }, 300);
+      }
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <div>
@@ -88,21 +150,29 @@ export default function EditInfomationCompany({ setEdit }: IEditCompanyProps) {
         <div className="flex space-x-2 items-center">
           <div className="flex-1">
             <div className="">Logo công ty</div>
-            <AvatarUpload control={control} name="logo" />
+            <AvatarUpload
+              control={control}
+              name="logo"
+              avatarLink={currentUser?.companyInfo.logoLink}
+            />
           </div>
           <div className="flex-1">
             <div className="">Ảnh bìa công ty</div>
-            <AvatarUpload name="banner" control={control} />
+            <AvatarUpload
+              name="banner"
+              control={control}
+              avatarLink={currentUser?.companyInfo.coverLink}
+            />
           </div>
         </div>
         <div className="flex space-x-2 items-center mt-2">
           <div className="flex-1">
             <div className="">Mã số thuế</div>
-            <TmInput control={control} name="code" />
+            <TmInput control={control} name="taxCode" />
           </div>
           <div className="flex-1">
             <div className="">Tên công ty</div>
-            <TmInput name="name" control={control} />
+            <TmInput name="fullName" control={control} />
           </div>
         </div>
         <div className="flex space-x-2 items-center mt-2">
@@ -113,24 +183,35 @@ export default function EditInfomationCompany({ setEdit }: IEditCompanyProps) {
           <div className="flex-1">
             <div className="">Lĩnh vực hoạt động</div>
 
-            <TmInput name="activity" control={control} />
+            <TmSelect
+              name="relId"
+              control={control}
+              placeholder="Chọn lĩnh vực hoạt động"
+              options={
+                listRels
+                  ? listRels?.map((item: any) => {
+                      return { label: item.text, value: item.id };
+                    })
+                  : []
+              }
+            />
           </div>
         </div>
         <div className="flex space-x-2 items-center mt-2">
           <div className="flex-1">
             <div className="">Quy mô</div>
-            <TmInput control={control} name="scale" />
+            <TmInput control={control} name="capacity" />
           </div>
           <div className="flex-1">
             <div className="">Địa chỉ</div>
 
-            <TmInput name="location" control={control} />
+            <TmInput name="addressInfo" control={control} />
           </div>
         </div>
         <div className="flex space-x-2 items-center mt-2">
           <div className="flex-1">
             <div className="">Email</div>
-            <TmInput control={control} name="email" />
+            <TmInput name="email" control={control} type="email" />
           </div>
           <div className="flex-1">
             <div className="">Số điện thoại</div>
@@ -138,8 +219,9 @@ export default function EditInfomationCompany({ setEdit }: IEditCompanyProps) {
             <TmInput name="phone" control={control} />
           </div>
         </div>
+
         <div className="mt-2">
-          <CustomCKEditor name="content" control={control} />
+          <CustomCKEditor name="shortDes" control={control} />
         </div>
         <button
           type="submit"

@@ -67,7 +67,7 @@ const CustomUpload: React.FC<IUpload> = ({ name, control }) => {
       >
         <div className="sm:flex justify-center items-center grid ">
           <CloudArrowUpIcon className="w-6 text-default font-semibold sm:mx-0 mx-auto" />
-          <div>Tải CV lên từ máy tính, chọn hoặc kéo thả</div>
+          <div>Tải file lên, chọn hoặc kéo thả</div>
         </div>
         <div className="text-center mt-4">
           Dung lượng tối đa 5MB, định dạng: Jpeg, JPG, PNG, PDF
@@ -79,26 +79,18 @@ const CustomUpload: React.FC<IUpload> = ({ name, control }) => {
 
       <div className="text-center flex items-center justify-center mt-4">
         {file && (
-          <div className="flex text-base items-center mr-4">
-            <DocumentTextIcon className="w-6 text-default" />
+          <div className="flex text-xs items-center mr-4">
+            <DocumentTextIcon className="w-4 text-default" />
             <div className="mx-2">{file.name}</div>
             <button
               type="button"
               onClick={handleRemoveFile}
               style={{ marginLeft: "10px" }}
             >
-              <TrashIcon className="w-6 text-default" />
+              <TrashIcon className="w-4 text-default" />
             </button>
           </div>
         )}
-
-        <button
-          type="button"
-          className="px-3 py-2 bg-[#F37A20] text-white rounded-lg"
-          onClick={handleButtonClick}
-        >
-          Chọn CV
-        </button>
       </div>
 
       <input

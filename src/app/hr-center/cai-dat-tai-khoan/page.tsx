@@ -10,8 +10,16 @@ import ChangePassword from "./setting/change-password";
 import UpdateInfomation from "./setting/update-infomation";
 import BusinessRegistration from "./setting/business-registration";
 import InfomationCompany from "./setting/infomation-company";
+import useSWR from "swr";
+import { GET_CURRENT_USER } from "@/utils/api-url";
+import { fetcher } from "@/utils/axios";
 
 export default function SettingAccount() {
+  const { data: currentUser, error, mutate } = useSWR(
+    GET_CURRENT_USER,
+    fetcher
+  );
+
   const left = [
     {
       title: "Đổi mật khẩu",
@@ -21,17 +29,17 @@ export default function SettingAccount() {
     {
       title: "Thông tin cá nhân",
       icon: <BoltIcon className="w-4 mr-2 text-default" />,
-      tab: <UpdateInfomation />,
+      tab: <UpdateInfomation currentUser={currentUser} mutate={mutate} />,
     },
     {
       title: "Giấy đăng ký doanh nghiệp",
       icon: <IdentificationIcon className="w-4 mr-2 text-default" />,
-      tab: <BusinessRegistration />,
+      tab: <BusinessRegistration currentUser={currentUser} mutate={mutate} />,
     },
     {
       title: "Thông tin công ty",
       icon: <UserCircleIcon className="w-4 mr-2 text-default" />,
-      tab: <InfomationCompany />,
+      tab: <InfomationCompany currentUser={currentUser} mutate={mutate} />,
     },
   ];
   const [active, setActive] = useState<number>(0);

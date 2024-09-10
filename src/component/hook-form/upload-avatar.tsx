@@ -1,9 +1,14 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IUpload } from "./interface/interface";
 import { useController } from "react-hook-form";
 
-const AvatarUpload: React.FC<IUpload> = ({ name, control, classNameImg }) => {
+const AvatarUpload: React.FC<IUpload> = ({
+  name,
+  control,
+  classNameImg,
+  avatarLink = "",
+}) => {
   const {
     field: { value, onChange, onBlur },
     fieldState: { error },
@@ -14,6 +19,42 @@ const AvatarUpload: React.FC<IUpload> = ({ name, control, classNameImg }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [preview, setPreview] = useState<string | ArrayBuffer | null>(null);
+
+  const readImageFromUrl = async (url: string) => {
+    try {
+      // Fetch the image as a Blob
+      const response = await fetch(url);
+      const blob = await response.blob();
+
+      const file = new File([blob], "image.jpg", { type: blob.type });
+      const dataTransfer = new DataTransfer();
+      dataTransfer.items.add(file);
+
+      if (fileInputRef.current) {
+        fileInputRef.current.files = dataTransfer.files;
+        const event = new Event("change", { bubbles: true });
+        fileInputRef.current.dispatchEvent(event);
+      }
+      // Create a FileReader to read the Blob
+      const reader = new FileReader();
+
+      // Define what happens when the FileReader has read the Blob
+      reader.onloadend = () => {
+        setPreview(reader.result);
+      };
+
+      // Read the Blob as a data URL (base64 encoded)
+      reader.readAsDataURL(blob);
+    } catch (error) {
+      console.error("Error reading image from URL:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (avatarLink.length > 0) {
+      readImageFromUrl(avatarLink);
+    }
+  }, [avatarLink]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files ? event.target.files[0] : null;
@@ -38,9 +79,9 @@ const AvatarUpload: React.FC<IUpload> = ({ name, control, classNameImg }) => {
 
   return (
     <div className="sm:block grid justify-center">
-      {preview ? (
+      {preview || avatarLink ? (
         <img
-          src={preview as string}
+          src={preview ? (preview as string) : avatarLink}
           alt="Avatar Preview"
           className={`rounded-full w-28 h-28 ${classNameImg}`}
         />
@@ -50,6 +91,7 @@ const AvatarUpload: React.FC<IUpload> = ({ name, control, classNameImg }) => {
         </div>
       )}
 
+      {error && <p className="text-red-500 text-sm mt-1">{error.message}</p>}
       <button
         type="button"
         onClick={handleClick}

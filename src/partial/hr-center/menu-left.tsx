@@ -7,8 +7,15 @@ import {
 import { MenuItem } from "./menu-items";
 import { useState } from "react";
 import { MenuItemSmall } from "./menu-item-small";
+import useSWR from "swr";
+import { GET_CURRENT_USER } from "@/utils/api-url";
+import { fetcher } from "@/utils/axios";
 
 export default function MenuLeft() {
+  const { data: currentUser, error, mutate } = useSWR(
+    GET_CURRENT_USER,
+    fetcher
+  );
   const [isOpen, setIsOpen] = useState<boolean>(true);
   return (
     <div>
@@ -26,18 +33,19 @@ export default function MenuLeft() {
                   <UserIcon className="w-10 text-white" />
                 </div>
                 <div>
-                  <div className="font-normal">MKT Vietstar Minh</div>
-                  <div className="text-xs font-normal">Employee</div>
+                  <div className="font-normal">{currentUser?.name}</div>
                   <div className="text-xs font-normal">
                     Tài khoản xác thực:{" "}
-                    <span className="text-default">Cấp 1/3</span>
+                    <span className="text-default">
+                      {currentUser?.authenticationLevelText}
+                    </span>
                   </div>
                 </div>
               </div>
-              <div className="mt-2 mx-4 py-1 rounded-xl flex text-[#1165AA] text-xs bg-[#C2E5F9] px-4">
+              {/* <div className="mt-2 mx-4 py-1 rounded-xl flex text-[#1165AA] text-xs bg-[#C2E5F9] px-4">
                 <ShieldCheckIcon className="w-4 mr-2 text-[#1165AA]" />
                 Xác thực để bảo vệ tốt hơn!
-              </div>
+              </div> */}
               <MenuItem />
             </div>
           ) : (

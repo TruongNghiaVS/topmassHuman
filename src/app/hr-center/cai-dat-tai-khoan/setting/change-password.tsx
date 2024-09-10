@@ -1,32 +1,58 @@
 "use client";
 
+import { useLoading } from "@/app/context/loading";
 import TmInput from "@/component/hook-form/input";
 import { IChangePassword } from "@/interface/interface";
+import { FORGOT_CHANGE_PASSWORD } from "@/utils/api-url";
+import axiosInstance from "@/utils/axios";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 
 export default function ChangePassword() {
+  const { setLoading } = useLoading();
+  const [isUpdate, setIsUpdate] = useState(false);
   const schema = yup.object().shape({
-    old_password: yup.string().required("Vui lòng nhập mật khẩu củ"),
-    password: yup.string().required("Vui lòng nhập mật khẩu"),
-    confirm_password: yup.string().required("Vui lòng nhập xác nhận mật khẩu"),
+    currentPassword: yup.string().required("Vui lòng nhập mật khẩu củ"),
+    password: yup
+      .string()
+      .min(6, "Tối thiểu 6 ký tự")
+      .max(50, "Tối đa 50 ký tự")
+      .matches(/^(?=.*[A-Z])(?=.*\d)/, "Phải có 1 ký tự in hoa và 1 chữ số")
+      .required("Vui lòng nhập mật khẩu"),
+    confirm_password: yup
+      .string()
+      .oneOf(
+        [yup.ref("password"), undefined],
+        "Nhập lại mật khẩu không chính xác"
+      )
+      .required("Vui lòng nhập xác nhận mật khẩu"),
   });
 
-  const { handleSubmit, control } = useForm<IChangePassword>({
+  const { handleSubmit, control, reset } = useForm<IChangePassword>({
     resolver: yupResolver(schema),
     defaultValues: {
-      old_password: "",
+      currentPassword: "",
       password: "",
       confirm_password: "",
     },
   });
 
-  const onSubmit: SubmitHandler<IChangePassword> = (data) => {
-    toast.success("Đổi mật khẩu thành công!");
-
-    console.log(data);
+  const onSubmit: SubmitHandler<IChangePassword> = async (data) => {
+    setLoading(true);
+    try {
+      const response = await axiosInstance.post(FORGOT_CHANGE_PASSWORD, {
+        currentPassword: data.currentPassword,
+        password: data.password,
+      });
+      toast.success("Đổi mật khẩu thành công!");
+      reset();
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -39,8 +65,8 @@ export default function ChangePassword() {
           </div>
           <TmInput
             control={control}
-            placeholder="Password"
-            name="old_password"
+            placeholder="Mật khẩu hiện tại"
+            name="currentPassword"
             type="password"
           />
         </div>
@@ -51,7 +77,7 @@ export default function ChangePassword() {
           <TmInput
             control={control}
             name="password"
-            placeholder="Password"
+            placeholder="Mật khẩu mới"
             type="password"
           />
         </div>

@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { HOST_API } from "@/config-global";
+import { HOST_API, HOST_API_UPLOAD_IMG } from "@/config-global";
 import { getToken } from "./token";
 
 // ----------------------------------------------------------------------
@@ -32,3 +32,16 @@ export const axiosInstanceNotToken = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 axiosInstanceNotToken.interceptors.response.use((response) => response.data);
+
+export const axiosInstanceImg = axios.create({
+  baseURL: HOST_API_UPLOAD_IMG,
+  headers: { "Content-Type": "multipart/form-data" },
+});
+
+axiosInstanceImg.interceptors.response.use((response) => response.data);
+
+axiosInstanceImg.interceptors.request.use((config: any) => {
+  const token = getToken();
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});

@@ -24,6 +24,7 @@ export interface ITmInputNumber extends ITmInput {
 
 export interface IUpload extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
+  avatarLink?: string;
   control: Control<any>;
   classNameImg?: string;
   title?: string;

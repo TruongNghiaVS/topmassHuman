@@ -13,7 +13,7 @@ import { AxiosError } from "axios";
 import { REGISTER } from "@/utils/api-url";
 
 const schema = yup.object().shape({
-  name: yup.string().required("Vui lòng nhập họ và tên"),
+  name: yup.string().required("Vui lòng nhập tên"),
   phone: yup
     .string()
     .required("Vui lòng nhập số điện thoại")
@@ -97,7 +97,7 @@ export const FormRegister = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className=" mb-4">
           <div className="">
-            Họ và tên <span className="text-[#dc2f2f]">*</span>
+            Tên <span className="text-[#dc2f2f]">*</span>
           </div>
           <TmInput control={control} name="name" />
         </div>
