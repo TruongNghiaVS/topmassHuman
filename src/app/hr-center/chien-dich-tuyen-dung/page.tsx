@@ -1,7 +1,10 @@
 "use client";
+import { useLoading } from "@/app/context/loading";
 import TmInput from "@/component/hook-form/input";
 import TmSelect from "@/component/hook-form/select";
-import { campaigns, dataBill, optionCampaigns } from "@/mockup-data/data";
+import { optionCampaigns } from "@/mockup-data/data";
+import { ChANGE_STATUS, GET_ALL_CAMPAIGN } from "@/utils/api-url";
+import axiosInstance, { fetcher } from "@/utils/axios";
 import {
   MagnifyingGlassIcon,
   PencilSquareIcon,
@@ -9,8 +12,41 @@ import {
 } from "@heroicons/react/16/solid";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import useSWR from "swr";
+import dayjs from "dayjs";
+import { ICampaign } from "@/interface/interface";
+import { useEffect, useState } from "react";
+import { PopupCampaign } from "@/component/popup-edit-campaign";
 
 export default function RecruimentCampaign() {
+  const { setLoading } = useLoading();
+  const [campaigns, setCampaigns] = useState<ICampaign[]>([]);
+  const [status, setStatus] = useState(-1);
+  const [nameUpdate, setNameUpdate] = useState("");
+  const [idUpdate, setIdUpdate] = useState(0);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { data: listCampaign, error, mutate } = useSWR(
+    `${GET_ALL_CAMPAIGN}?status=${status}`,
+    fetcher
+  );
+
+  const onOpen = () => {
+    setIsOpen(true);
+  };
+
+  const onClose = () => {
+    setIsOpen(false);
+  };
+
+  useEffect(() => {
+    setCampaigns(listCampaign ? listCampaign.data : []);
+  }, [listCampaign, setCampaigns]);
+
+  if (error) {
+    toast.error("Lấy danh sách chiến dịch thất bại");
+  }
+
   const { control } = useForm({
     defaultValues: {
       campaign: "",
@@ -24,6 +60,35 @@ export default function RecruimentCampaign() {
     "Tìm CV",
     "Thời gian tạo",
   ];
+
+  const handleChangeStatus = async (checked: boolean, id: number) => {
+    setLoading(true);
+    try {
+      const response = await axiosInstance.post(ChANGE_STATUS, {
+        idUpdate: id,
+        status: checked ? 1 : 0,
+      });
+      if (response) {
+        toast.success("Cập nhật trạng thái thành công");
+        mutate();
+      }
+    } catch (error) {
+      toast.error("Cập nhật trạng thái thất bại");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleFilterStatus = async (value: string) => {
+    setStatus(+value);
+    mutate();
+  };
+
+  const handleOpenPopup = (name: string, id: number) => {
+    setNameUpdate(name);
+    setIdUpdate(id);
+    onOpen();
+  };
 
   return (
     <div className="">
@@ -48,13 +113,13 @@ export default function RecruimentCampaign() {
         <TmSelect
           name="campaign"
           control={control}
-          placeholder="Tất cả chiến dịch"
+          onChangeValue={handleFilterStatus}
           options={optionCampaigns}
         />
         <TmInput
           className="flex-1"
           name="search"
-          classNameCustom="flex-1 "
+          classNameCustom="flex-1"
           control={control}
           placeholder="Tìm kiếm chiến dịch"
           icon={<MagnifyingGlassIcon className="w-4" />}
@@ -78,27 +143,32 @@ export default function RecruimentCampaign() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 text-xs">
-              {campaigns.map((row, idx) => (
+              {campaigns?.map((row: any, idx: number) => (
                 <tr key={idx} className={`hover:bg-gray-100 text-center`}>
                   <td className="p-4">
                     <div>
                       <Link
                         href="/hr-center/chien-dich-tuyen-dung/1"
-                        className=" hover:text-default"
+                        className="text-default text-sm"
                       >
                         {row.name}
                       </Link>
                     </div>
                     <div>Tin tuyển dụng</div>
                     <div>Xem CV ứng tuyển</div>
-                    <div>Sửa tên chiến dịch</div>
+                    <button onClick={() => handleOpenPopup(row.name, row.id)}>
+                      Sửa tên chiến dịch
+                    </button>
                   </td>
                   <td className="font-normal p-4">
                     <label className="inline-flex items-center cursor-pointer">
                       <input
                         type="checkbox"
                         value="check"
-                        defaultChecked={row.status}
+                        checked={row.status || false}
+                        onChange={(e) =>
+                          handleChangeStatus(e.target.checked, row.id)
+                        }
                         className="sr-only peer"
                       />
                       <div className="relative w-11 h-6 bg-[#9A9A9B] peer-focus:outline-none min-w-11 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all after:duration-500 peer-checked:bg-gradient-to-r peer-checked:from-[#F89E1B] peer-checked:to-[#F37A20]"></div>
@@ -116,7 +186,9 @@ export default function RecruimentCampaign() {
                         "inline-block px-2 py-1 rounded-xl text-[#C65000] bg-[#FFE39C]"
                       }`}
                     >
-                      {row.recruitment_news}
+                      {row.status
+                        ? "Đăng tin tuyển dụng"
+                        : "Bật chiến dịch để thực hiện đăng tin"}
                     </div>
                   </td>
                   <td className={`p-4`}>
@@ -126,16 +198,27 @@ export default function RecruimentCampaign() {
                         "inline-block px-4 py-1 rounded-xl text-default border border-[#F37A20]"
                       }`}
                     >
-                      {row.search_cv}
+                      {row.status
+                        ? "Tìm CV"
+                        : "Bật chiến dịch để thực hiện tìm CV"}
                     </div>
                   </td>
-                  <td className="p-4 ">{row.date}</td>
+                  <td className="p-4 ">
+                    {dayjs(row.createAt).format("DD-MM-YYYY")}
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       </div>
+      <PopupCampaign
+        isOpen={isOpen}
+        onClose={onClose}
+        nameUpdate={nameUpdate}
+        id={idUpdate}
+        mutate={mutate}
+      />
     </div>
   );
 }

@@ -181,10 +181,9 @@ export const detailOder = [
 ];
 
 export const optionCampaigns = [
-  { value: "chiến dịch đang mở", label: "chiến dịch đang mở" },
-  { value: "Tin đang chạy", label: "Tin đang chạy" },
-  { value: "Tin có sử dụng dịch vụ", label: "Tin có sử dụng dịch vụ" },
-  { value: "Tin hết hạn", label: "Tin hết hạn" },
+  { value: -1, label: "Tất cả chiến dịch" },
+  { value: 1, label: "chiến dịch đang mở" },
+  { value: 0, label: "Chiến dịch đang tắt" },
 ];
 export const campaigns = [
   {

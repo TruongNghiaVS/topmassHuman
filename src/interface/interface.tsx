@@ -63,7 +63,7 @@ export interface ISupportSetting {
   description: string;
 }
 
-export interface ICampaign {
+export interface ICampaignUpdate {
   name: string;
 }
 
@@ -152,4 +152,25 @@ export interface IReal {
   createdBy: string;
   updateAt: string;
   updatedBy: string;
+}
+
+export interface ICampaign {
+  createAt: string;
+  from: string;
+  id: number;
+  lableText: string;
+  name: string;
+  status: number;
+  statusText: string;
+  to: string;
+  totalRecord: number;
+  updateAt: string;
+}
+
+export interface IModalEditCampaign {
+  isOpen: boolean;
+  onClose: () => void;
+  nameUpdate: string;
+  id: number;
+  mutate: KeyedMutator<any>;
 }

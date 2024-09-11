@@ -9,17 +9,23 @@ const TmSelect: React.FC<ITmSelect> = ({
   label,
   icon,
   options,
-  placeholder = "Select an option...",
+  placeholder = "",
   className,
   classNameCustom,
+  onChangeValue,
 }) => {
   const {
-    field: { value, onChange },
+    field,
     fieldState: { error },
   } = useController({
     name,
     control,
   });
+
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    field.onChange(e.target.value); // Update the form value
+    if (onChangeValue) onChangeValue(e.target.value); // Map the value to other components
+  };
 
   return (
     <div className={classNameCustom}>
@@ -27,15 +33,18 @@ const TmSelect: React.FC<ITmSelect> = ({
         <label className="block text-gray-700 mb-2">{label}</label>
         {icon && <div className="absolute left-3">{icon}</div>}
         <select
-          value={value}
-          onChange={onChange}
+          {...field}
+          onChange={handleChange}
           className={`p-2 border rounded-md w-full ${className} ${
             icon && "pl-10"
           }  ${error ? "border-red-500" : "border-gray-300"}`}
         >
-          <option value="" disabled>
-            {placeholder}
-          </option>
+          {placeholder.length && (
+            <option value="" disabled>
+              {placeholder}
+            </option>
+          )}
+
           {options.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}

@@ -11,3 +11,9 @@ export const UPDATE_INFOMATION = "/api/recruiter/Profile/UpdateBasicInfo";
 export const ADD_BUSINESSLICENSE = "/api/recruiter/Profile/AddBusinesslicense";
 export const REALS = "/api/recruiter/MasterData/InfoRealms";
 export const UPDATE_COMPANY = "/api/recruiter/Profile/UpdateCompanyInfo";
+
+//-------//
+export const GET_ALL_CAMPAIGN = "/api/recruiter/Campagn/GetAll";
+export const ADD_CAMPAIGN = "/api/recruiter/Campagn/Add";
+export const UPDATE_CAMPAIGN = "/api/recruiter/Campagn/Update";
+export const ChANGE_STATUS = "/api/recruiter/Campagn/ChangeStatus";

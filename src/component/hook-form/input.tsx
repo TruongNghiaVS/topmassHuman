@@ -12,7 +12,7 @@ const TmInput: React.FC<ITmInput> = ({
   classNameCustom,
 }) => {
   const {
-    field: { value, onChange, onBlur },
+    field,
     fieldState: { error },
   } = useController({
     name,
@@ -25,9 +25,7 @@ const TmInput: React.FC<ITmInput> = ({
         {icon && <div className="absolute left-3">{icon}</div>}
         <input
           type={type}
-          value={value}
-          onChange={onChange}
-          onBlur={onBlur}
+          {...field}
           placeholder={placeholder}
           className={`p-2 border rounded-md w-full focus-visible:outline-none ${className} ${
             icon && "pl-10"

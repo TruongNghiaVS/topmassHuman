@@ -1,7 +1,10 @@
 "use client";
 
+import { useLoading } from "@/app/context/loading";
 import TmInput from "@/component/hook-form/input";
-import { ICampaign } from "@/interface/interface";
+import { ICampaignUpdate } from "@/interface/interface";
+import { ADD_CAMPAIGN } from "@/utils/api-url";
+import axiosInstance from "@/utils/axios";
 import {
   ArrowUturnLeftIcon,
   PencilSquareIcon,
@@ -13,20 +16,31 @@ import { toast } from "react-toastify";
 import * as yup from "yup";
 
 export default function CreateCampaign() {
+  const { setLoading } = useLoading();
   const schema = yup.object().shape({
     name: yup.string().required("Vui lòng nhập tên chiến dịch"),
   });
 
-  const { control, handleSubmit } = useForm({
-    resolver: yupResolver<ICampaign>(schema),
+  const { control, handleSubmit, reset } = useForm({
+    resolver: yupResolver<ICampaignUpdate>(schema),
     defaultValues: {
       name: "",
     },
   });
 
-  const onSubmit: SubmitHandler<ICampaign> = (data) => {
-    toast.success("Thêm mới chiến dịch thành công!");
-    console.log(data);
+  const onSubmit: SubmitHandler<ICampaignUpdate> = async (data) => {
+    try {
+      setLoading(true);
+      const response = await axiosInstance.post(ADD_CAMPAIGN, data);
+      if (response) {
+        toast.success("Thêm mới chiến dịch thành công!");
+        reset();
+      }
+    } catch (error) {
+      toast.error("Thêm mới chiến dịch thất bạis");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
