@@ -1,5 +1,7 @@
 "use client";
 
+import useAuth from "@/hook/useAuthToken";
+import useAuthToken from "@/hook/useAuthToken";
 import { HeaderHrCenter } from "@/partial/hr-center/header";
 import MenuLeft from "@/partial/hr-center/menu-left";
 
@@ -9,6 +11,7 @@ export default function HrCenterLayout({
   children: React.ReactNode;
 }>) {
   const pathValidated = ["/dang-ky", "/dang-nhap", "/quen-mat-khau"];
+  useAuth();
   return (
     <main>
       <HeaderHrCenter />

@@ -19,6 +19,8 @@ export const HeaderHrCenter = () => {
   useEffect(() => {
     if (token) {
       setIsLogin(true);
+    } else {
+      setIsLogin(false);
     }
     const handleScroll = () => {
       if (headerRef.current) {

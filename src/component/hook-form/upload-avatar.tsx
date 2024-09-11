@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { IUpload } from "./interface/interface";
 import { useController } from "react-hook-form";
+import axiosInstance from "@/utils/axios";
 
 const AvatarUpload: React.FC<IUpload> = ({
   name,
@@ -23,8 +24,8 @@ const AvatarUpload: React.FC<IUpload> = ({
   const readImageFromUrl = async (url: string) => {
     try {
       // Fetch the image as a Blob
-      const response = await fetch(url);
-      const blob = await response.blob();
+      const response = await axiosInstance.get(url);
+      const blob = await response.data.blob();
 
       const file = new File([blob], "image.jpg", { type: blob.type });
       const dataTransfer = new DataTransfer();

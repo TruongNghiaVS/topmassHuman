@@ -47,8 +47,10 @@ export default function ChangePassword() {
         currentPassword: data.currentPassword,
         password: data.password,
       });
-      toast.success("Đổi mật khẩu thành công!");
-      reset();
+      if (response) {
+        toast.success("Đổi mật khẩu thành công!");
+        reset();
+      }
     } catch (error) {
     } finally {
       setLoading(false);

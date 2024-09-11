@@ -1,3 +1,4 @@
+"use client";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
@@ -44,11 +45,11 @@ export const LoginForm = ({ onClose }: ILoginForm) => {
       if (response && response.token) {
         Cookies.set("token", response.token, { expires: 7 });
         toast.success("Đăng nhập thành công");
+        router.push("/hr-center/bang-tin");
       }
       if (onClose) {
         onClose();
       }
-      router.push("/hr-center/bang-tin");
     } catch (error) {
       if (error instanceof AxiosError) {
         toast.error(

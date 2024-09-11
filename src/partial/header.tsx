@@ -23,8 +23,7 @@ export const Header = () => {
   const [isFixed, setIsFixed] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
-  const { data: token } = useSWR("token", getToken, { refreshInterval: 500 });
-
+  const { data: token } = useSWR("token", getToken, { refreshInterval: 1000 });
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -36,6 +35,8 @@ export const Header = () => {
   useEffect(() => {
     if (token) {
       setIsLogin(true);
+    } else {
+      setIsLogin(false);
     }
     const handleScroll = () => {
       if (headerRef.current) {
@@ -154,16 +155,18 @@ export const DropdownUser = ({
 }: IDropdownMenu) => {
   const path = usePathname();
   const router = useRouter();
+  const handleLogout = async () => {
+    removeToken();
+    setIsLogin(false);
+    toast.success("Đăng xuất thành công");
+    router.push("/");
+  };
+
   return (
     <ul className="p-2 rounded-lg group/subMenu overflow-hidden border-[#d9dbe9] h-0 transition-all ease-in-out duration-300 text-sm leading-[19px] absolute top-[calc(100%+20px)] right-0 bg-white min-w-[250px] py-[5px] z-[-1] group-hover/title:z-[11] group-hover/title:h-auto shadow-md opacity-0 group-hover/title:opacity-100 group-hover/title:top-full">
       <li
         className={`group/item normal-case whitespace-nowrap my-2 bg-[#e4e4e4] p-0 rounded`}
-        onClick={() => {
-          removeToken();
-          setIsLogin(false);
-          toast.success("Đăng xuất thành công");
-          router.push("/");
-        }}
+        onClick={handleLogout}
       >
         <Link
           href="#"
