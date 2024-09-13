@@ -181,9 +181,9 @@ export const detailOder = [
 ];
 
 export const optionCampaigns = [
-  { value: -1, label: "Tất cả chiến dịch" },
-  { value: 1, label: "chiến dịch đang mở" },
-  { value: 0, label: "Chiến dịch đang tắt" },
+  { value: "-1", label: "Tất cả chiến dịch" },
+  { value: "1", label: "chiến dịch đang mở" },
+  { value: "0", label: "Chiến dịch đang tắt" },
 ];
 export const campaigns = [
   {
@@ -204,6 +204,10 @@ export const campaigns = [
 
 export const shows = [
   {
+    value: "-1",
+    label: "Tất cả",
+  },
+  {
     value: "0",
     label: "Không hiển thị",
   },
@@ -218,6 +222,10 @@ export const shows = [
 ];
 
 export const browsings = [
+  {
+    value: "-1",
+    label: "Tất cả",
+  },
   {
     value: "0",
     label: "Chưa duyệt yêu cầu",

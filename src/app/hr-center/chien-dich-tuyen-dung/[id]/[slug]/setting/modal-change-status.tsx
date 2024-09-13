@@ -1,0 +1,90 @@
+import { useLoading } from "@/app/context/loading";
+import TmSelect from "@/component/hook-form/select";
+import Modal from "@/component/modal";
+import {
+  IModalChangeStatusProps,
+  IUpdateStatusCandidate,
+} from "@/interface/interface";
+import { UPDATE_STATUS_CV_CANDIDATE } from "@/utils/api-url";
+import axiosInstance from "@/utils/axios";
+import { yupResolver } from "@hookform/resolvers/yup";
+import dynamic from "next/dynamic";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import * as yup from "yup";
+
+const CustomCKEditor = dynamic(
+  () => {
+    return import("../../../../../../component/hook-form/ck-editor");
+  },
+  { ssr: false }
+);
+
+export const ModalChangeStatus = ({
+  isOpenModal,
+  onClose,
+  listStatus,
+  id,
+  status,
+  mutate,
+}: IModalChangeStatusProps) => {
+  const { setLoading } = useLoading();
+  const schema = yup.object().shape({
+    noteCode: yup.string().required("Trạng thái không được để trống"),
+    noted: yup.string(),
+  });
+
+  const { control, handleSubmit } = useForm<IUpdateStatusCandidate>({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      noteCode: status.toString(),
+      noted: "",
+    },
+  });
+
+  const onSubmit: SubmitHandler<IUpdateStatusCandidate> = async (data) => {
+    setLoading(true);
+    try {
+      const response = await axiosInstance.post(UPDATE_STATUS_CV_CANDIDATE, {
+        identi: id,
+        noteCode: +data.noteCode,
+        noted: data.noted,
+      });
+      toast.success("Cập nhật trạng thái thành công");
+      mutate();
+      onClose();
+    } catch (error) {
+      toast.error("Cập nhật trạng thái thất bại");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Modal onClose={onClose} isOpen={isOpenModal}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="mt-4">
+          <div>
+            Mật khẩu hiện tại <span className="text-[#dc2f2f]">*</span>
+          </div>
+          <TmSelect
+            control={control}
+            name="noteCode"
+            options={listStatus}
+            placeholder="Trạng thái"
+          />
+        </div>
+        <div className="mt-4">
+          <div>Lý do</div>
+          <CustomCKEditor name="noted" control={control} />
+        </div>
+        <button
+          type="submit"
+          className="w-full py-3 text-white bg-[#FF7D55] rounded-lg text-base font-bold"
+        >
+          Xác nhận
+        </button>
+      </form>
+    </Modal>
+  );
+};

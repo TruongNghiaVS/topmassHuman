@@ -1,4 +1,6 @@
+import { Option } from "@/component/hook-form/interface/interface";
 import { Dispatch, SetStateAction } from "react";
+import { Control } from "react-hook-form";
 import { KeyedMutator } from "swr";
 
 export interface ILogin {
@@ -173,4 +175,156 @@ export interface IModalEditCampaign {
   nameUpdate: string;
   id: number;
   mutate: KeyedMutator<any>;
+}
+
+export interface IFormCreateNew {
+  name: string;
+  campagnId?: string;
+  position: string;
+  profession: string;
+  expired_date: string;
+  quantity: number;
+  type_of_work: string;
+  rank: string;
+  experience: string;
+  locations: {
+    location: string;
+    districts: {
+      district: string;
+      detail_location: string;
+    }[];
+  }[];
+  time_working: {
+    day_from: string;
+    day_to: string;
+    time_from: string;
+    time_to: string;
+  }[];
+  aggrement?: boolean;
+  salary_from?: number;
+  salary_to?: number;
+  type_money?: string;
+  gender?: string;
+  description: string;
+  requirement: string;
+  benefit: string;
+  skills?: { skill?: string }[];
+  username: string;
+  phone: string;
+  emails: { email: string }[];
+}
+
+export interface IProvinces {
+  code: string;
+  name: string;
+}
+
+export interface ILocationForm {
+  control: Control<any>;
+  name: string;
+  options?: Option[];
+}
+
+export interface ICareer {
+  text: string;
+  typeData: string;
+  code: string;
+  status: number;
+  deleted: boolean;
+  id: number;
+  createAt: string;
+  createdBy: string;
+  updateAt: string;
+  updatedBy: string;
+}
+
+export interface IJob {
+  id: number;
+  authorName: string;
+  campaignId: number;
+  campaignName: string;
+  createAt: string;
+  name: string;
+  packageName: string;
+  reason: number;
+  reasonText: string;
+  relId: number;
+  status: number;
+  resultCode: number;
+  resultText: string;
+}
+
+export interface IInfoJobUpdate {
+  campagn: number;
+  createAt: string;
+  createdBy: number;
+  deleted: boolean;
+  id: number;
+  name: string;
+  package: number;
+  relId: number;
+  status: number;
+  updateAt: string;
+  updatedBy: number;
+}
+
+export interface IKeySearchJob {
+  keyword: string;
+  reasonCode: number;
+  resultCode: number;
+}
+
+export interface IDetailCvProps {
+  idJob: number;
+}
+
+export interface ICvJob {
+  campagnId: number;
+  campagnText: string;
+  createAt: string;
+  cvId: number;
+  email: string;
+  fullName: string;
+  jobId: number;
+  jobName: string;
+  linkFile: string;
+  phone: string;
+  statusCode: number;
+  statusText: string;
+  viewMode: number;
+  viewModeText: string;
+  id: number;
+}
+
+export interface IStatusApply {
+  code: string;
+  createAt: string;
+  createdBy: number;
+  deleted: false;
+  id: number;
+  status: number;
+  text: string;
+  typeData: number;
+  updateAt: string;
+  updatedBy: number;
+}
+
+export interface IModalChangeStatusProps {
+  isOpenModal: boolean;
+  onClose: () => void;
+  listStatus: Option[];
+  id: number;
+  status: number;
+  mutate: KeyedMutator<any>;
+}
+
+export interface IUpdateStatusCandidate {
+  noteCode: string;
+  noted?: string;
+}
+
+export interface ISearchCvCandidate {
+  name?: string;
+  viewMode?: number;
+  statusCode?: number;
 }

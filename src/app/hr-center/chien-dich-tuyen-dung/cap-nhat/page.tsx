@@ -4,7 +4,7 @@ import { LocationForm } from "@/app/hr-center/chien-dich-tuyen-dung/tao-tin-dang
 import TmInput from "@/component/hook-form/input";
 import TmInputNumber from "@/component/hook-form/input-number";
 import TmSelect from "@/component/hook-form/select";
-import { campaignForm, gender, salaryOptions } from "@/mockup-data/data";
+import { gender, salaryOptions } from "@/mockup-data/data";
 import {
   ArrowUturnLeftIcon,
   DocumentTextIcon,
@@ -18,30 +18,36 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import * as yup from "yup";
-import { TimeWorkingForm } from "./setting/time-working-form";
 import dynamic from "next/dynamic";
 import { toast } from "react-toastify";
-import { EmailsForm } from "./setting/emails-form";
 import { useLoading } from "@/app/context/loading";
-import axiosInstance from "@/utils/axios";
+import axiosInstance, { fetcher } from "@/utils/axios";
 import {
   ADD_JOB,
   GET_ALL_CAMPAIGN,
   GET_CAREER,
+  GET_DETAIL_JOB,
   GET_DISTRICT,
   GET_EXPERIENCE,
   GET_PROVINCE,
   GET_RANK_CANDIDATE,
+  UPDATE_JOB,
 } from "@/utils/api-url";
 import {
   ICampaign,
   ICareer,
   IFormCreateNew,
+  IInfoJobUpdate,
+  IJob,
   IProvinces,
 } from "@/interface/interface";
 import { useEffect, useState } from "react";
 import { Option } from "@/component/hook-form/interface/interface";
-import { SkillsForm } from "./setting/skills-form";
+import { TimeWorkingForm } from "../tao-tin-dang/setting/time-working-form";
+import { SkillsForm } from "../tao-tin-dang/setting/skills-form";
+import { EmailsForm } from "../tao-tin-dang/setting/emails-form";
+import { useRouter, useSearchParams } from "next/navigation";
+import useSWR from "swr";
 
 const CustomCKEditor = dynamic(
   () => {
@@ -137,7 +143,7 @@ const schema = yup.object().shape({
     .required("Vui nhập email"),
 });
 
-export default function CreateNew() {
+export default function UpdateJob() {
   const { setLoading } = useLoading();
   const [provinces, setProvinces] = useState<Option[]>([]);
   const [district, setDistrict] = useState<Option[]>([]);
@@ -146,7 +152,15 @@ export default function CreateNew() {
   const [jobTypes, setJobTypes] = useState<Option[]>([]);
   const [ranks, setRanks] = useState<Option[]>([]);
   const [experiences, setExperiences] = useState<Option[]>([]);
-  const [status, setStatus] = useState<number>(5);
+
+  const searchParams = useSearchParams();
+  const idUpdate = searchParams.get("idUpdate");
+  const router = useRouter();
+  const { data: jobInfo, error } = useSWR(
+    `${GET_DETAIL_JOB}?jobId=${idUpdate}`,
+    fetcher
+  );
+
   const getAllProvinces = async () => {
     setLoading(true);
     try {
@@ -208,14 +222,11 @@ export default function CreateNew() {
     }
   };
 
-  useEffect(() => {
-    getAllProvinces();
-  }, []);
-
   const {
     control,
     handleSubmit,
     getValues,
+    setValue,
     formState: { errors },
   } = useForm<IFormCreateNew>({
     resolver: yupResolver(schema),
@@ -263,6 +274,14 @@ export default function CreateNew() {
     },
   });
 
+  useEffect(() => {
+    getAllProvinces();
+    if (jobInfo) {
+      setValue("name", jobInfo.name);
+      setValue("campagnId", jobInfo.campagn.toString());
+    }
+  }, [jobInfo, setValue]);
+
   const handleFilterDistrict = async (value: string, index: number) => {
     setLoading(true);
     try {
@@ -290,23 +309,16 @@ export default function CreateNew() {
     name: "locations",
   });
 
-  const onSubmit: SubmitHandler<IFormCreateNew> = async (data, event) => {
+  const onSubmit: SubmitHandler<IFormCreateNew> = async (data) => {
     setLoading(true);
-
     try {
-      const target = event?.target as HTMLDivElement;
-      const dataType = target.getAttribute("data-type");
-      const dataSubmit: any = { ...data };
-      if (dataType === "save-draff") {
-        dataSubmit.status = 5;
-      } else {
-        dataSubmit.status = 1;
-      }
-
-      const response = await axiosInstance.post(ADD_JOB, dataSubmit);
-      toast.success("Tạo tin thành công");
+      const dataUpdate: any = { ...data };
+      dataUpdate.idUpdate = idUpdate;
+      const response = await axiosInstance.post(UPDATE_JOB, dataUpdate);
+      toast.success("Cập nhật thành công");
+      router.push(`/hr-center/chien-dich-tuyen-dung/${data.campagnId}`);
     } catch (error) {
-      toast.error("Tạo tin lỗi");
+      toast.error("Cập nhật lỗi");
     } finally {
       setLoading(false);
     }
@@ -323,7 +335,7 @@ export default function CreateNew() {
             <ArrowUturnLeftIcon className="w-4 mr-1" />
             Trở vế
           </Link>
-          <div>Tạo tin đăng</div>
+          <div>Chỉnh sửa tin đăng</div>
         </div>
         <Link
           href="/hr-center/chien-dich-tuyen-dung/them-moi-chien-dich"
@@ -624,20 +636,12 @@ export default function CreateNew() {
           </div>
           <div className="mt-4 flex space-x-4 justify-end">
             <button
-              type="button"
-              data-type="save-draff"
-              onClick={handleSubmit(onSubmit)}
-              className="bg-[#137F04] text-white rounded flex space-x-1 items-center px-3 py-1 text-base"
-            >
-              <DocumentTextIcon className="w-4" /> Lưu nháp
-            </button>
-            <button
               className="bg-[#137F04] text-white rounded flex space-x-1 items-center px-3 py-1 text-base"
               onClick={handleSubmit(onSubmit)}
               data-type="save"
               type="button"
             >
-              <PencilSquareIcon className="w-4" /> Đăng tin
+              <PencilSquareIcon className="w-4" /> Cập nhật
             </button>
           </div>
         </form>

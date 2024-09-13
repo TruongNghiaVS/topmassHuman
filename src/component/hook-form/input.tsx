@@ -10,6 +10,7 @@ const TmInput: React.FC<ITmInput> = ({
   type = "text",
   className,
   classNameCustom,
+  ...rest
 }) => {
   const {
     field,
@@ -26,6 +27,7 @@ const TmInput: React.FC<ITmInput> = ({
         <input
           type={type}
           {...field}
+          {...rest}
           placeholder={placeholder}
           className={`p-2 border rounded-md w-full focus-visible:outline-none ${className} ${
             icon && "pl-10"

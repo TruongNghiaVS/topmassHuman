@@ -39,7 +39,6 @@ export interface ITmSelect extends InputHTMLAttributes<HTMLSelectElement> {
   options: Option[];
   placeholder?: string;
   classNameCustom?: string;
-  onChangeValue?: (value: any) => void;
 }
 
 export interface ITmRadioProps {

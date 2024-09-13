@@ -22,6 +22,7 @@ import { PopupCampaign } from "@/component/popup-edit-campaign";
 export default function RecruimentCampaign() {
   const { setLoading } = useLoading();
   const [campaigns, setCampaigns] = useState<ICampaign[]>([]);
+  const [listDataSearch, setListDataSearch] = useState<ICampaign[]>([]);
   const [status, setStatus] = useState(-1);
   const [nameUpdate, setNameUpdate] = useState("");
   const [idUpdate, setIdUpdate] = useState(0);
@@ -41,7 +42,8 @@ export default function RecruimentCampaign() {
 
   useEffect(() => {
     setCampaigns(listCampaign ? listCampaign.data : []);
-  }, [listCampaign, setCampaigns]);
+    setListDataSearch(listCampaign ? listCampaign.data : []);
+  }, [listCampaign, setCampaigns, setListDataSearch]);
 
   if (error) {
     toast.error("Lấy danh sách chiến dịch thất bại");
@@ -90,6 +92,18 @@ export default function RecruimentCampaign() {
     onOpen();
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (value.length > 0) {
+      const listSearchResult = listDataSearch.filter((item) =>
+        item.name.toLowerCase().includes(value.toLowerCase())
+      );
+      setCampaigns(listSearchResult);
+    } else {
+      setCampaigns(listDataSearch);
+    }
+  };
+
   return (
     <div className="">
       <div className="flex justify-between sm:items-center p-4 sm:flex-row flex-col  border-b">
@@ -113,7 +127,7 @@ export default function RecruimentCampaign() {
         <TmSelect
           name="campaign"
           control={control}
-          onChangeValue={handleFilterStatus}
+          onChange={(e) => handleFilterStatus(e.target.value)}
           options={optionCampaigns}
         />
         <TmInput
@@ -121,6 +135,7 @@ export default function RecruimentCampaign() {
           name="search"
           classNameCustom="flex-1"
           control={control}
+          onChange={handleChange}
           placeholder="Tìm kiếm chiến dịch"
           icon={<MagnifyingGlassIcon className="w-4" />}
         />
@@ -148,7 +163,7 @@ export default function RecruimentCampaign() {
                   <td className="p-4">
                     <div>
                       <Link
-                        href="/hr-center/chien-dich-tuyen-dung/1"
+                        href={`/hr-center/chien-dich-tuyen-dung/${row.id}`}
                         className="text-default text-sm"
                       >
                         {row.name}

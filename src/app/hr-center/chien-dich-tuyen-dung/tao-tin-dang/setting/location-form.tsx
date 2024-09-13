@@ -1,15 +1,14 @@
 import TmInput from "@/component/hook-form/input";
 import TmSelect from "@/component/hook-form/select";
-import { locations } from "@/mockup-data/data";
+import { ILocationForm } from "@/interface/interface";
 import { PlusIcon, TrashIcon } from "@heroicons/react/16/solid";
-import { Control, useFieldArray } from "react-hook-form";
+import { useFieldArray } from "react-hook-form";
 
-export interface ILocationForm {
-  control: Control<any>;
-  name: string;
-}
-
-export const LocationForm = ({ control, name }: ILocationForm) => {
+export const LocationForm = ({
+  control,
+  name,
+  options = [],
+}: ILocationForm) => {
   const { fields, append, remove } = useFieldArray({
     control,
     name,
@@ -25,7 +24,7 @@ export const LocationForm = ({ control, name }: ILocationForm) => {
               classNameCustom="w-full"
               name={`${name}.${index}.district`}
               control={control}
-              options={locations}
+              options={options}
             />
             <TmInput
               classNameCustom="w-full"

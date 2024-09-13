@@ -12,7 +12,7 @@ const TmSelect: React.FC<ITmSelect> = ({
   placeholder = "",
   className,
   classNameCustom,
-  onChangeValue,
+  ...rest
 }) => {
   const {
     field,
@@ -22,9 +22,12 @@ const TmSelect: React.FC<ITmSelect> = ({
     control,
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    field.onChange(e.target.value); // Update the form value
-    if (onChangeValue) onChangeValue(e.target.value); // Map the value to other components
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedValue = event.target.value;
+    field.onChange(selectedValue); // Update React Hook Form state
+    if (rest.onChange) {
+      rest.onChange(event); // Call the custom onChange handler
+    }
   };
 
   return (
@@ -34,6 +37,7 @@ const TmSelect: React.FC<ITmSelect> = ({
         {icon && <div className="absolute left-3">{icon}</div>}
         <select
           {...field}
+          {...rest}
           onChange={handleChange}
           className={`p-2 border rounded-md w-full ${className} ${
             icon && "pl-10"
