@@ -1,7 +1,13 @@
 import { ArrowUturnLeftIcon } from "@heroicons/react/16/solid";
 import Link from "next/link";
 
-export default function DetailNotification() {
+export default function DetailNotification({
+  params,
+}: {
+  params: { id: number };
+}) {
+  const { id } = params;
+  // const {data:detailNoti ,error} = use
   return (
     <div className="min-h-screen">
       <div className="p-4 bg-white flex whitespace-nowrap space-x-4 items-center">

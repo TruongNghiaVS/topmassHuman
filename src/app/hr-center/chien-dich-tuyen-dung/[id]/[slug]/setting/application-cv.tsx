@@ -6,7 +6,6 @@ import {
   ICvJob,
   IDetailCvProps,
   ISearchCvCandidate,
-  IStatusApply,
 } from "@/interface/interface";
 import {
   GET_ALL_CV_JOB,
@@ -128,7 +127,6 @@ export const ApplicationCV = ({ idJob }: IDetailCvProps) => {
     } finally {
       setLoading(false);
     }
-    console.log(data);
   };
 
   return (
@@ -169,9 +167,9 @@ export const ApplicationCV = ({ idJob }: IDetailCvProps) => {
           </div>
           <button
             type="submit"
-            className="px-2 py-1.5 text-white bg-[#FF7D55] rounded-lg text-base font-bold"
+            className="px-2 py-1.5 text-white bg-[#FF7D55] rounded-lg font-bold"
           >
-            Xác nhận
+            Tìm kiếm
           </button>
         </div>
       </form>

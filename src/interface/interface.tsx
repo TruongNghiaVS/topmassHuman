@@ -328,3 +328,49 @@ export interface ISearchCvCandidate {
   viewMode?: number;
   statusCode?: number;
 }
+
+export interface IManagerCv {
+  id: number;
+  phone: string;
+  fullName: string;
+  email: string;
+  statusCode: 0;
+  cvId: number;
+  statusText: string;
+  jobId: number;
+  jobName: string;
+  campagnText: string;
+  campagnId: number;
+  createAt: string;
+  linkFile: string;
+  viewMode: number;
+  viewModeText: string;
+}
+
+export interface ISearchManagerCv {
+  keyword?: string;
+  campaign?: number;
+  status?: number;
+  cv?: number;
+}
+
+export interface ICandidateViewJob {
+  fullName: string;
+  phoneNumber: string;
+  email: string;
+  createAt: string;
+  dob: string;
+  extraText: string;
+}
+
+export interface INotification {
+  title: string;
+  relId: number;
+  userName: string;
+  lableText: string;
+  typeInfo: number;
+  content: string;
+  linkFile: string;
+  createAt: string;
+  status: number;
+}

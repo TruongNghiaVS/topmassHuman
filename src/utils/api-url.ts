@@ -39,3 +39,11 @@ export const GET_STATUS_APPLY_CV =
 export const GET_ALL_CV_JOB = "/api/recruiter/CV/GetAllCVOfJob";
 export const UPDATE_VIEW_MODE = "/api/recruiter/CV/UpdateViewModel";
 export const UPDATE_STATUS_CV_CANDIDATE = "/api/recruiter/CV/AddLogStatus";
+export const GET_MANAGER_CV_APPLY = "/api/recruiter/CV/GetAllCVApply";
+export const GET_CANDIDATE_VIEW_JOB = "/api/recruiter/Job/GetAllViewerOfJob";
+
+//------------ Notification -----------//
+export const GET_ALL_NOTIFICATION = "/api/recruiter/Notification/GetAll";
+
+//-------- Support ----------//
+export const CREATE_TOCKET = "/api/recruiter/Support/CreateTicket";

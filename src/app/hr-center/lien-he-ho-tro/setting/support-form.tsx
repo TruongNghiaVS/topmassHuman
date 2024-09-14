@@ -1,12 +1,17 @@
+import { useLoading } from "@/app/context/loading";
 import TmInput from "@/component/hook-form/input";
 import CustomUploadMulti from "@/component/hook-form/upload-multiphe-file";
 import { ISupportSetting } from "@/interface/interface";
+import { CREATE_TOCKET, UPLOAD_IMG } from "@/utils/api-url";
+import axiosInstance, { axiosInstanceImg } from "@/utils/axios";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 
 export default function SupportForm() {
+  const { setLoading } = useLoading();
+
   const fileValidationSchema = yup.object().shape({
     files: yup
       .mixed<FileList>()
@@ -44,6 +49,7 @@ export default function SupportForm() {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<ISupportSetting>({
     resolver: yupResolver(fileValidationSchema),
@@ -53,7 +59,32 @@ export default function SupportForm() {
     },
   });
 
-  const onSubmit = (data: ISupportSetting) => {
+  const onSubmit = async (data: ISupportSetting) => {
+    setLoading(true);
+    let link = "";
+    try {
+      if (data.files && data.files?.length > 0) {
+        const response = await axiosInstanceImg.post(UPLOAD_IMG, {
+          file: data.files[0],
+        });
+        if (response) {
+          link = response.data.shortLink;
+        }
+      }
+
+      const res = axiosInstance.post(CREATE_TOCKET, {
+        title: data.title,
+        content: data.description,
+        linkFile: link,
+      });
+      reset();
+      toast.success("Thêm thông tin hỗ trợ thành công");
+    } catch (error) {
+      toast.error("Thêm thông tin hỗ trợ thất bại");
+    } finally {
+      setLoading(false);
+    }
+
     // Handle form submission
     toast.success("Gửi thông tin thành công");
     console.log(data.files);

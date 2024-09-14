@@ -2,31 +2,88 @@
 
 import TmInput from "@/component/hook-form/input";
 import TmSelect from "@/component/hook-form/select";
+import { ICampaign, IManagerCv, ISearchManagerCv } from "@/interface/interface";
 import { WechatBootstrapIcon } from "@/theme/icons/wechatBootstrapIcon";
 import {
-  EllipsisHorizontalCircleIcon,
-  PhoneIcon,
-  ShoppingBagIcon,
-} from "@heroicons/react/16/solid";
+  GET_ALL_CAMPAIGN,
+  GET_MANAGER_CV_APPLY,
+  GET_STATUS_APPLY_CV,
+} from "@/utils/api-url";
+import axiosInstance, { fetcher } from "@/utils/axios";
+import { PencilSquareIcon, PhoneIcon } from "@heroicons/react/16/solid";
 import { ClockIcon, EnvelopeIcon } from "@heroicons/react/24/outline";
-import { useForm } from "react-hook-form";
-
-const options = [
-  {
-    value: "test",
-    label: "test",
-  },
-];
+import dayjs from "dayjs";
+import { useEffect, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import useSWR from "swr";
+import { ModalChangeStatus } from "../chien-dich-tuyen-dung/[id]/[slug]/setting/modal-change-status";
+import { useLoading } from "@/app/context/loading";
+import { Option } from "@/component/hook-form/interface/interface";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { toast } from "react-toastify";
 
 export default function ManagerCV() {
-  const { control } = useForm({
+  const [managerCv, setManagerCv] = useState<IManagerCv[]>([]);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [idUpdate, setIdUpdate] = useState(-1);
+  const [statusUpdate, setStatusUpdate] = useState(-1);
+  const [statusApply, setStatusApply] = useState<Option[]>([]);
+  const [campaign, setCampaign] = useState<Option[]>([]);
+  const { setLoading } = useLoading();
+  const { data: listManagerCV, error, mutate } = useSWR(
+    GET_MANAGER_CV_APPLY,
+    fetcher
+  );
+
+  const getStatusApply = async () => {
+    setLoading(true);
+    try {
+      const response = await axiosInstance.get(GET_STATUS_APPLY_CV);
+      const data = response.data.map((item: any) => ({
+        label: item.text,
+        value: item.id,
+      }));
+      setStatusApply(data);
+      const resCampaign = await axiosInstance.get(GET_ALL_CAMPAIGN, {
+        params: {
+          code: -1,
+        },
+      });
+      const listCampaigns = resCampaign.data.data.map((item: ICampaign) => {
+        return {
+          value: item.id,
+          label: item.name,
+        };
+      });
+      setCampaign(listCampaigns);
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (listManagerCV) {
+      setManagerCv(listManagerCV.data);
+    }
+    getStatusApply();
+  }, [listManagerCV, setManagerCv]);
+
+  const schema = yup.object().shape({
+    keyword: yup.string(),
+    campaign: yup.number(),
+    status: yup.number(),
+    cv: yup.number(),
+  });
+
+  const { control, handleSubmit } = useForm<ISearchManagerCv>({
+    resolver: yupResolver(schema),
     defaultValues: {
-      key: "",
-      recruitment: "",
-      status: "",
-      cv: "",
-      search: "",
-      test: "",
+      keyword: "",
+      campaign: -1,
+      status: -1,
+      cv: -1,
     },
   });
 
@@ -38,85 +95,75 @@ export default function ManagerCV() {
     "Trạng thái",
   ];
 
-  const data = [
-    {
-      name: "Trần Ngọc Phú",
-      campaign: "Hỗ trợ Cv cho ứng viên",
-      tag: "123345",
-      email: "test@gmail.com",
-      phone: "0345678012",
-      status: "Phù hợp",
-    },
-    {
-      name: "Trần Ngọc Phú 1",
-      campaign: "Hỗ trợ Cv cho ứng viên",
-      tag: "123345",
-      email: "test@gmail.com",
-      phone: "0345678012",
-      status: "Phù hợp",
-    },
-    {
-      name: "Trần Ngọc Phú 2",
-      campaign: "Hỗ trợ Cv cho ứng viên",
-      tag: "123345",
-      email: "test@gmail.com",
-      phone: "0345678012",
-      status: "Phù hợp",
-    },
-  ];
+  const onSubmit: SubmitHandler<ISearchManagerCv> = async (data) => {
+    setLoading(true);
+    try {
+      const response = await axiosInstance.get(GET_MANAGER_CV_APPLY, {
+        params: data,
+      });
+      setManagerCv(response.data.data);
+      toast.success("Tìm kiếm thông tin thành công");
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="px-6 py-3 ">
       <div className="text-base font-normal">Quản lý cv ứng viên</div>
       <div className="mt-4 p-2 bg-white border rounded">
-        <div className="flex space-x-2">
-          <div className="flex-1">
-            <TmInput
-              className="w-full"
-              name="key"
-              control={control}
-              placeholder="Tìm kiếm tên,Email,Số điện thoại"
-            />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="flex space-x-2">
+            <div className="flex-1">
+              <TmInput
+                className="w-full"
+                name="key"
+                control={control}
+                placeholder="Tìm kiếm tên,Email,Số điện thoại"
+              />
+            </div>
+            <div className="flex-1">
+              <TmSelect
+                className="w-full"
+                name="recruitment"
+                control={control}
+                options={campaign}
+                placeholder="Chọn chiến dịch tuyển dụng"
+              />
+            </div>
+            <div className="flex-1">
+              <TmSelect
+                className="w-full"
+                name="status"
+                control={control}
+                options={statusApply}
+                placeholder="Trạng thái"
+              />
+            </div>
+            <div className="flex-1">
+              <TmSelect
+                className="w-full"
+                name="cv"
+                control={control}
+                options={[{ value: -1, label: "Tất cả" }]}
+                placeholder="Nguồn cv"
+              />
+            </div>
+            <button
+              type="submit"
+              className="px-2 py-1.5 text-white bg-[#FF7D55] rounded-lg font-bold"
+            >
+              Tìm kiếm
+            </button>
           </div>
-          <div className="flex-1">
-            <TmSelect
-              className="w-full"
-              name="recruitment"
-              control={control}
-              options={options}
-              placeholder="Chọn chiến dịch tuyển dụng"
-            />
-          </div>
-          <div className="flex-1">
-            <TmSelect
-              className="w-full"
-              name="status"
-              control={control}
-              options={options}
-              placeholder="Trạng thái"
-            />
-          </div>
-          <div className="flex-1">
-            <TmSelect
-              className="w-full"
-              name="cv"
-              control={control}
-              options={options}
-              placeholder="Nguồn cv"
-            />
-          </div>
-        </div>
+        </form>
       </div>
       <div className="mt-4 flex justify-between items center">
         <div className="flex items-center">
-          Tìm thấy <span className="text-default mx-1">201</span> ứng viên
+          Tìm thấy <span className="text-default mx-1">{managerCv.length}</span>{" "}
+          ứng viên
         </div>
-        <TmSelect
-          name="search"
-          control={control}
-          options={options}
-          placeholder="Hiển thị tất cả"
-        />
       </div>
       <div className="mt-4 bg-white">
         <div className="overflow-x-auto ">
@@ -137,8 +184,8 @@ export default function ManagerCV() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
-              {data.map((row) => (
-                <tr key={row.name} className={` `}>
+              {managerCv.map((row) => (
+                <tr key={row.id} className={` `}>
                   <td className="p-4">
                     <div className="flex space-x-2 items-center">
                       <img
@@ -148,19 +195,16 @@ export default function ManagerCV() {
                       />
                       <div>
                         <div className="font-normal line-clamp-3">
-                          {row.name}
+                          {row.fullName}
                         </div>
                         <div className="text-xs inline-block p-1 rounded bg-[#F5F8FA]">
-                          Đã xem
+                          {row.viewModeText}
                         </div>
                       </div>
                     </div>
                   </td>
                   <td className="p-4">
-                    <div className="line-clamp-1">{row.campaign}</div>
-                    <div className="text-xs inline-block p-1 rounded bg-[#F5F8FA]">
-                      #{row.tag}
-                    </div>
+                    <div className="line-clamp-1">{row.campagnText}</div>
                   </td>
                   <td className="p-4 ">
                     <div className="flex">
@@ -178,18 +222,24 @@ export default function ManagerCV() {
                   <td className="p-4 ">
                     <div className="flex mt-1">
                       <ClockIcon className="w-4 mr-2" />
-                      14/08/2024 15:45
+                      {dayjs(row.createAt).format("DD-MM-YYYY HH:mm")}
                     </div>
                   </td>
                   <td>
                     <div className="text-center rounded-lg px-4 py-1 bg-[#FFFAF5] text-[#FFA24F]">
-                      Phù hợp
+                      {row.statusText}
                     </div>
                   </td>
                   <td className="min-w-[30px] ">
-                    <div className="grid h-full justify-center items-center">
-                      <EllipsisHorizontalCircleIcon className="w-4" />
-                    </div>
+                    <button
+                      onClick={() => (
+                        setIsOpenModal(true),
+                        setIdUpdate(row.id),
+                        setStatusUpdate(row.statusCode)
+                      )}
+                    >
+                      <PencilSquareIcon className="w-4" />
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -197,6 +247,14 @@ export default function ManagerCV() {
           </table>
         </div>
       </div>
+      <ModalChangeStatus
+        id={idUpdate}
+        isOpenModal={isOpenModal}
+        onClose={() => setIsOpenModal(false)}
+        listStatus={statusApply}
+        status={statusUpdate}
+        mutate={mutate}
+      />
     </div>
   );
 }
