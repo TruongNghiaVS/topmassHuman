@@ -1,6 +1,18 @@
+import { ArrowUturnLeftIcon } from "@heroicons/react/16/solid";
+import Link from "next/link";
+
 export default function Regulation() {
   return (
     <div className="px-6 py-3 bg-white">
+      <div className="bg-white flex whitespace-nowrap space-x-4 items-center">
+        <Link
+          href="/hr-center/chinh-sach-va-quy-dinh"
+          className="flex rounded-2xl py-1 px-2 bg-[#BFBFBF]"
+        >
+          <ArrowUturnLeftIcon className="w-4 mr-1" />
+          Trở vế
+        </Link>
+      </div>
       <div className="uppercase text-base font-bold text-default">
         CHÍNH SÁCH BẢO MẬT THÔNG TIN NGƯỜI DÙNG
       </div>
