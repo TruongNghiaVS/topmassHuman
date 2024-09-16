@@ -3,17 +3,16 @@
 import { useLoading } from "@/app/context/loading";
 import TmInput from "@/component/hook-form/input";
 import { IChangePassword } from "@/interface/interface";
-import { FORGOT_CHANGE_PASSWORD } from "@/utils/api-url";
+import { CHANGE_PASSWORD } from "@/utils/api-url";
 import axiosInstance from "@/utils/axios";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 
 export default function ChangePassword() {
   const { setLoading } = useLoading();
-  const [isUpdate, setIsUpdate] = useState(false);
   const schema = yup.object().shape({
     currentPassword: yup.string().required("Vui lòng nhập mật khẩu củ"),
     password: yup
@@ -43,7 +42,7 @@ export default function ChangePassword() {
   const onSubmit: SubmitHandler<IChangePassword> = async (data) => {
     setLoading(true);
     try {
-      const response = await axiosInstance.post(FORGOT_CHANGE_PASSWORD, {
+      const response = await axiosInstance.post(CHANGE_PASSWORD, {
         currentPassword: data.currentPassword,
         password: data.password,
       });

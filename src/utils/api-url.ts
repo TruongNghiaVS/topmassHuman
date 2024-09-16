@@ -4,7 +4,9 @@ export const LOGIN = "/api/recruiter/Authen/LoginUser";
 export const FORGOT_PASSWORD = "/api/recruiter/Forget/RequestChangePassword";
 export const CONFIRM_FORGOT_PASSWORD =
   "/api/recruiter/Forget/ConfirmToPageChangePassword";
-export const FORGOT_CHANGE_PASSWORD = "/api/recruiter/Authen/ChangePassword";
+export const FORGOT_CHANGE_PASSWORD = "/api/recruiter/Forget/ChangePassword";
+export const CHANGE_PASSWORD = "/pi/recruiter/Forget/ChangePassword";
+
 export const UPLOAD_IMG = "/Media/UploadAvatar";
 export const GET_CURRENT_USER = "/api/recruiter/Authen/GetInfo";
 export const UPDATE_INFOMATION = "/api/recruiter/Profile/UpdateBasicInfo";
