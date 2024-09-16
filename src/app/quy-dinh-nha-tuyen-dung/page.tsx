@@ -657,14 +657,14 @@ export default function Regulation() {
         trong quyền hạn của bạn.
       </div>
       <div>
-        - Dịch vụ chứa nội dung mà Topmass sở hữu hoặc cấp phép ("Nội dung
-        Topmass"). Nội dung Topmass được bảo vệ bởi bản quyền, nhãn hiệu thương
-        mại, bằng sáng chế, bí mật thương mại và các luật khác, đồng thời giữa
-        bạn và Topmass, Topmass sở hữu và nắm giữ tất cả các quyền về Dịch vụ và
-        Nội dung Topmass. Bạn không được xóa, thay đổi hoặc che giấu bất kỳ
-        thông báo nào về bản quyền, nhãn hiệu thương mại, nhãn hiệu dịch vụ hay
-        quyền sở hữu khác được kết hợp với hay đi kèm Nội dung Topmass và bạn
-        không được sao chép, sửa đổi, điều chỉnh, chuẩn bị các sản phẩm phái
+        - Dịch vụ chứa nội dung mà Topmass sở hữu hoặc cấp phép (&rdquo;Nội dung
+        Topmass&rdquo;). Nội dung Topmass được bảo vệ bởi bản quyền, nhãn hiệu
+        thương mại, bằng sáng chế, bí mật thương mại và các luật khác, đồng thời
+        giữa bạn và Topmass, Topmass sở hữu và nắm giữ tất cả các quyền về Dịch
+        vụ và Nội dung Topmass. Bạn không được xóa, thay đổi hoặc che giấu bất
+        kỳ thông báo nào về bản quyền, nhãn hiệu thương mại, nhãn hiệu dịch vụ
+        hay quyền sở hữu khác được kết hợp với hay đi kèm Nội dung Topmass và
+        bạn không được sao chép, sửa đổi, điều chỉnh, chuẩn bị các sản phẩm phái
         sinh dựa trên, thực hiện, hiển thị, xuất bản, phân phối, truyền đi,
         phát, bán, cấp phép hoặc khai thác Nội dung Topmass.
       </div>
