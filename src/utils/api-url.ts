@@ -5,7 +5,7 @@ export const FORGOT_PASSWORD = "/api/recruiter/Forget/RequestChangePassword";
 export const CONFIRM_FORGOT_PASSWORD =
   "/api/recruiter/Forget/ConfirmToPageChangePassword";
 export const FORGOT_CHANGE_PASSWORD = "/api/recruiter/Forget/ChangePassword";
-export const CHANGE_PASSWORD = "/api/recruiter/Forget/Authen";
+export const CHANGE_PASSWORD = "/api/recruiter/Authen/ChangePassword";
 
 export const UPLOAD_IMG = "/Media/UploadAvatar";
 export const GET_CURRENT_USER = "/api/recruiter/Authen/GetInfo";
