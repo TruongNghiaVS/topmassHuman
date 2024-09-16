@@ -14,18 +14,23 @@ import Modal from "@/component/modal";
 import { LoginForm } from "@/component/login";
 import useSWR from "swr";
 import { getToken, removeToken } from "@/utils/token";
-import { IDropdownMenu } from "@/interface/interface";
+import { IDropdownMenu, INotification } from "@/interface/interface";
 import { usePathname, useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { GET_ALL_NOTIFICATION } from "@/utils/api-url";
+import { fetcher } from "@/utils/axios";
 
 export const Header = () => {
   const headerRef = useRef<HTMLDivElement | null>(null);
   const [isFixed, setIsFixed] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
+  const [notis, setNotis] = useState<INotification[]>([]);
   const { data: token } = useSWR("token", getToken, { refreshInterval: 1000 });
-  const { data: notis, error } = useSWR(`${GET_ALL_NOTIFICATION}?Status=0`);
+  const { data: listNotis, error } = useSWR(
+    `${GET_ALL_NOTIFICATION}?status=0`,
+    fetcher
+  );
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -52,13 +57,17 @@ export const Header = () => {
       }
     };
 
+    if (listNotis) {
+      setNotis(listNotis.data);
+    }
+
     window.addEventListener("scroll", handleScroll);
 
     // Cleanup event listener on component unmount
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [token]);
+  }, [token, listNotis, setNotis]);
 
   return (
     <>
@@ -111,7 +120,7 @@ export const Header = () => {
                 <BellIcon className="text-[#F37A20] mr-3 w-6" />
                 {notis && notis.length > 0 && (
                   <div className="absolute content-[''] text-xs text-center w-4 h-4 top-[-4px] right-2 rounded-full bg-[#C40202] text-white">
-                    {notis.lenght}
+                    {notis.length}
                   </div>
                 )}
               </div>

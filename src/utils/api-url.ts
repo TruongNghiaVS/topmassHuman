@@ -47,6 +47,10 @@ export const GET_CANDIDATE_VIEW_JOB = "/api/recruiter/Job/GetAllViewerOfJob";
 //------------ Notification -----------//
 export const GET_ALL_NOTIFICATION = "/api/recruiter/Notification/GetAll";
 export const GET_DETAIL_NOTIFICATION = "/api/recruiter/Notification/GetDetail";
-
+export const UPDATE_NOTIFICATION =
+  "api/recruiter/Notification/UpdateNotificaton";
 //-------- Support ----------//
 export const CREATE_TOCKET = "/api/recruiter/Support/CreateTicket";
+
+//-------- Web -------//
+export const ADD_REQUEST_CONTACT = "/api/recruiter/Web/AddCustomerContact";

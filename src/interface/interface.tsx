@@ -72,7 +72,7 @@ export interface ICampaignUpdate {
 export interface IContact {
   name: string;
   email: string;
-  phone: string;
+  phoneNumber: string;
   title: string;
   content: string;
 }
@@ -373,4 +373,5 @@ export interface INotification {
   linkFile: string;
   createAt: string;
   status: number;
+  id: number;
 }

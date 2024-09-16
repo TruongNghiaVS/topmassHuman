@@ -90,18 +90,18 @@ export const FormRegister = () => {
       <div className="text-2xl font-normal mb-4 text-[#F37A20]">
         Đăng ký tài khoản nhà tuyển dụng
       </div>
-      <div className="mb-4 font-normal">
+      <div className="mb-2 font-normal">
         Cùng xây dựng một hệ sinh thái tuyển dụng nhân sự cùng với nguồn ứng
         viên khổng lồ từ Topmass
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className=" mb-4">
+        <div className="mb-2">
           <div className="">
             Tên <span className="text-[#dc2f2f]">*</span>
           </div>
           <TmInput control={control} name="name" />
         </div>
-        <div className="mb-4">
+        <div className="mb-2">
           <div className="">
             Số điện thoại <span className="text-[#dc2f2f]">*</span>
           </div>
@@ -109,7 +109,7 @@ export const FormRegister = () => {
             <TmInput control={control} name="phone" />
           </div>
         </div>
-        <div className="mb-4">
+        <div className="mb-2">
           <div>
             Email <span className="text-[#dc2f2f]">*</span>
           </div>
@@ -120,7 +120,7 @@ export const FormRegister = () => {
             type="email"
           />
         </div>
-        <div className="mb-4">
+        <div className="mb-2">
           <div>
             Mật khẩu <span className="text-[#dc2f2f]">*</span>
           </div>
@@ -131,7 +131,7 @@ export const FormRegister = () => {
             type="password"
           />
         </div>
-        <div className="mb-4">
+        <div className="mb-2">
           <div>
             Mã số thuế <span className="text-[#dc2f2f]">*</span>
           </div>

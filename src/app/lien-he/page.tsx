@@ -8,33 +8,47 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import * as yup from "yup";
+import { useLoading } from "../context/loading";
+import axiosInstance from "@/utils/axios";
+import { ADD_REQUEST_CONTACT } from "@/utils/api-url";
 
 export default function Contact() {
+  const { setLoading } = useLoading();
   const schema = yup.object().shape({
     name: yup.string().required("Tên là bắt buộc"),
     email: yup
       .string()
       .required("Email là bắt buộc")
       .email("Sai format email "),
-    phone: yup.string().required("Số điện thoại là bắt buộc"),
+    phoneNumber: yup.string().required("Số điện thoại là bắt buộc"),
     title: yup.string().required("Tiêu đề là bắt buộc"),
     content: yup.string().required("Nội dung là bắt buộc"),
   });
 
-  const { handleSubmit, control } = useForm<IContact>({
+  const { handleSubmit, control, reset } = useForm<IContact>({
     resolver: yupResolver(schema),
     defaultValues: {
       name: "",
       email: "",
-      phone: "",
+      phoneNumber: "",
       title: "",
       content: "",
     },
   });
 
-  const onSubmit: SubmitHandler<IContact> = (data) => {
-    toast.success("Gửi thông tin thành công!");
-    console.log(data);
+  const onSubmit: SubmitHandler<IContact> = async (data) => {
+    setLoading(true);
+    try {
+      const response = await axiosInstance.post(ADD_REQUEST_CONTACT, data);
+      if (response) {
+        toast.success("Gửi thông tin thành công!");
+        reset();
+      }
+    } catch (error) {
+      toast.error("Gửi thông tin thất bại");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -70,7 +84,7 @@ export default function Contact() {
               <div className="mb-4">
                 <TmInput
                   control={control}
-                  name="phone"
+                  name="phoneNumber"
                   placeholder="Số điện thoại"
                 />
               </div>

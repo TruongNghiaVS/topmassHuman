@@ -10,13 +10,19 @@ import useSWR from "swr";
 import { getToken } from "@/utils/token";
 import { DropdownUser } from "../header";
 import { GET_ALL_NOTIFICATION } from "@/utils/api-url";
+import { fetcher } from "@/utils/axios";
+import { INotification } from "@/interface/interface";
 
 export const HeaderHrCenter = () => {
   const headerRef = useRef<HTMLDivElement | null>(null);
   const [isFixed, setIsFixed] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
+  const [notis, setNotis] = useState<INotification[]>([]);
   const { data: token } = useSWR("token", getToken, { refreshInterval: 500 });
-  const { data: notis, error } = useSWR(`${GET_ALL_NOTIFICATION}?Status=0`);
+  const { data: listNotis, error } = useSWR(
+    `${GET_ALL_NOTIFICATION}?Status=0`,
+    fetcher
+  );
 
   useEffect(() => {
     if (token) {
@@ -36,11 +42,15 @@ export const HeaderHrCenter = () => {
 
     window.addEventListener("scroll", handleScroll);
 
+    if (listNotis) {
+      setNotis(listNotis.data);
+    }
+
     // Cleanup event listener on component unmount
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [token]);
+  }, [token, listNotis, setNotis]);
 
   return (
     <>
@@ -82,7 +92,7 @@ export const HeaderHrCenter = () => {
                   <BellIcon className="text-[#F37A20] mr-3 w-6" />
                   {notis && notis.length > 0 && (
                     <div className="absolute content-[''] text-xs text-center w-4 h-4 top-[-4px] right-2 rounded-full bg-[#C40202] text-white">
-                      {notis.lenght}
+                      {notis.length}
                     </div>
                   )}
                 </div>
