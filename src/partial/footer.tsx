@@ -22,11 +22,11 @@ export const Footer = () => {
     },
     {
       title: "Chính sách bảo mật",
-      link: "/hr-center/chinh-sach-bao-mat",
+      link: "/chinh-sach-bao-mat",
     },
     {
       title: "Điều khoản dịch vụ",
-      link: "/new/1",
+      link: "/quy-dinh-nha-tuyen-dung",
     },
   ];
 

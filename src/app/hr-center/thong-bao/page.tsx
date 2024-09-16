@@ -32,7 +32,11 @@ export default function Notification() {
               <Link
                 href={`/hr-center/thong-bao/chi-tiet-thong-bao/${item.relId}`}
               >
-                <div className="flex space-x-2 border-b items-center px-6 py-3">
+                <div
+                  className={`flex space-x-2 border-b items-center px-6 py-3 ${
+                    item.status === 0 && "font-medium"
+                  }`}
+                >
                   <div className="px-3 py-1 rounded-lg bg-[#FFF5D9] text-[#FFB600]">
                     Thông báo
                   </div>

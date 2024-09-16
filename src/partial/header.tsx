@@ -17,6 +17,7 @@ import { getToken, removeToken } from "@/utils/token";
 import { IDropdownMenu } from "@/interface/interface";
 import { usePathname, useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { GET_ALL_NOTIFICATION } from "@/utils/api-url";
 
 export const Header = () => {
   const headerRef = useRef<HTMLDivElement | null>(null);
@@ -24,6 +25,8 @@ export const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const { data: token } = useSWR("token", getToken, { refreshInterval: 1000 });
+  const { data: notis, error } = useSWR(`${GET_ALL_NOTIFICATION}?Status=0`);
+
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -106,9 +109,11 @@ export const Header = () => {
             <div className={`items-center hidden ${isLogin && "!flex"}`}>
               <div className="relative">
                 <BellIcon className="text-[#F37A20] mr-3 w-6" />
-                <div className="absolute content-[''] text-xs text-center w-4 h-4 top-[-4px] right-2 rounded-full bg-[#C40202] text-white">
-                  1
-                </div>
+                {notis && notis.length > 0 && (
+                  <div className="absolute content-[''] text-xs text-center w-4 h-4 top-[-4px] right-2 rounded-full bg-[#C40202] text-white">
+                    {notis.lenght}
+                  </div>
+                )}
               </div>
               <img
                 src="/imgs/messenger.svg"

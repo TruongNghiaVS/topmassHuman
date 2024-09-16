@@ -9,12 +9,14 @@ import { CardBootstrapIcon } from "@/theme/icons/cardBootstrapIcon";
 import useSWR from "swr";
 import { getToken } from "@/utils/token";
 import { DropdownUser } from "../header";
+import { GET_ALL_NOTIFICATION } from "@/utils/api-url";
 
 export const HeaderHrCenter = () => {
   const headerRef = useRef<HTMLDivElement | null>(null);
   const [isFixed, setIsFixed] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const { data: token } = useSWR("token", getToken, { refreshInterval: 500 });
+  const { data: notis, error } = useSWR(`${GET_ALL_NOTIFICATION}?Status=0`);
 
   useEffect(() => {
     if (token) {
@@ -78,9 +80,11 @@ export const HeaderHrCenter = () => {
               <div className={`items-center flex space-x-4`}>
                 <div className="relative">
                   <BellIcon className="text-[#F37A20] mr-3 w-6" />
-                  <div className="absolute content-[''] text-xs text-center w-4 h-4 top-[-4px] right-2 rounded-full bg-[#C40202] text-white">
-                    1
-                  </div>
+                  {notis && notis.length > 0 && (
+                    <div className="absolute content-[''] text-xs text-center w-4 h-4 top-[-4px] right-2 rounded-full bg-[#C40202] text-white">
+                      {notis.lenght}
+                    </div>
+                  )}
                 </div>
                 <img
                   src="/imgs/messenger.svg"

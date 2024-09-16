@@ -169,8 +169,6 @@ export default function RecruimentCampaign() {
                         {row.name}
                       </Link>
                     </div>
-                    <div>Tin tuyển dụng</div>
-                    <div>Xem CV ứng tuyển</div>
                     <button onClick={() => handleOpenPopup(row.name, row.id)}>
                       Sửa tên chiến dịch
                     </button>

@@ -1,5 +1,10 @@
+"use client";
+
+import { GET_DETAIL_NOTIFICATION } from "@/utils/api-url";
+import { fetcher } from "@/utils/axios";
 import { ArrowUturnLeftIcon } from "@heroicons/react/16/solid";
 import Link from "next/link";
+import useSWR from "swr";
 
 export default function DetailNotification({
   params,
@@ -7,7 +12,11 @@ export default function DetailNotification({
   params: { id: number };
 }) {
   const { id } = params;
-  // const {data:detailNoti ,error} = use
+  const { data: detailNoti, error } = useSWR(
+    `${GET_DETAIL_NOTIFICATION}?Id=${id}`,
+    fetcher
+  );
+
   return (
     <div className="min-h-screen">
       <div className="p-4 bg-white flex whitespace-nowrap space-x-4 items-center">
@@ -21,14 +30,8 @@ export default function DetailNotification({
         <div>Chi tiết thông báo</div>
       </div>
       <div className="m-6 bg-white p-4">
-        <div className="font-medium">
-          Cập nhật chính sách mới cho việc sử dụng tia sét đổi CV
-        </div>
-        <div className="mt-4">
-          Từ ngày 20/08/2024 Hạn sử dụng của các tia set qui đổi từ chương trình
-          đổi Cv sẽ được gia hạn đến 1 tháng 20 ngày. Vui lòng cập nhật thông
-          tin và sử dụng tia sét hợp lý để không bỏ qua bất kì tia sét nào.
-        </div>
+        <div className="font-medium">{detailNoti?.title} </div>
+        <div className="mt-4">{detailNoti?.content}</div>
       </div>
     </div>
   );

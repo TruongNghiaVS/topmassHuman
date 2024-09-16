@@ -1,7 +1,6 @@
 import {
   ArrowLeftCircleIcon,
   ArrowRightCircleIcon,
-  ShieldCheckIcon,
   UserIcon,
 } from "@heroicons/react/16/solid";
 import { MenuItem } from "./menu-items";
