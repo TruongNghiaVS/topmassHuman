@@ -10,7 +10,6 @@ export default function HrCenterLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const pathValidated = ["/dang-ky", "/dang-nhap", "/quen-mat-khau"];
   useAuth();
   return (
     <main>

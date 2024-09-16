@@ -182,11 +182,6 @@ export default function DetailCampaign({ params }: { params: { id: number } }) {
           <div>{getCampaignName()}</div>
         </div>
         <div>
-          {keySearch.resultCode}
-          {keySearch.reasonCode}
-          {keySearch.keyword}
-        </div>
-        <div>
           <div className="flex sm:space-x-2 sm:flex-row flex-col space-y-2 sm:space-y-0">
             <Link
               href="/hr-center/chien-dich-tuyen-dung/tao-tin-dang"

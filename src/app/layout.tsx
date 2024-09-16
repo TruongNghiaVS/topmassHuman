@@ -52,6 +52,8 @@ export default function RootLayout({
     "/dang-nhap",
     "/quen-mat-khau",
     "/hr-center",
+    "/khoi-tao-mat-khau",
+    "/xac-thuc-tai-khoan",
   ];
   return (
     <html lang="en">

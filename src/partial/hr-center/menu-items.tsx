@@ -72,7 +72,7 @@ export const MenuItem = () => {
     },
     {
       title: "Chính sách bảo mật và quy định sử dụng",
-      link: "chinh-sach-bao-mat",
+      link: "chinh-sach-va-quy-dinh",
       icon: <ShieldExclamationIcon className="w-4" />,
     },
   ];

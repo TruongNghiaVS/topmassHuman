@@ -14,7 +14,7 @@ import {
   CONFIRM_FORGOT_PASSWORD,
   FORGOT_CHANGE_PASSWORD,
 } from "@/utils/api-url";
-import { setToken } from "@/utils/token";
+import { removeToken, setToken } from "@/utils/token";
 import { useLoading } from "../context/loading";
 import { IConfirmResetPassword } from "@/interface/interface";
 
@@ -64,6 +64,7 @@ export default function ResetPassword() {
     try {
       await axiosInstance.post(FORGOT_CHANGE_PASSWORD, data);
       toast.success("Đổi mật khẩu thành công!");
+      removeToken();
       router.push("/dang-nhap");
     } catch (error) {
       toast.error("Đổi mật khẩu không thành công!");

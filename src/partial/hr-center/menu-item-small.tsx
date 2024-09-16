@@ -61,7 +61,7 @@ export const MenuItemSmall = () => {
       icon: <EnvelopeIcon className="w-6" />,
     },
     {
-      link: "chinh-sach-bao mat",
+      link: "chinh-sach-va-quy-dinh",
       icon: <ShieldExclamationIcon className="w-6" />,
     },
   ];
