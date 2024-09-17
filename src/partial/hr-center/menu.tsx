@@ -6,7 +6,7 @@ export const MenuHrCenter = () => {
     {
       title: "HR Center",
       subMenu: [],
-      link: "/hr-center/bang-tin",
+      link: "/hr-center/chien-dich-tuyen-dung",
       border: true,
       active: false,
       image: false,
