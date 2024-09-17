@@ -182,7 +182,7 @@ export const RecruimentNews = ({ idJob }: IDetailCvProps) => {
             name="search"
             control={control}
             value={dateSearch}
-            onChange={(e) => changeDateSearch(e.target.value)}
+            onChange={(e) => changeDateSearch(+e.target.value)}
             className="!w-auto"
             placeholder="Chọn"
             options={[
