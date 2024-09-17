@@ -111,7 +111,7 @@ export const Header = () => {
                   <br />
                   <div className="text-sm leading-[14px] pt-2 inline block font-medium">
                     <button onClick={openModal}>Đăng nhập</button>/
-                    <Link href="/dang-ky">đăng ký</Link>
+                    <Link href="/dang-ky">Đăng ký</Link>
                   </div>
                 </div>
               </div>

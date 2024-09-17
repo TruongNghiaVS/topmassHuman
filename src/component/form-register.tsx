@@ -97,9 +97,9 @@ export const FormRegister = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-2">
           <div className="">
-            Tên <span className="text-[#dc2f2f]">*</span>
+            Tên công ty <span className="text-[#dc2f2f]">*</span>
           </div>
-          <TmInput control={control} name="name" placeholder="Tên" />
+          <TmInput control={control} name="name" placeholder="Tên công ty" />
         </div>
         <div className="mb-2">
           <div className="">
