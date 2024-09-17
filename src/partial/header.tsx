@@ -106,24 +106,27 @@ export const Header = () => {
                   isLogin && "hidden"
                 }`}
               >
-                <button onClick={openModal}>
+                <div>
                   Nhà tuyển dụng
                   <br />
                   <div className="text-sm leading-[14px] pt-2 inline block font-medium">
-                    Đăng nhập/đăng ký
+                    <button onClick={openModal}>Đăng nhập</button>/
+                    <Link href="/dang-ky">đăng ký</Link>
                   </div>
-                </button>
+                </div>
               </div>
             </div>
             <div className={`items-center hidden ${isLogin && "!flex"}`}>
-              <div className="relative">
-                <BellIcon className="text-[#F37A20] mr-3 w-6" />
-                {notis && notis.length > 0 && (
-                  <div className="absolute content-[''] text-xs text-center w-4 h-4 top-[-4px] right-2 rounded-full bg-[#C40202] text-white">
-                    {notis.length}
-                  </div>
-                )}
-              </div>
+              <Link href="/hr-center/thong-bao">
+                <div className="relative">
+                  <BellIcon className="text-[#F37A20] mr-3 w-6" />
+                  {notis && notis.length > 0 && (
+                    <div className="absolute content-[''] text-xs text-center w-4 h-4 top-[-4px] right-2 rounded-full bg-[#C40202] text-white">
+                      {notis.length}
+                    </div>
+                  )}
+                </div>
+              </Link>
               <img
                 src="/imgs/messenger.svg"
                 alt=""

@@ -88,27 +88,29 @@ export const HeaderHrCenter = () => {
             </div>
             <div className={`hidden  ${isLogin && "!block"}  `}>
               <div className={`items-center flex space-x-4`}>
-                <div className="relative">
-                  <BellIcon className="text-[#F37A20] mr-3 w-6" />
-                  {notis && notis.length > 0 && (
-                    <div className="absolute content-[''] text-xs text-center w-4 h-4 top-[-4px] right-2 rounded-full bg-[#C40202] text-white">
-                      {notis.length}
-                    </div>
-                  )}
-                </div>
+                <Link href="/hr-center/thong-bao">
+                  <div className="relative">
+                    <BellIcon className="text-[#F37A20] mr-3 w-6" />
+                    {notis && notis.length > 0 && (
+                      <div className="absolute content-[''] text-xs text-center w-4 h-4 top-[-4px] right-2 rounded-full bg-[#C40202] text-white">
+                        {notis.length}
+                      </div>
+                    )}
+                  </div>
+                </Link>
                 <img
                   src="/imgs/messenger.svg"
                   alt=""
                   className="w-6 h-auto mr-3"
                 />
-                <Link href="/hr-center/gio-hang">
+                {/* <Link href="/hr-center/gio-hang">
                   <div
                     className={` flex items-center px-5 py-2 rounded-2xl bg-[#595757]`}
                   >
                     <CardBootstrapIcon className="w-6 text-default mr-2 text-white" />
                     <div className=" text-white">Giỏ hàng</div>
                   </div>
-                </Link>
+                </Link> */}
                 <div
                   className={` flex items-center px-5 py-1 rounded-2xl bg-[#595757]`}
                 >

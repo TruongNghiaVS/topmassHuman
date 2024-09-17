@@ -24,14 +24,14 @@ interface IItemProps {
 
 export const MenuItemSmall = () => {
   const data = [
-    {
-      link: "bang-tin",
-      icon: <RocketLaunchIcon className="w-6" />,
-    },
-    {
-      link: "dich-vu",
-      icon: <SparklesIcon className="w-6" />,
-    },
+    // {
+    //   link: "bang-tin",
+    //   icon: <RocketLaunchIcon className="w-6" />,
+    // },
+    // {
+    //   link: "dich-vu",
+    //   icon: <SparklesIcon className="w-6" />,
+    // },
     {
       link: "chien-dich-tuyen-dung",
       icon: <NewspaperIcon className="w-6" />,

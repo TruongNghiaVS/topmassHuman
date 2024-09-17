@@ -1,10 +1,109 @@
+import { useLoading } from "@/app/context/loading";
 import { Chart } from "@/component/chart";
 import TmSelect from "@/component/hook-form/select";
-import { recruimentNews } from "@/mockup-data/data";
+import {
+  IChartOverview,
+  IDetailCvProps,
+  IOverviewJob,
+} from "@/interface/interface";
+import { GET_CHART_OVERVIEW, GET_OVERVIEW_JOB } from "@/utils/api-url";
+import axiosInstance, { fetcher } from "@/utils/axios";
 import { PencilIcon } from "@heroicons/react/16/solid";
+import dayjs from "dayjs";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import useSWR from "swr";
 
-export const RecruimentNews = () => {
+export const RecruimentNews = ({ idJob }: IDetailCvProps) => {
+  const { setLoading } = useLoading();
+  const [infomationJob, setInfomationJob] = useState<IOverviewJob[]>([]);
+  const [dateSearch, setDateSearch] = useState<number>(7);
+  const [dataChart, setDataChart] = useState<IChartOverview>({
+    labels: [],
+    datasets: [
+      {
+        label: "",
+        data: [],
+        fill: false,
+        borderColor: "",
+        tension: 0.1,
+      },
+      {
+        label: "",
+        data: [],
+        fill: false,
+        borderColor: "",
+        tension: 0.1,
+      },
+    ],
+  });
+
+  const getData = async () => {
+    setLoading(true);
+    try {
+      const resInfo: any = await axiosInstance.get(GET_OVERVIEW_JOB, {
+        params: {
+          JobId: idJob,
+        },
+      });
+      if (resInfo) {
+        setInfomationJob([resInfo]);
+      }
+
+      const dateTo = dayjs();
+      const dateFrom = dayjs().subtract(dateSearch, "days");
+      const resChart: any = await axiosInstance.get(GET_CHART_OVERVIEW, {
+        params: {
+          Jobid: idJob,
+          From: dateFrom,
+          To: dateTo,
+        },
+      });
+      if (resChart) {
+        const labels = resChart.dataDraw.map((item: any) => item.dayReport);
+        const dataViews = resChart.dataDraw.map(
+          (item: any) => item.totalViewer
+        );
+        const dataApplys = resChart.dataDraw.map(
+          (item: any) => item.totalApply
+        );
+
+        const data = {
+          labels: labels,
+          datasets: [
+            {
+              label: "Lượt xem",
+              data: dataViews,
+              fill: false,
+              borderColor: "#DAFFD7",
+              tension: 0.1,
+            },
+            {
+              label: "Lượt ứng tuyển",
+              data: dataApplys,
+              fill: false,
+              borderColor: "#F37A20",
+              tension: 0.1,
+            },
+          ],
+        };
+
+        setDataChart(data);
+      }
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, [dateSearch]);
+
+  const changeDateSearch = (value: number) => {
+    setDateSearch(value);
+  };
+
   const header = [
     "Vị trí tuyển",
     "Dịch vụ sử dụng",
@@ -16,35 +115,9 @@ export const RecruimentNews = () => {
 
   const { control } = useForm({
     defaultValues: {
-      search: "7",
+      search: 7,
     },
   });
-
-  const data = {
-    labels: [
-      "20/08/2024",
-      "21/08/2024",
-      "22/08/2024",
-      "23/08/2024",
-      "24/08/2024",
-    ],
-    datasets: [
-      {
-        label: "Lượt xem",
-        data: [120, 100, 150, 80, 120, 160],
-        fill: false,
-        borderColor: "#DAFFD7",
-        tension: 0.1,
-      },
-      {
-        label: "Lượt ứng tuyển",
-        data: [140, 120, 100, 130, 100, 150],
-        fill: false,
-        borderColor: "#F37A20",
-        tension: 0.1,
-      },
-    ],
-  };
 
   return (
     <div className="">
@@ -65,17 +138,17 @@ export const RecruimentNews = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 text-xs">
-            {recruimentNews.map((row, idx) => (
+            {infomationJob.map((row, idx) => (
               <tr key={idx} className={`hover:bg-gray-100 text-center`}>
                 <td className="p-4 text-left">
                   <div className="flex justify-between items-center">
-                    {row.position}
-                    <PencilIcon className="w-6 p-1 rounded-full bg-[#E3E3E3]" />
+                    {row.jobName}
+                    {/* <PencilIcon className="w-6 p-1 rounded-full bg-[#E3E3E3]" /> */}
                   </div>
                 </td>
                 <td className="font-normal p-4">
                   <div className="inline-block px-2 py-1 rounded-xl bg-[#F37A20] text-white">
-                    {row.service}
+                    {row.serviceName}
                   </div>
                 </td>
                 <td className="p-4 ">
@@ -95,9 +168,9 @@ export const RecruimentNews = () => {
                     </span>
                   </div>
                 </td>
-                <td className={`p-4`}>{row.total_view}</td>
-                <td className="p-4 ">{row.total_view}</td>
-                <td className="p-4 ">{row.ratio_cv}</td>
+                <td className={`p-4`}>{row.totalViewer}</td>
+                <td className="p-4 ">{row.totalApply}</td>
+                <td className="p-4 ">{row.rate}% </td>
               </tr>
             ))}
           </tbody>
@@ -108,18 +181,20 @@ export const RecruimentNews = () => {
           <TmSelect
             name="search"
             control={control}
+            value={dateSearch}
+            onChange={(e) => changeDateSearch(e.target.value)}
             className="!w-auto"
             placeholder="Chọn"
             options={[
-              { label: "7 ngày", value: "7" },
-              { label: "14 ngày", value: "14" },
+              { label: "7 ngày", value: 7 },
+              { label: "14 ngày", value: 14 },
             ]}
           />
         </div>
       </div>
       <div className=" lg:px-20 mt-4">
         <div className="">
-          <Chart data={data} />
+          <Chart data={dataChart} />
         </div>
       </div>
     </div>

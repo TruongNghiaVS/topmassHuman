@@ -25,7 +25,7 @@ export default function ActivityHistory() {
           >
             <ClockIcon className="w-4 mr-2 text-default" /> Lịch sử truy cập
           </button>
-          <button
+          {/* <button
             onClick={() => setActive(1)}
             className={`flex p-2 rounded items-center w-full ${
               active === 1 && "bg-white"
@@ -42,7 +42,7 @@ export default function ActivityHistory() {
           >
             <IdentificationIcon className="w-4 mr-2 text-default" /> Lịch sử
             dùng điểm
-          </button>
+          </button> */}
           <button
             onClick={() => setActive(3)}
             className={`flex p-2 rounded items-center w-full ${

@@ -12,52 +12,52 @@ export const Menu = () => {
       border: false,
       patch_check: "/gioi-thieu",
     },
-    {
-      title: "Dịch Vụ",
-      subMenu: [
-        {
-          title: "Bí Quyết Tìm Việc",
-          slug: "/dich-vu/bi-quyet-tim-viec",
-          icon: (
-            <DocumentTextIcon className="text-default mr-2 text-[15px] leading-4 w-6" />
-          ),
-        },
-        {
-          title: "Thị Trường - Xu Hướng",
-          slug: "/dich-vu/thi-truong-xu-huong",
-          icon: (
-            <DocumentTextIcon className="text-default mr-2 text-[15px] leading-4 w-6" />
-          ),
-        },
-        {
-          title: "Góc Thư Giản",
-          slug: "/dich-vu/goc-thu-gian",
-          icon: (
-            <DocumentTextIcon className="text-default mr-2 text-[15px] leading-4 w-6" />
-          ),
-        },
-        {
-          title: "Tiện Ích",
-          slug: "/dich-vu/tien-ich",
-          icon: (
-            <DocumentTextIcon className="text-default mr-2 text-[15px] leading-4 w-6" />
-          ),
-        },
-        {
-          title: "Góc Báo Chí",
-          slug: "/dich-vu/goc-bao-chi",
-          icon: (
-            <DocumentTextIcon className="text-default mr-2 text-[15px] leading-4 w-6" />
-          ),
-        },
-      ],
-      border: false,
-      patch_check: "/dich-vu",
-    },
+    // {
+    //   title: "Dịch Vụ",
+    //   subMenu: [
+    //     {
+    //       title: "Bí Quyết Tìm Việc",
+    //       slug: "/dich-vu/bi-quyet-tim-viec",
+    //       icon: (
+    //         <DocumentTextIcon className="text-default mr-2 text-[15px] leading-4 w-6" />
+    //       ),
+    //     },
+    //     {
+    //       title: "Thị Trường - Xu Hướng",
+    //       slug: "/dich-vu/thi-truong-xu-huong",
+    //       icon: (
+    //         <DocumentTextIcon className="text-default mr-2 text-[15px] leading-4 w-6" />
+    //       ),
+    //     },
+    //     {
+    //       title: "Góc Thư Giản",
+    //       slug: "/dich-vu/goc-thu-gian",
+    //       icon: (
+    //         <DocumentTextIcon className="text-default mr-2 text-[15px] leading-4 w-6" />
+    //       ),
+    //     },
+    //     {
+    //       title: "Tiện Ích",
+    //       slug: "/dich-vu/tien-ich",
+    //       icon: (
+    //         <DocumentTextIcon className="text-default mr-2 text-[15px] leading-4 w-6" />
+    //       ),
+    //     },
+    //     {
+    //       title: "Góc Báo Chí",
+    //       slug: "/dich-vu/goc-bao-chi",
+    //       icon: (
+    //         <DocumentTextIcon className="text-default mr-2 text-[15px] leading-4 w-6" />
+    //       ),
+    //     },
+    //   ],
+    //   border: false,
+    //   patch_check: "/dich-vu",
+    // },
     {
       title: "HR Center",
       subMenu: [],
-      link: "/hr-center/bang-tin",
+      link: "/hr-center/chien-dich-tuyen-dung",
       border: true,
       patch_check: "/hr-center",
     },

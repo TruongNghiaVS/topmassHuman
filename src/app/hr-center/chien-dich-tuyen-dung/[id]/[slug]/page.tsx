@@ -68,7 +68,7 @@ export default function RecruimentPosition() {
         </button>
       </div>
       <div className="mt-4">
-        {selected === 1 && <RecruimentNews />}
+        {selected === 1 && <RecruimentNews idJob={idJob} />}
         {selected === 2 && <ApplicationCV idJob={idJob} />}
         {selected === 3 && <CandidateCv />}
         {selected === 4 && <CvSearch />}

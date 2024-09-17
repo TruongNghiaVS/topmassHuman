@@ -375,3 +375,27 @@ export interface INotification {
   status: number;
   id: number;
 }
+
+export interface IOverviewJob {
+  jobId: number;
+  jobName: string;
+  rate: number;
+  serviceName: string;
+  statusCode: number;
+  statusText: string;
+  totalApply: number;
+  totalViewer: string;
+}
+
+export interface IDatasets {
+  label: string;
+  data: number[];
+  fill: boolean;
+  borderColor: string;
+  tension: number;
+}
+
+export interface IChartOverview {
+  labels: string[];
+  datasets: IDatasets[];
+}

@@ -26,6 +26,9 @@ export const ADD_JOB = "/api/recruiter/Job/Add";
 export const CHANGE_STATUS_JOB = "/api/recruiter/Job/ChangeStatus";
 export const GET_DETAIL_JOB = "/api/recruiter/Job/GetInfo";
 export const UPDATE_JOB = "/api/recruiter/Job/Update";
+export const GET_OVERVIEW_JOB = "/api/recruiter/Job/GetOverViewInfoMation";
+export const GET_CHART_OVERVIEW =
+  "/api/recruiter/Job/GetDataChartCountViewByJob";
 
 //------- Master data -------//
 export const GET_PROVINCE = "/api/recruiter/Location/GetAllProvinces";
