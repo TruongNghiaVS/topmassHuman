@@ -45,10 +45,6 @@ export default function RecruimentCampaign() {
     setListDataSearch(listCampaign ? listCampaign.data : []);
   }, [listCampaign, setCampaigns, setListDataSearch]);
 
-  if (error) {
-    toast.error("Lấy danh sách chiến dịch thất bại");
-  }
-
   const { control } = useForm({
     defaultValues: {
       campaign: "",
