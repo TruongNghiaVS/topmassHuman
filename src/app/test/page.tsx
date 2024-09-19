@@ -1,83 +1,26 @@
 "use client";
-import * as Yup from "yup";
-import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import React from "react";
+import Link from "next/link";
+import { MouseEvent } from "react";
 
-const AddressSchema = Yup.object({
-  street: Yup.string().required("Street is required"),
-  city: Yup.string().required("City is required"),
-  zipCode: Yup.string()
-    .required("Zip Code is required")
-    .matches(/^\d{5}$/, "Zip Code must be exactly 5 digits"),
-});
+const CustomLink = () => {
+  const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    // Prevent the default behavior of Link navigation
+    e.preventDefault();
 
-const FormSchema = Yup.object({
-  addresses: Yup.array()
-    .of(AddressSchema)
-    .min(1, "At least one address is required")
-    .required("Addresses are required"),
-});
+    // Log your data here
+    console.log("Link clicked! Logging some data...");
 
-interface Address {
-  street: string;
-  city: string;
-  zipCode: string;
-}
-
-interface FormValues {
-  addresses: Address[];
-}
-
-const FormComponent: React.FC = () => {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormValues>({
-    resolver: yupResolver(FormSchema),
-  });
-
-  const onSubmit = (data: FormValues) => {
-    console.log(data);
+    // Open the link in a new tab
+    window.open("https://example.com", "_blank", "noopener,noreferrer");
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      {Array.from({ length: 3 }).map((_, index) => (
-        <div key={index}>
-          <Controller
-            name={`addresses.${index}.street`}
-            control={control}
-            render={({ field }) => <input {...field} placeholder="Street" />}
-          />
-          {errors.addresses?.[index]?.street && (
-            <p>{errors.addresses[index].street?.message}</p>
-          )}
-
-          <Controller
-            name={`addresses.${index}.city`}
-            control={control}
-            render={({ field }) => <input {...field} placeholder="City" />}
-          />
-          {errors.addresses?.[index]?.city && (
-            <p>{errors.addresses[index].city?.message}</p>
-          )}
-
-          <Controller
-            name={`addresses.${index}.zipCode`}
-            control={control}
-            render={({ field }) => <input {...field} placeholder="Zip Code" />}
-          />
-          {errors.addresses?.[index]?.zipCode && (
-            <p>{errors.addresses[index].zipCode?.message}</p>
-          )}
-        </div>
-      ))}
-
-      <button type="submit">Submit</button>
-    </form>
+    <Link href="https://example.com" legacyBehavior>
+      <a onClick={handleClick} className="text-blue-500 hover:underline">
+        Open Link and Log Data
+      </a>
+    </Link>
   );
 };
 
-export default FormComponent;
+export default CustomLink;
