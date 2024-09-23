@@ -25,11 +25,11 @@ interface IItemProps {
 
 export const MenuItem = () => {
   const data = [
-    // {
-    //   title: "Bảng tin",
-    //   link: "bang-tin",
-    //   icon: <RocketLaunchIcon className="w-4" />,
-    // },
+    {
+      title: "Bảng tin",
+      link: "bang-tin",
+      icon: <RocketLaunchIcon className="w-4" />,
+    },
     // {
     //   title: "Dịch vụ",
     //   link: "dich-vu",

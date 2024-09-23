@@ -45,7 +45,7 @@ export const LoginForm = ({ onClose }: ILoginForm) => {
       if (response && response.token) {
         Cookies.set("token", response.token, { expires: 7 });
         toast.success("Đăng nhập thành công");
-        router.push("/hr-center/chien-dich-tuyen-dung");
+        router.push("/hr-center/bang-tin");
       }
       if (onClose) {
         onClose();
