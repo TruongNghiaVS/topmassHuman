@@ -25,15 +25,17 @@ export const GET_ALL_JOB = "/api/recruiter/Job/GetAll";
 export const ADD_JOB = "/api/recruiter/Job/Add";
 export const CHANGE_STATUS_JOB = "/api/recruiter/Job/ChangeStatus";
 export const GET_DETAIL_JOB = "/api/recruiter/Job/GetInfo";
-export const UPDATE_JOB = "/api/recruiter/Job/Update";
+export const UPDATE_JOB = "/api/recruiter/Job/UpdateJob";
 export const GET_OVERVIEW_JOB = "/api/recruiter/Job/GetOverViewInfoMation";
 export const GET_CHART_OVERVIEW =
   "/api/recruiter/Job/GetDataChartCountViewByJob";
+export const GET_INFO_TO_EDIT = "/api/recruiter/Job/GetInfoForEdit";
 
 //------- Master data -------//
 export const GET_PROVINCE = "/api/recruiter/Location/GetAllProvinces";
 export const GET_DISTRICT = "/api/recruiter/Location/GetAllDistrict";
 export const GET_CAREER = "/api/recruiter/MasterData/GetAllCareer";
+export const GET_JOB_TYPE = "/api/recruiter/MasterData/GetAllJobType";
 export const GET_RANK_CANDIDATE =
   "/api/recruiter/MasterData/GetAllRankCandidate";
 export const GET_EXPERIENCE = "/api/recruiter/MasterData/GetAllExperience";

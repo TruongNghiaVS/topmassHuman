@@ -26,7 +26,9 @@ export const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const [notis, setNotis] = useState<INotification[]>([]);
-  const { data: token } = useSWR("token", getToken, { refreshInterval: 1000 });
+  const { data: token, mutate } = useSWR("token", getToken, {
+    refreshInterval: 100,
+  });
   const { data: listNotis, error } = useSWR(
     `${GET_ALL_NOTIFICATION}?status=0`,
     fetcher
@@ -137,7 +139,11 @@ export const Header = () => {
                   <UserIcon className="text-white w-6" />
                 </div>
                 <ChevronDownIcon className="text-[#F37A20] mr-3 w-6" />
-                <DropdownUser pathCheck="" setIsLogin={setIsLogin} />
+                <DropdownUser
+                  pathCheck=""
+                  setIsLogin={setIsLogin}
+                  mutate={mutate}
+                />
               </div>
             </div>
             <div className={` hidden items-center ${isLogin && "!flex"}`}>
@@ -169,6 +175,7 @@ export const DropdownUser = ({
   subMenu,
   pathCheck,
   setIsLogin,
+  mutate,
 }: IDropdownMenu) => {
   const path = usePathname();
   const router = useRouter();
@@ -177,6 +184,9 @@ export const DropdownUser = ({
     setIsLogin(false);
     toast.success("Đăng xuất thành công");
     router.push("/");
+    if (mutate) {
+      mutate();
+    }
   };
 
   return (

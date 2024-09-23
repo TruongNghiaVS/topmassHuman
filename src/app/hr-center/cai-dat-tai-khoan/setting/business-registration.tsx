@@ -9,7 +9,6 @@ import { ADD_BUSINESSLICENSE, UPLOAD_IMG } from "@/utils/api-url";
 import axiosInstance, { axiosInstanceImg } from "@/utils/axios";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import * as yup from "yup";

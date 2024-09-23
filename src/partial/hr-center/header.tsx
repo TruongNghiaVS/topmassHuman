@@ -5,7 +5,6 @@ import { BellIcon, UserIcon, ChevronDownIcon } from "@heroicons/react/16/solid";
 
 import { useEffect, useRef, useState } from "react";
 import { MenuHrCenter } from "./menu";
-import { CardBootstrapIcon } from "@/theme/icons/cardBootstrapIcon";
 import useSWR from "swr";
 import { getToken } from "@/utils/token";
 import { DropdownUser } from "../header";
@@ -18,7 +17,9 @@ export const HeaderHrCenter = () => {
   const [isFixed, setIsFixed] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const [notis, setNotis] = useState<INotification[]>([]);
-  const { data: token } = useSWR("token", getToken, { refreshInterval: 500 });
+  const { data: token, mutate } = useSWR("token", getToken, {
+    refreshInterval: 100,
+  });
   const { data: listNotis, error } = useSWR(
     `${GET_ALL_NOTIFICATION}?Status=0`,
     fetcher
@@ -132,7 +133,11 @@ export const HeaderHrCenter = () => {
                     <UserIcon className="text-white w-6" />
                   </div>
                   <ChevronDownIcon className="text-[#F37A20] w-6" />
-                  <DropdownUser pathCheck="" setIsLogin={setIsLogin} />
+                  <DropdownUser
+                    pathCheck=""
+                    setIsLogin={setIsLogin}
+                    mutate={mutate}
+                  />
                 </div>
               </div>
             </div>

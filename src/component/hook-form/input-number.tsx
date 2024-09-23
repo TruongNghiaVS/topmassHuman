@@ -47,12 +47,8 @@ const TmInputNumber: React.FC<ITmInputNumber> = ({
         </button>
         <input
           type="number"
-          defaultValue={
-            value !== undefined && !isNaN(value)
-              ? value.toString()
-              : min && 0 < min
-              ? min
-              : 0
+          value={
+            value && !isNaN(value) ? value.toString() : min && 0 < min ? min : 0
           }
           onChange={onChange}
           min={min}

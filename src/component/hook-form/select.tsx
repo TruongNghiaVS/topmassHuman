@@ -30,6 +30,10 @@ const TmSelect: React.FC<ITmSelect> = ({
     }
   };
 
+  const getValue = (value: any) => {
+    return typeof value === "string" ? "" : -1;
+  };
+
   return (
     <div className={classNameCustom}>
       <div className="relative flex items-center">
@@ -39,12 +43,12 @@ const TmSelect: React.FC<ITmSelect> = ({
           {...field}
           {...rest}
           onChange={handleChange}
-          className={`p-2 border rounded-md w-full ${className} ${
+          className={`px-2 py-2.5 border rounded-md w-full ${className} ${
             icon && "pl-10"
           }  ${error ? "border-red-500" : "border-gray-300"}`}
         >
           {placeholder.length && (
-            <option value="" disabled>
+            <option value={getValue(field.value)} disabled>
               {placeholder}
             </option>
           )}

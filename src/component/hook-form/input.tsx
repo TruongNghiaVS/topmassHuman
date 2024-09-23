@@ -29,7 +29,7 @@ const TmInput: React.FC<ITmInput> = ({
           {...field}
           {...rest}
           placeholder={placeholder}
-          className={`p-2 border rounded-md w-full focus-visible:outline-none ${className} ${
+          className={`px-2 py-[9px] border rounded-md w-full focus-visible:outline-none ${className} ${
             icon && "pl-10"
           } ${error ? "border-red-500" : "border-gray-300"}`}
         />

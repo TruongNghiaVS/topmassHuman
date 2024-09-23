@@ -91,7 +91,7 @@ export default function CreateCampaign() {
                   type="submit"
                   className="w-full mt-4 py-3 text-white bg-[#0F7A00] rounded-lg text-base font-bold"
                 >
-                  Cập nhật
+                  Thêm mới
                 </button>
               </form>
             </div>

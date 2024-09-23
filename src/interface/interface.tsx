@@ -100,6 +100,7 @@ export type IDropdownMenu = {
   }[];
   pathCheck: string;
   setIsLogin: Dispatch<SetStateAction<boolean>>;
+  mutate?: KeyedMutator<string | undefined>;
 };
 
 export interface IConfirmResetPassword {
@@ -179,14 +180,14 @@ export interface IModalEditCampaign {
 
 export interface IFormCreateNew {
   name: string;
-  campagnId?: string;
+  campagnId?: number;
   position: string;
-  profession: string;
+  profession: number;
   expired_date: string;
   quantity: number;
-  type_of_work: string;
-  rank: string;
-  experience: string;
+  type_of_work: number;
+  rank: number;
+  experience: number;
   locations: {
     location: string;
     districts: {
@@ -203,8 +204,8 @@ export interface IFormCreateNew {
   aggrement?: boolean;
   salary_from?: number;
   salary_to?: number;
-  type_money?: string;
-  gender?: string;
+  type_money?: number;
+  gender?: number;
   description: string;
   requirement: string;
   benefit: string;

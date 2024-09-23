@@ -30,6 +30,7 @@ import {
   GET_CAREER,
   GET_DISTRICT,
   GET_EXPERIENCE,
+  GET_JOB_TYPE,
   GET_PROVINCE,
   GET_RANK_CANDIDATE,
 } from "@/utils/api-url";
@@ -52,17 +53,27 @@ const CustomCKEditor = dynamic(
 
 const schema = yup.object().shape({
   name: yup.string().required("Vui lòng nhập tên"),
-  campagnId: yup.string(),
+  campagnId: yup.number(),
   position: yup.string().required("Vui lòng nhập vị trí tuyển dụng"),
-  profession: yup.string().required("Chọn ngành nghề"),
+  profession: yup
+    .number()
+    .required("Vui lòng chọn ngành nghề")
+    .min(0, "Vui lòng chọn ngành nghề"),
+
   expired_date: yup.string().required("Vui lòng nhập hạn nhận hồ sơ"),
   quantity: yup
     .number()
     .required("Vui lòng nhập số lượng tuyển")
     .min(1, "Vui lòng nhập số lượng tuyển"),
-  type_of_work: yup.string().required("Vui lòng chọn loại công việc"),
-  rank: yup.string().required("Vui lòng chọn cấp bậc"),
-  experience: yup.string().required("Vui lòng chọn kinh nghiệm làm việc"),
+  type_of_work: yup.number().required("Vui lòng chọn loại công việc"),
+  rank: yup
+    .number()
+    .required("Vui lòng chọn cấp bậc")
+    .min(0, "Vui lòng chọn cấp bậc"),
+  experience: yup
+    .number()
+    .required("Vui lòng chọn kinh nghiệm làm việc")
+    .min(0, "Vui lòng chọn kinh nghiệm làm việc"),
   locations: yup
     .array()
     .of(
@@ -107,8 +118,8 @@ const schema = yup.object().shape({
       ? schema.required("Vui lòng nhập số tiền").min(1, "Vui lòng nhập số tiền")
       : schema;
   }),
-  type_money: yup.string(),
-  gender: yup.string(),
+  type_money: yup.number(),
+  gender: yup.number(),
   description: yup.string().required("Vui lòng nhập mô tả công việc"),
   requirement: yup.string().required("Vui lòng nhập yêu cầu ứng viên"),
   benefit: yup.string().required("Vui lòng nhập quyền lợi của ứng viên"),
@@ -146,7 +157,8 @@ export default function CreateNew() {
   const [jobTypes, setJobTypes] = useState<Option[]>([]);
   const [ranks, setRanks] = useState<Option[]>([]);
   const [experiences, setExperiences] = useState<Option[]>([]);
-  const [status, setStatus] = useState<number>(5);
+  const [isSkipValidate, setIsSkipValidate] = useState(true);
+
   const getAllProvinces = async () => {
     setLoading(true);
     try {
@@ -178,7 +190,7 @@ export default function CreateNew() {
         };
       });
       setCareers(listCareers);
-      const resJobTypes = await axiosInstance.get(GET_CAREER);
+      const resJobTypes = await axiosInstance.get(GET_JOB_TYPE);
       const listJobTypes = resJobTypes.data.map((item: ICareer) => {
         return {
           value: item.id,
@@ -216,19 +228,20 @@ export default function CreateNew() {
     control,
     handleSubmit,
     getValues,
+    reset,
     formState: { errors },
   } = useForm<IFormCreateNew>({
-    resolver: yupResolver(schema),
+    resolver: !isSkipValidate ? yupResolver(schema) : undefined,
     defaultValues: {
       name: "",
-      campagnId: "",
+      campagnId: -1,
       position: "",
-      profession: "",
+      profession: -1,
       expired_date: new Date().toISOString().split("T")[0],
       quantity: 0,
-      type_of_work: "",
-      rank: "",
-      experience: "",
+      type_of_work: -1,
+      rank: -1,
+      experience: -1,
       locations: [
         {
           location: "",
@@ -251,8 +264,8 @@ export default function CreateNew() {
       aggrement: false,
       salary_from: 0,
       salary_to: 0,
-      type_money: "",
-      gender: "",
+      type_money: -1,
+      gender: 0,
       description: "",
       requirement: "",
       benefit: "",
@@ -290,26 +303,29 @@ export default function CreateNew() {
     name: "locations",
   });
 
-  const onSubmit: SubmitHandler<IFormCreateNew> = async (data, event) => {
+  const onSubmit = async (data: IFormCreateNew) => {
     setLoading(true);
-
     try {
-      const target = event?.target as HTMLDivElement;
-      const dataType = target.getAttribute("data-type");
       const dataSubmit: any = { ...data };
-      if (dataType === "save-draff") {
+      dataSubmit.Campaign = data.campagnId;
+      if (isSkipValidate) {
         dataSubmit.status = 5;
       } else {
         dataSubmit.status = 1;
       }
-
       const response = await axiosInstance.post(ADD_JOB, dataSubmit);
       toast.success("Tạo tin thành công");
+      reset();
     } catch (error) {
       toast.error("Tạo tin lỗi");
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSubmitData = (isDraff: boolean) => {
+    setIsSkipValidate(isDraff);
+    handleSubmit(onSubmit)();
   };
 
   return (
@@ -625,16 +641,14 @@ export default function CreateNew() {
           <div className="mt-4 flex space-x-4 justify-end">
             <button
               type="button"
-              data-type="save-draff"
-              onClick={handleSubmit(onSubmit)}
+              onClick={() => handleSubmitData(false)}
               className="bg-[#137F04] text-white rounded flex space-x-1 items-center px-3 py-1 text-base"
             >
               <DocumentTextIcon className="w-4" /> Lưu nháp
             </button>
             <button
               className="bg-[#137F04] text-white rounded flex space-x-1 items-center px-3 py-1 text-base"
-              onClick={handleSubmit(onSubmit)}
-              data-type="save"
+              onClick={() => handleSubmitData(true)}
               type="button"
             >
               <PencilSquareIcon className="w-4" /> Đăng tin

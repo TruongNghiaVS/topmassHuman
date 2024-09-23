@@ -7,7 +7,6 @@ import TmSelect from "@/component/hook-form/select";
 import { gender, salaryOptions } from "@/mockup-data/data";
 import {
   ArrowUturnLeftIcon,
-  DocumentTextIcon,
   MapPinIcon,
   PencilSquareIcon,
   PlusCircleIcon,
@@ -23,12 +22,12 @@ import { toast } from "react-toastify";
 import { useLoading } from "@/app/context/loading";
 import axiosInstance, { fetcher } from "@/utils/axios";
 import {
-  ADD_JOB,
   GET_ALL_CAMPAIGN,
   GET_CAREER,
-  GET_DETAIL_JOB,
   GET_DISTRICT,
   GET_EXPERIENCE,
+  GET_INFO_TO_EDIT,
+  GET_JOB_TYPE,
   GET_PROVINCE,
   GET_RANK_CANDIDATE,
   UPDATE_JOB,
@@ -37,8 +36,6 @@ import {
   ICampaign,
   ICareer,
   IFormCreateNew,
-  IInfoJobUpdate,
-  IJob,
   IProvinces,
 } from "@/interface/interface";
 import { useEffect, useState } from "react";
@@ -58,17 +55,27 @@ const CustomCKEditor = dynamic(
 
 const schema = yup.object().shape({
   name: yup.string().required("Vui lòng nhập tên"),
-  campagnId: yup.string(),
+  campagnId: yup.number(),
   position: yup.string().required("Vui lòng nhập vị trí tuyển dụng"),
-  profession: yup.string().required("Chọn ngành nghề"),
+  profession: yup
+    .number()
+    .required("Vui lòng chọn ngành nghề")
+    .min(0, "Vui lòng chọn ngành nghề"),
+
   expired_date: yup.string().required("Vui lòng nhập hạn nhận hồ sơ"),
   quantity: yup
     .number()
     .required("Vui lòng nhập số lượng tuyển")
     .min(1, "Vui lòng nhập số lượng tuyển"),
-  type_of_work: yup.string().required("Vui lòng chọn loại công việc"),
-  rank: yup.string().required("Vui lòng chọn cấp bậc"),
-  experience: yup.string().required("Vui lòng chọn kinh nghiệm làm việc"),
+  type_of_work: yup.number().required("Vui lòng chọn loại công việc"),
+  rank: yup
+    .number()
+    .required("Vui lòng chọn cấp bậc")
+    .min(0, "Vui lòng chọn cấp bậc"),
+  experience: yup
+    .number()
+    .required("Vui lòng chọn kinh nghiệm làm việc")
+    .min(0, "Vui lòng chọn kinh nghiệm làm việc"),
   locations: yup
     .array()
     .of(
@@ -113,8 +120,8 @@ const schema = yup.object().shape({
       ? schema.required("Vui lòng nhập số tiền").min(1, "Vui lòng nhập số tiền")
       : schema;
   }),
-  type_money: yup.string(),
-  gender: yup.string(),
+  type_money: yup.number(),
+  gender: yup.number(),
   description: yup.string().required("Vui lòng nhập mô tả công việc"),
   requirement: yup.string().required("Vui lòng nhập yêu cầu ứng viên"),
   benefit: yup.string().required("Vui lòng nhập quyền lợi của ứng viên"),
@@ -146,7 +153,7 @@ const schema = yup.object().shape({
 export default function UpdateJob() {
   const { setLoading } = useLoading();
   const [provinces, setProvinces] = useState<Option[]>([]);
-  const [district, setDistrict] = useState<Option[]>([]);
+  const [district, setDistrict] = useState<Option[][]>([[]]);
   const [campaigns, setCampaigns] = useState<Option[]>([]);
   const [careers, setCareers] = useState<Option[]>([]);
   const [jobTypes, setJobTypes] = useState<Option[]>([]);
@@ -157,11 +164,11 @@ export default function UpdateJob() {
   const idUpdate = searchParams.get("idUpdate");
   const router = useRouter();
   const { data: jobInfo, error } = useSWR(
-    `${GET_DETAIL_JOB}?jobId=${idUpdate}`,
+    `${GET_INFO_TO_EDIT}?jobId=${idUpdate}`,
     fetcher
   );
 
-  const getAllProvinces = async () => {
+  const getAllData = async () => {
     setLoading(true);
     try {
       const response = await axiosInstance.get(GET_PROVINCE);
@@ -192,7 +199,7 @@ export default function UpdateJob() {
         };
       });
       setCareers(listCareers);
-      const resJobTypes = await axiosInstance.get(GET_CAREER);
+      const resJobTypes = await axiosInstance.get(GET_JOB_TYPE);
       const listJobTypes = resJobTypes.data.map((item: ICareer) => {
         return {
           value: item.id,
@@ -227,19 +234,20 @@ export default function UpdateJob() {
     handleSubmit,
     getValues,
     setValue,
+    reset,
     formState: { errors },
   } = useForm<IFormCreateNew>({
     resolver: yupResolver(schema),
     defaultValues: {
       name: "",
-      campagnId: "",
+      campagnId: -1,
       position: "",
-      profession: "",
+      profession: -1,
       expired_date: new Date().toISOString().split("T")[0],
-      quantity: 0,
-      type_of_work: "",
-      rank: "",
-      experience: "",
+      quantity: -1,
+      type_of_work: -1,
+      rank: -1,
+      experience: -1,
       locations: [
         {
           location: "",
@@ -262,8 +270,8 @@ export default function UpdateJob() {
       aggrement: false,
       salary_from: 0,
       salary_to: 0,
-      type_money: "",
-      gender: "",
+      type_money: -1,
+      gender: 0,
       description: "",
       requirement: "",
       benefit: "",
@@ -275,12 +283,24 @@ export default function UpdateJob() {
   });
 
   useEffect(() => {
-    getAllProvinces();
+    getAllData();
     if (jobInfo) {
-      setValue("name", jobInfo.name);
-      setValue("campagnId", jobInfo.campagn.toString());
+      jobInfo.expired_date = jobInfo.expired_date
+        ? jobInfo.expired_date.split("T")[0]
+        : new Date().toISOString().split("T")[0];
+      jobInfo.time_working = jobInfo.timeWorks;
+      reset(jobInfo);
+      handleFilterListDistrict(
+        jobInfo.locations.map((item: any) => item.location)
+      );
     }
-  }, [jobInfo, setValue]);
+  }, [jobInfo]);
+
+  const handleFilterListDistrict = (ids: number[]) => {
+    ids.forEach((id, index) => {
+      handleFilterDistrict(id.toString(), index);
+    });
+  };
 
   const handleFilterDistrict = async (value: string, index: number) => {
     setLoading(true);
@@ -297,7 +317,10 @@ export default function UpdateJob() {
         };
       });
 
-      setDistrict(listDistrict);
+      setDistrict((prevItem) => {
+        prevItem[index] = listDistrict;
+        return prevItem;
+      });
     } catch (error) {
     } finally {
       setLoading(false);
@@ -313,7 +336,7 @@ export default function UpdateJob() {
     setLoading(true);
     try {
       const dataUpdate: any = { ...data };
-      dataUpdate.idUpdate = idUpdate;
+      dataUpdate.jobId = idUpdate ? +idUpdate : 0;
       const response = await axiosInstance.post(UPDATE_JOB, dataUpdate);
       toast.success("Cập nhật thành công");
       router.push(`/hr-center/chien-dich-tuyen-dung/${data.campagnId}`);
@@ -411,6 +434,11 @@ export default function UpdateJob() {
                   className="absolute right-1 top-1"
                   onClick={() => {
                     remove(index);
+                    setDistrict((prevItem) =>
+                      prevItem.filter(
+                        (data: Option[], idx: number) => idx !== index
+                      )
+                    );
                   }}
                 >
                   <XMarkIcon className="w-6" />
@@ -435,7 +463,7 @@ export default function UpdateJob() {
                 <div className="mt-4">
                   <LocationForm
                     control={control}
-                    options={district}
+                    options={district[index]}
                     name={`locations.${index}.districts`}
                   />
                 </div>
