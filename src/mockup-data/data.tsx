@@ -313,8 +313,8 @@ export const locations = [
 ];
 
 export const salaryOptions = [
-  { value: 0, label: "VNĐ" },
-  { value: 1, label: "USD" },
+  { value: "0", label: "VNĐ" },
+  { value: "1", label: "USD" },
 ];
 
 export const dayOfWeek = [

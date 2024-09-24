@@ -120,7 +120,7 @@ const schema = yup.object().shape({
       ? schema.required("Vui lòng nhập số tiền").min(1, "Vui lòng nhập số tiền")
       : schema;
   }),
-  type_money: yup.number(),
+  type_money: yup.string(),
   gender: yup.number(),
   description: yup.string().required("Vui lòng nhập mô tả công việc"),
   requirement: yup.string().required("Vui lòng nhập yêu cầu ứng viên"),
@@ -233,7 +233,6 @@ export default function UpdateJob() {
     control,
     handleSubmit,
     getValues,
-    setValue,
     reset,
     formState: { errors },
   } = useForm<IFormCreateNew>({
@@ -270,7 +269,7 @@ export default function UpdateJob() {
       aggrement: false,
       salary_from: 0,
       salary_to: 0,
-      type_money: -1,
+      type_money: "",
       gender: 0,
       description: "",
       requirement: "",
@@ -289,6 +288,7 @@ export default function UpdateJob() {
         ? jobInfo.expired_date.split("T")[0]
         : new Date().toISOString().split("T")[0];
       jobInfo.time_working = jobInfo.timeWorks;
+      jobInfo.campagnId = jobInfo.campaign;
       reset(jobInfo);
       handleFilterListDistrict(
         jobInfo.locations.map((item: any) => item.location)
@@ -334,6 +334,7 @@ export default function UpdateJob() {
 
   const onSubmit: SubmitHandler<IFormCreateNew> = async (data) => {
     setLoading(true);
+    console.log("___");
     try {
       const dataUpdate: any = { ...data };
       dataUpdate.jobId = idUpdate ? +idUpdate : 0;
@@ -369,7 +370,7 @@ export default function UpdateJob() {
       </div>
       <div className="mt-4 lg:px-40 px-2">
         <div className="font-medium">Thông tin chung</div>
-        <form className="mt-2 pb-10">
+        <form className="mt-2 pb-10" onSubmit={handleSubmit(onSubmit)}>
           <div className="mt-2">
             <div className="font-medium">
               Tên tiêu đề <span className="text-[#dc2f2f]">*</span>
@@ -665,9 +666,7 @@ export default function UpdateJob() {
           <div className="mt-4 flex space-x-4 justify-end">
             <button
               className="bg-[#137F04] text-white rounded flex space-x-1 items-center px-3 py-1 text-base"
-              onClick={handleSubmit(onSubmit)}
-              data-type="save"
-              type="button"
+              type="submit"
             >
               <PencilSquareIcon className="w-4" /> Cập nhật
             </button>

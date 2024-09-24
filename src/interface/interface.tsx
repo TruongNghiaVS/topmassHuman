@@ -204,7 +204,7 @@ export interface IFormCreateNew {
   aggrement?: boolean;
   salary_from?: number;
   salary_to?: number;
-  type_money?: number;
+  type_money?: string;
   gender?: number;
   description: string;
   requirement: string;

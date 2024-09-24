@@ -118,7 +118,7 @@ const schema = yup.object().shape({
       ? schema.required("Vui lòng nhập số tiền").min(1, "Vui lòng nhập số tiền")
       : schema;
   }),
-  type_money: yup.number(),
+  type_money: yup.string(),
   gender: yup.number(),
   description: yup.string().required("Vui lòng nhập mô tả công việc"),
   requirement: yup.string().required("Vui lòng nhập yêu cầu ứng viên"),
@@ -264,7 +264,7 @@ export default function CreateNew() {
       aggrement: false,
       salary_from: 0,
       salary_to: 0,
-      type_money: -1,
+      type_money: "",
       gender: 0,
       description: "",
       requirement: "",
