@@ -57,7 +57,7 @@ export const Menu = () => {
     {
       title: "HR Center",
       subMenu: [],
-      link: "/hr-center/chien-dich-tuyen-dung",
+      link: "/hr-center/bang-tin",
       border: true,
       patch_check: "/hr-center",
     },

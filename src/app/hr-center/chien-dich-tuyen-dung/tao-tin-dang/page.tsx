@@ -222,7 +222,7 @@ export default function CreateNew() {
 
   useEffect(() => {
     getAllProvinces();
-  }, []);
+  }, [setIsSkipValidate]);
 
   const {
     control,
@@ -231,7 +231,7 @@ export default function CreateNew() {
     reset,
     formState: { errors },
   } = useForm<IFormCreateNew>({
-    resolver: !isSkipValidate ? yupResolver(schema) : undefined,
+    resolver: isSkipValidate ? yupResolver(schema) : undefined,
     defaultValues: {
       name: "",
       campagnId: -1,
@@ -325,7 +325,9 @@ export default function CreateNew() {
 
   const handleSubmitData = (isDraff: boolean) => {
     setIsSkipValidate(isDraff);
-    handleSubmit(onSubmit)();
+    setTimeout(() => {
+      handleSubmit(onSubmit)();
+    }, 200);
   };
 
   return (
@@ -348,6 +350,7 @@ export default function CreateNew() {
           <PlusCircleIcon className="w-4 mr-2" /> Thêm mới chiến dịch
         </Link>
       </div>
+      <div>{isSkipValidate.toString()}</div>
       <div className="mt-4 lg:px-40 px-2">
         <div className="font-medium">Thông tin chung</div>
         <form className="mt-2 pb-10">
