@@ -309,9 +309,9 @@ export default function CreateNew() {
       const dataSubmit: any = { ...data };
       dataSubmit.Campaign = data.campagnId;
       if (isSkipValidate) {
-        dataSubmit.status = 5;
-      } else {
         dataSubmit.status = 1;
+      } else {
+        dataSubmit.status = 5;
       }
       const response = await axiosInstance.post(ADD_JOB, dataSubmit);
       toast.success("Tạo tin thành công");
