@@ -78,7 +78,6 @@ export const ModalChangeStatus = ({
           <TmSelect
             control={control}
             name="noteCode"
-            value={status}
             options={listStatus}
             placeholder="Trạng thái"
           />
