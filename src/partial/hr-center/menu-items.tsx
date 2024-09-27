@@ -41,7 +41,7 @@ export const MenuItem = () => {
       icon: <NewspaperIcon className="w-4" />,
     },
     {
-      title: "Quản lý cv",
+      title: "Quản lý CV",
       link: "quan-ly-cv",
       icon: <DocumentTextIcon className="w-4" />,
     },

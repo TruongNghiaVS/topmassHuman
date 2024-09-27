@@ -29,15 +29,16 @@ export const ModalChangeStatus = ({
   mutate,
 }: IModalChangeStatusProps) => {
   const { setLoading } = useLoading();
+  console.log("status",status);
   const schema = yup.object().shape({
-    noteCode: yup.string().required("Trạng thái không được để trống"),
+    noteCode: yup.number().required("Trạng thái không được để trống"),
     noted: yup.string(),
   });
 
   const { control, handleSubmit } = useForm<IUpdateStatusCandidate>({
     resolver: yupResolver(schema),
     defaultValues: {
-      noteCode: status.toString(),
+      noteCode: status,
       noted: "",
     },
   });

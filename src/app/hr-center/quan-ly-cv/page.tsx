@@ -233,9 +233,11 @@ export default function ManagerCV() {
                   <td className="min-w-[30px] ">
                     <button
                       onClick={() => (
+                        
                         setIsOpenModal(true),
                         setIdUpdate(row.id),
                         setStatusUpdate(row.statusCode)
+                        
                       )}
                     >
                       <PencilSquareIcon className="w-4" />

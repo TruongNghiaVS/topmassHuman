@@ -320,7 +320,7 @@ export interface IModalChangeStatusProps {
 }
 
 export interface IUpdateStatusCandidate {
-  noteCode: string;
+  noteCode: number;
   noted?: string;
 }
 
