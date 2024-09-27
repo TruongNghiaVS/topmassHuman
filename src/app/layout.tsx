@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { LoadingProvider } from "./context/loading";
 import GlobalLoadingIndicator from "@/component/loading-component";
 import { Suspense } from "react";
+import { SWRConfig } from "swr";
 
 const roboto = localFont({
   src: [
@@ -59,17 +60,23 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${roboto.variable} font-roboto  min-h-screen `}>
         <LoadingProvider>
-          <GlobalLoadingIndicator />
-          <Suspense>
-            {!pathValidated.includes(path) && (
-              <div className="relative z-[10]">
-                <Header />
-              </div>
-            )}
-            {children}
-            <ToastContainer autoClose={1000} />
-            {!pathValidated.includes(path) && <Footer />}
-          </Suspense>
+          <SWRConfig
+            value={{
+              revalidateOnFocus: false, // Disable revalidation on focus
+            }}
+          >
+            <GlobalLoadingIndicator />
+            <Suspense>
+              {!pathValidated.includes(path) && (
+                <div className="relative z-[10]">
+                  <Header />
+                </div>
+              )}
+              {children}
+              <ToastContainer autoClose={1000} />
+              {!pathValidated.includes(path) && <Footer />}
+            </Suspense>
+          </SWRConfig>
         </LoadingProvider>
       </body>
     </html>
