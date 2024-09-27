@@ -232,13 +232,12 @@ export default function ManagerCV() {
                   </td>
                   <td className="min-w-[30px] ">
                     <button
-                      onClick={() => (
-                        
-                        setIsOpenModal(true),
-                        setIdUpdate(row.id),
-                        setStatusUpdate(row.statusCode)
-                        
-                      )}
+                      onClick={() => {
+                        console.log(row.statusCode);
+                        setStatusUpdate(row.statusCode);
+                        setIdUpdate(row.id);
+                        setIsOpenModal(true);
+                      }}
                     >
                       <PencilSquareIcon className="w-4" />
                     </button>

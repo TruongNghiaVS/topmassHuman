@@ -335,7 +335,7 @@ export interface IManagerCv {
   phone: string;
   fullName: string;
   email: string;
-  statusCode: 0;
+  statusCode: number;
   cvId: number;
   statusText: string;
   jobId: number;

@@ -9,6 +9,7 @@ import { UPDATE_STATUS_CV_CANDIDATE } from "@/utils/api-url";
 import axiosInstance from "@/utils/axios";
 import { yupResolver } from "@hookform/resolvers/yup";
 import dynamic from "next/dynamic";
+import { useEffect, useMemo } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import * as yup from "yup";
@@ -29,17 +30,23 @@ export const ModalChangeStatus = ({
   mutate,
 }: IModalChangeStatusProps) => {
   const { setLoading } = useLoading();
-  console.log("status",status);
   const schema = yup.object().shape({
     noteCode: yup.number().required("Trạng thái không được để trống"),
     noted: yup.string(),
   });
 
-  const { control, handleSubmit } = useForm<IUpdateStatusCandidate>({
+  useEffect(() => {
+    reset({
+      noted: "",
+      noteCode: status,
+    });
+  }, [status]);
+
+  const { control, handleSubmit, reset } = useForm<IUpdateStatusCandidate>({
     resolver: yupResolver(schema),
     defaultValues: {
-      noteCode: status,
       noted: "",
+      noteCode: -1,
     },
   });
 
@@ -71,6 +78,7 @@ export const ModalChangeStatus = ({
           <TmSelect
             control={control}
             name="noteCode"
+            value={status}
             options={listStatus}
             placeholder="Trạng thái"
           />
