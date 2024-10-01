@@ -400,3 +400,20 @@ export interface IChartOverview {
   labels: string[];
   datasets: IDatasets[];
 }
+
+export interface IHistory {
+  timeBusiness: string;
+  content: string;
+  timeText: string;
+  dateText: string;
+}
+
+export interface IHistoryGroup {
+  groupDate: string;
+  data: IHistory[];
+}
+
+export interface IHistoryProps {
+  historys: IHistoryGroup[];
+  title: string;
+}

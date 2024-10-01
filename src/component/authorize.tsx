@@ -15,8 +15,12 @@ export const AuthorizeLayout = ({ children }: props) => {
           </div>
         </div>
       </div>
-      <div className="xl:col-span-4 lg:col-span-5 col-span-12 lg:row-auto row-start-1 row-end-1">
-        <img src="/imgs/bg-authorize.png" alt="" className="w-full h-full" />
+      <div className="xl:col-span-4 lg:col-span-5 col-span-12  ">
+        <div className="bg-[url(/imgs/bg-login.png)] bg-no-repeat bg-[length:100%_100%] h-full lg:flex items-center hidden">
+          <div className="flex-1">
+            <img src="/imgs/logo-login.png" className="w-full" alt="" />
+          </div>
+        </div>
       </div>
     </div>
   );

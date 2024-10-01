@@ -1,5 +1,7 @@
 "use client";
 import TmInput from "@/component/hook-form/input";
+import { HISTORY_LOGIN, HISTORY_UPDATE } from "@/utils/api-url";
+import { fetcher } from "@/utils/axios";
 import {
   BoltIcon,
   ClockIcon,
@@ -8,10 +10,15 @@ import {
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import useSWR from "swr";
+import { HistoryView } from "./history-view";
 
 export default function ActivityHistory() {
   const [active, setActive] = useState<number>(0);
   const { control } = useForm();
+
+  const { data: historyLogin } = useSWR(HISTORY_LOGIN, fetcher);
+  const { data: historyUpdate } = useSWR(HISTORY_UPDATE, fetcher);
 
   return (
     <div className="px-6 py-3 bg-white min-h-screen">
@@ -57,59 +64,10 @@ export default function ActivityHistory() {
           <div className="bg-white p-4 rounded-lg">
             {active === 0 && (
               <div>
-                <div className="sm:flex mb-4 justify-between items-center">
-                  <div>Tất cả lịch sử</div>
-                  <div className="flex space-x-2">
-                    <TmInput name="from_date" control={control} type="date" />
-                    <TmInput name="to_date" control={control} type="date" />
-                  </div>
-                </div>
-                <div className="py-2">
-                  <div className="flex mb-6">
-                    <div className="mr-3">06/08/2024</div>
-                    <div>
-                      <ul className="space-y-4 text-gray-500 list-disc list-inside [&>li:not(:last-child)]:after:absolute [&>li:not(:last-child)]:after:left-0 [&>li:not(:last-child)]:after:top-[100%] [&>li:not(:last-child)]:after:w-0.5 [&>li:not(:last-child)]:after:h-4 [&>li:not(:last-child)]:after:bg-[#E5E5E5]">
-                        <li className="relative">
-                          <span className="p-1 rounded-lg bg-[#F9DCB9] text-default mr-2 ">
-                            09:00
-                          </span>
-                          Đăng nhập
-                        </li>
-                        <li className="relative">
-                          <span className="p-1 rounded-lg bg-[#F9DCB9] text-default mr-2">
-                            16:00
-                          </span>
-                          Đăng nhập
-                        </li>
-                        <li className="relative">
-                          <span className="p-1 rounded-lg bg-[#F9DCB9] text-default mr-2">
-                            16:00
-                          </span>
-                          Đăng nhập
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div className="flex mb-6">
-                    <div className="mr-3">06/08/2024</div>
-                    <div>
-                      <ul className="space-y-4 text-gray-500 list-disc list-inside [&>li:not(:last-child)]:after:absolute [&>li:not(:last-child)]:after:left-0 [&>li:not(:last-child)]:after:top-[100%] [&>li:not(:last-child)]:after:w-0.5 [&>li:not(:last-child)]:after:h-4 [&>li:not(:last-child)]:after:bg-[#E5E5E5]">
-                        <li className="relative ">
-                          <span className="p-1 rounded-lg bg-[#F9DCB9] text-default mr-2 ">
-                            09:00
-                          </span>
-                          Đăng nhập
-                        </li>
-                        <li className="relative">
-                          <span className="p-1 rounded-lg bg-[#F9DCB9] text-default mr-2">
-                            16:00
-                          </span>
-                          Đăng nhập
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
+                <HistoryView
+                  title="Tất cả lịch sử"
+                  historys={historyLogin?.data}
+                />
               </div>
             )}
             {active === 1 && (
@@ -228,59 +186,10 @@ export default function ActivityHistory() {
             )}
             {active === 3 && (
               <div>
-                <div className="sm:flex mb-4 justify-between items-center">
-                  <div>Cập nhật tài khoản</div>
-                  <div className="flex space-x-2">
-                    <TmInput name="from_date" control={control} type="date" />
-                    <TmInput name="to_date" control={control} type="date" />
-                  </div>
-                </div>
-                <div className="py-2">
-                  <div className="flex mb-6">
-                    <div className="mr-3">06/08/2024</div>
-                    <div>
-                      <ul className="space-y-4 text-gray-500 list-disc list-inside [&>li:not(:last-child)]:after:absolute [&>li:not(:last-child)]:after:left-0 [&>li:not(:last-child)]:after:top-[100%] [&>li:not(:last-child)]:after:w-0.5 [&>li:not(:last-child)]:after:h-4 [&>li:not(:last-child)]:after:bg-[#E5E5E5]">
-                        <li className="relative">
-                          <span className="p-1 rounded-lg bg-[#F9DCB9] text-default mr-2 ">
-                            09:00
-                          </span>
-                          Đăng nhập
-                        </li>
-                        <li className="relative">
-                          <span className="p-1 rounded-lg bg-[#F9DCB9] text-default mr-2">
-                            16:00
-                          </span>
-                          Đăng nhập
-                        </li>
-                        <li className="relative">
-                          <span className="p-1 rounded-lg bg-[#F9DCB9] text-default mr-2">
-                            16:00
-                          </span>
-                          Đăng nhập
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div className="flex mb-6">
-                    <div className="mr-3">06/08/2024</div>
-                    <div>
-                      <ul className="space-y-4 text-gray-500 list-disc list-inside [&>li:not(:last-child)]:after:absolute [&>li:not(:last-child)]:after:left-0 [&>li:not(:last-child)]:after:top-[100%] [&>li:not(:last-child)]:after:w-0.5 [&>li:not(:last-child)]:after:h-4 [&>li:not(:last-child)]:after:bg-[#E5E5E5]">
-                        <li className="relative ">
-                          <span className="p-1 rounded-lg bg-[#F9DCB9] text-default mr-2 ">
-                            09:00
-                          </span>
-                          Đăng nhập
-                        </li>
-                        <li className="relative">
-                          <span className="p-1 rounded-lg bg-[#F9DCB9] text-default mr-2">
-                            16:00
-                          </span>
-                          Đăng nhập
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
+                <HistoryView
+                  title="Cập nhật tài khoản"
+                  historys={historyUpdate?.data}
+                />
               </div>
             )}
           </div>

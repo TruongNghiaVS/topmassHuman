@@ -59,3 +59,7 @@ export const CREATE_TOCKET = "/api/recruiter/Support/CreateTicket";
 
 //-------- Web -------//
 export const ADD_REQUEST_CONTACT = "/api/recruiter/Web/AddCustomerContact";
+
+//--------- History ------------//
+export const HISTORY_LOGIN = "/api/recruiter/History/GetHistoryLogin";
+export const HISTORY_UPDATE = "/api/recruiter/History/GetLogUpdateAccount";
