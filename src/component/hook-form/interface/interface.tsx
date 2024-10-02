@@ -48,11 +48,13 @@ export interface ITmRadioProps {
   classNameCustom?: string;
 }
 
-export interface SearchSelectProps {
+export interface SearchSelectProps
+  extends InputHTMLAttributes<HTMLSelectElement> {
   name: string;
   control: Control<any>;
   options: Option[];
   placeholder?: string;
+  customSelect?: () => void;
 }
 
 export interface CKEditorInputProps extends UseControllerProps {

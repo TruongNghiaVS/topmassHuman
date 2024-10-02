@@ -129,7 +129,7 @@ export const massPoint = [
 export const gender = [
   {
     value: 0,
-    label: "Không xác định",
+    label: "Tất cả",
   },
   {
     value: 1,
