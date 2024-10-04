@@ -43,6 +43,9 @@ import {
 import { useEffect, useState } from "react";
 import { Option } from "@/component/hook-form/interface/interface";
 import { SkillsForm } from "./setting/skills-form";
+import CustomSelectSearchForm from "@/component/hook-form/customSelectSearchForm";
+import CustomSelectSearch from "@/component/hook-form/customSelectSearchForm";
+import CustomSelect from "@/component/hook-form/customSelectSearchForm";
 
 const CustomCKEditor = dynamic(
   () => {
@@ -144,7 +147,7 @@ const schema = yup.object().shape({
       })
     )
     .min(1, "Tối thiểu 1 email")
-    .max(5, "Tối đa 5 email")
+    .max(5, "Tối đa 3 email")
     .required("Vui nhập email"),
 });
 
@@ -264,7 +267,7 @@ export default function CreateNew() {
       aggrement: false,
       salary_from: 0,
       salary_to: 0,
-      type_money: "",
+      type_money: "0",
       gender: 0,
       description: "",
       requirement: "",
@@ -277,6 +280,7 @@ export default function CreateNew() {
   });
 
   const handleFilterDistrict = async (value: string, index: number) => {
+    console.log(value);
     setLoading(true);
     try {
       const response = await axiosInstance.get(GET_DISTRICT, {
@@ -329,6 +333,8 @@ export default function CreateNew() {
       handleSubmit(onSubmit)();
     }, 200);
   };
+
+  console.log(errors.locations);
 
   return (
     <div className="bg-white min-h-screen">
@@ -425,14 +431,17 @@ export default function CreateNew() {
                 <div className="">
                   <div className="flex space-x-2 items-start ">
                     <MapPinIcon className="w-7" />
-                    <div>Khu vực {index + 1}:</div>
-                    <TmSelect
-                      classNameCustom="flex-1"
+                    <div className="whitespace-nowrap">
+                      Khu vực {index + 1}:
+                    </div>
+                    <CustomSelect
                       name={`locations.${index}.location`}
                       control={control}
-                      value={getValues(`locations.${index}.location`)}
-                      onChange={(e) =>
-                        handleFilterDistrict(e.target.value, index)
+                      customSelect={() =>
+                        handleFilterDistrict(
+                          getValues(`locations.${index}.location`),
+                          index
+                        )
                       }
                       options={provinces}
                       placeholder="Chọn thành phố"
@@ -449,7 +458,7 @@ export default function CreateNew() {
               </div>
             ))}
             {errors && errors.locations && (
-              <p className="text-red-500">{errors.locations.message}</p>
+              <p className="text-red-500">{errors.locations.root?.message}</p>
             )}
 
             <button
@@ -562,9 +571,9 @@ export default function CreateNew() {
             <div>
               <TimeWorkingForm control={control} name={`time_working`} />
             </div>
-            {errors && errors.emails && (
+            {errors && errors.time_working && (
               <p className="text-red-500 text-sm mt-1">
-                {errors.emails.message}
+                {errors.time_working.root?.message}
               </p>
             )}
           </div>
@@ -637,7 +646,7 @@ export default function CreateNew() {
             </div>
             {errors && errors.emails && (
               <p className="text-red-500 text-sm mt-1">
-                {errors.emails.message}
+                {errors.emails.root?.message}
               </p>
             )}
           </div>

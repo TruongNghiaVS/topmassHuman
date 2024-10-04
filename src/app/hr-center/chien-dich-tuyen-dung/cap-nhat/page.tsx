@@ -269,7 +269,7 @@ export default function UpdateJob() {
       aggrement: false,
       salary_from: 0,
       salary_to: 0,
-      type_money: "",
+      type_money: "0",
       gender: 0,
       description: "",
       requirement: "",
@@ -334,7 +334,6 @@ export default function UpdateJob() {
 
   const onSubmit: SubmitHandler<IFormCreateNew> = async (data) => {
     setLoading(true);
-    console.log("___");
     try {
       const dataUpdate: any = { ...data };
       dataUpdate.jobId = idUpdate ? +idUpdate : 0;
@@ -471,7 +470,7 @@ export default function UpdateJob() {
               </div>
             ))}
             {errors && errors.locations && (
-              <p className="text-red-500">{errors.locations.message}</p>
+              <p className="text-red-500">{errors.locations.root?.message}</p>
             )}
 
             <button
@@ -584,9 +583,9 @@ export default function UpdateJob() {
             <div>
               <TimeWorkingForm control={control} name={`time_working`} />
             </div>
-            {errors && errors.emails && (
+            {errors && errors.time_working && (
               <p className="text-red-500 text-sm mt-1">
-                {errors.emails.message}
+                {errors.time_working.root?.message}
               </p>
             )}
           </div>
@@ -659,7 +658,7 @@ export default function UpdateJob() {
             </div>
             {errors && errors.emails && (
               <p className="text-red-500 text-sm mt-1">
-                {errors.emails.message}
+                {errors.emails.root?.message}
               </p>
             )}
           </div>

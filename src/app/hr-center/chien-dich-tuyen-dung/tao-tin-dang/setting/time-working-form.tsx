@@ -66,7 +66,7 @@ export const TimeWorkingForm = ({ control, name }: ILocationForm) => {
         className="flex text-default mt-4"
       >
         <PlusIcon className="w-4 mr-2" />
-        Thêm địa chỉ
+        Thêm thời gian
       </button>
     </div>
   );
