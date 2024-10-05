@@ -105,7 +105,7 @@ const CustomMultipleSelectSearchForm: React.FC<SearchSelectProps> = ({
                 </li>
               ))
             ) : (
-              <li className="p-2 text-gray-500">No options found</li>
+              <li className="p-2 text-gray-500">Không có thông tin phù hợp</li>
             )}
           </ul>
         )}

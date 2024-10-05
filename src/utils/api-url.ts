@@ -48,6 +48,9 @@ export const UPDATE_VIEW_MODE = "/api/recruiter/CV/UpdateViewModel";
 export const UPDATE_STATUS_CV_CANDIDATE = "/api/recruiter/CV/AddLogStatus";
 export const GET_MANAGER_CV_APPLY = "/api/recruiter/CV/GetAllCVApply";
 export const GET_CANDIDATE_VIEW_JOB = "/api/recruiter/Job/GetAllViewerOfJob";
+export const SEARCH_CV = "/api/recruiter/SearchCV/Search";
+export const GET_PROFILE_SEARCH_CV =
+  "/api/recruiter/SearchCV/GetProfileGenerate";
 
 //------------ Notification -----------//
 export const GET_ALL_NOTIFICATION = "/api/recruiter/Notification/GetAll";

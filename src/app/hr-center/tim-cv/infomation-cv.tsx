@@ -1,3 +1,5 @@
+import { ISearchCvDetailProps } from "@/interface/cv";
+import { renderRangeSalary } from "@/utils/custom-hook";
 import {
   AcademicCapIcon,
   BookOpenIcon,
@@ -9,7 +11,10 @@ import {
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
-export default function InfomationCv() {
+export default function InfomationCv({
+  item,
+  idCampaign,
+}: ISearchCvDetailProps) {
   return (
     <div>
       <div className="grid sm:grid-cols-3 grid-cols-1 gap-x-4 p-4 bg-white pb-6 border-b">
@@ -17,60 +22,61 @@ export default function InfomationCv() {
           <div className="flex">
             <div>
               <img
-                src="/imgs/no-avatar.png"
+                src={
+                  item.avatarlink.length > 0
+                    ? item.avatarlink
+                    : "/imgs/no-avatar.png"
+                }
                 alt=""
                 className="w-auto p-0.5 bg-[#F37A20] rounded-full mr-2"
               />
             </div>
             <div>
-              <div className="text-base">M.K</div>
+              <div className="text-base">{item.fullName}</div>
               <div className="inline-block mt-2 text-white bg-[#CC0000] rounded-xl px-2 py-0.5 text-xs">
                 Đang tìm việc
               </div>
               <div className="flex items-start">
-                <BriefcaseIcon className="w-4 mr-1 " /> Sale support
+                <BriefcaseIcon className="w-4 mr-1 " /> {item.position}
               </div>
               <div className="flex items-start">
-                <MapPinIcon className="w-4 mr-1 " /> Hồ Chí Minh
+                <MapPinIcon className="w-4 mr-1 " /> {item.location}
               </div>
               <div className="mt-1 p-2 bg-[#F7F2EB]">
                 <div className="flex text-xs mt-0.5">
                   <ClockIcon className="w-4 mr-1 " /> Cập nhật 2 giờ trước
                 </div>
                 <div className="flex text-xs mt-0.5">
-                  <CurrencyDollarIcon className="w-4 mr-1 " /> Thoả thuận
+                  <CurrencyDollarIcon className="w-4 mr-1 " />{" "}
+                  {renderRangeSalary(item.salaryFrom, item.salaryTo, "0")}
                 </div>
                 <div className="flex text-xs mt-0.5">
-                  <EyeIcon className="w-4 mr-1 " /> 10 lượt xem
+                  <EyeIcon className="w-4 mr-1 " /> {item.totalView} lượt xem
                 </div>
                 <div className="flex text-xs mt-0.5">
-                  <BookOpenIcon className="w-4 mr-1 " /> 25 lượt liên hệ
+                  <BookOpenIcon className="w-4 mr-1 " /> {item.totalContact}{" "}
+                  lượt liên hệ
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div className="sm:col-span-2 sm:mt-0 mt-2">
-          <div>Kinh nghiệm (4 năm 11 tháng)</div>
+          <div>Kinh nghiệm ({item.experienceText})</div>
           <div className="flex items-start">
-            <BriefcaseIcon className="w-4 mr-1 " /> Sale admin tại VietStar
-            Group
-          </div>
-          <div className="flex items-start">
-            <BriefcaseIcon className="w-4 mr-1 " /> Sale admin tại Topmass
+            <BriefcaseIcon className="w-4 mr-1 " /> {item.educationText}
           </div>
           <div className="mt-2">Học vấn</div>
           <div className="flex items-start">
-            <AcademicCapIcon className="w-4 mr-1 " /> Marjor: Kế toán - Trường
-            đại học tài chính Marketing Thành phố Hồ Chí Minh
+            <AcademicCapIcon className="w-4 mr-1 " /> Marjor:
+            {item.educationText}
           </div>
           <div className="mt-2">Mục tiêu sự nghiệp</div>
           <div className="flex items-start">
-            <AcademicCapIcon className="w-4 mr-1 " /> Muốn trở thành best saler
-            trong tương lai. Phấn đấu trở thành teamleader phát triển công ty
+            <AcademicCapIcon className="w-4 mr-1 " /> {item.jobObjectiveText}
           </div>
           <div className="text-default">
-            <Link href="#"> Xem thêm...</Link>
+            <Link href={`/hr-center/tim-cv/${item.searchId}`}>Xem thêm...</Link>
           </div>
         </div>
       </div>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<style>
+  body {
+    color: #555555;
+    margin: 0;
+  }
+
+  .fix-screen {
+    width: 800px;
+    margin: auto;
+  }
+
+  .grid-box {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+  }
+
+  .box-left {
+    padding: 40px 20px;
+    background-color: #555555;
+    color: #ffffff;
+  }
+
+  .box-right {
+    padding: 20px;
+    position: relative;
+  }
+
+  .img {
+    width: 227px;
+    height: 227px;
+    border-radius: 100%;
+    object-fit: cover;
+    background: #ffffff;
+    position: relative;
+    z-index: 2;
+  }
+
+  .avatar {
+    position: relative;
+  }
+
+  .box-absolute {
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    border-radius: 100%;
+    z-index: 1;
+  }
+
+  .absolute-left {
+    left: -4px;
+    background-color: #F37A20;
+    top: -13px;
+  }
+
+  .absolute-right {
+    right: -4px;
+    bottom: -13px;
+    background-color: #F89E1B;
+  }
+
+  .mt-2 {
+    margin-top: 8px;
+  }
+
+  .text-12 {
+    font-size: 12px;
+  }
+
+  .img-svg {
+    width: 16px;
+    margin-right: 8px;
+  }
+
+  .ab-cv {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .name-cv {
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #F37A20;
+    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 4px;
+    display: inline-block;
+  }
+
+  .name-cv::after {
+    position: absolute;
+    content: "";
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    height: 3px;
+    background: #F37A20;
+  }
+
+  .title-cv {
+    display: inline-block;
+    padding: 4px 30px 4px 4px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    background-color: #F37A20;
+    color: #ffffff;
+  }
+</style>
+
+<body>
+  <div class="fix-screen">
+    <div class="grid-box">
+      <div class="box-left">
+        <div class="avatar">
+          <img src="{linkProFile}" alt="" class="img">
+          <div class="box-absolute absolute-left"></div>
+          <div class="box-absolute absolute-right"></div>
+        </div>
+        <div>{contact}</div>
+        <div>{education}</div>
+        <div>{soft_skill}</div>
+        <div>{skill}</div>
+        <div>{reward}</div>
+        <div>{certificates}</div>
+      </div>
+      <div class="box-right">
+        <div class="ab-cv">
+          <img src="http://localhost:3000/imgs/ab-cv.png" alt="">
+        </div>
+        <div style="color: #F37A20; display: flex; align-items: center; padding: 20px 0;">
+          <div style="font-size: 12px; margin-right: 4px;">Được thiết kế bởi</div>
+          <img src="http://localhost:3000/imgs/logo-new.svg" alt="" style="width: 60px;">
+        </div>
+        <div class="name-cv">
+          {name}
+        </div>
+        <div style="margin: 10px 0;">{position}</div>
+        <div class="title-cv">
+          Mục tiêu nghề nghiệp
+        </div>
+        <div style="margin-top: 10px;">
+          {introduction}
+        </div>
+        <div>
+          {experiences}
+        </div>
+        <div>{project}</div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

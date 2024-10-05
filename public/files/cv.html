@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<style>
+  body {
+    color: #555555;
+    margin: 0;
+  }
+
+  .fix-screen {
+    width: 800px;
+    margin: auto;
+  }
+
+  .grid-box {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+  }
+
+  .box-left {
+    padding: 40px 20px;
+    background-color: #555555;
+    color: #ffffff;
+  }
+
+  .box-right {
+    padding: 20px;
+    position: relative;
+  }
+
+  .img {
+    width: 227px;
+    height: 227px;
+    border-radius: 100%;
+    position: relative;
+    z-index: 2;
+    background: #ffffff;
+  }
+
+  .avatar {
+    position: relative;
+  }
+
+  .box-absolute {
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    border-radius: 100%;
+    z-index: 1;
+  }
+
+  .absolute-left {
+    left: -4px;
+    background-color: #F37A20;
+    top: -13px;
+  }
+
+  .absolute-right {
+    right: -4px;
+    bottom: -13px;
+    background-color: #F89E1B;
+  }
+
+  .mt-2 {
+    margin-top: 8px;
+  }
+
+  .text-12 {
+    font-size: 12px;
+  }
+
+  .img-svg {
+    width: 16px;
+    margin-right: 8px;
+  }
+
+  .ab-cv {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .name-cv {
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #F37A20;
+    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 4px;
+    display: inline-block;
+  }
+
+  .name-cv::after {
+    position: absolute;
+    content: "";
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    height: 3px;
+    background: #F37A20;
+  }
+
+  .title-cv {
+    display: inline-block;
+    padding: 4px 30px 4px 4px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    background-color: #F37A20;
+    color: #ffffff;
+  }
+</style>
+
+<body>
+  <div class="fix-screen">
+    <div class="grid-box">
+      <div class="box-left">
+        <div class="avatar">
+          <img src="http://localhost:3000/imgs/img-cv.jpg" alt="" class="img">
+          <div class="box-absolute absolute-left"></div>
+          <div class="box-absolute absolute-right"></div>
+        </div>
+        <div style="margin-top: 20px;">
+          <div>Liên hệ</div>
+          <div style="display: flex; align-items: center;" class="mt-2 text-12">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="img-svg">
+              <path
+                d="m15 1.784-.796.795a1.125 1.125 0 1 0 1.591 0L15 1.784ZM12 1.784l-.796.795a1.125 1.125 0 1 0 1.591 0L12 1.784ZM9 1.784l-.796.795a1.125 1.125 0 1 0 1.591 0L9 1.784ZM9.75 7.547c.498-.021.998-.035 1.5-.042V6.75a.75.75 0 0 1 1.5 0v.755c.502.007 1.002.021 1.5.042V6.75a.75.75 0 0 1 1.5 0v.88l.307.022c1.55.117 2.693 1.427 2.693 2.946v1.018a62.182 62.182 0 0 0-13.5 0v-1.018c0-1.519 1.143-2.829 2.693-2.946l.307-.022v-.88a.75.75 0 0 1 1.5 0v.797ZM12 12.75c-2.472 0-4.9.184-7.274.54-1.454.217-2.476 1.482-2.476 2.916v.384a4.104 4.104 0 0 1 2.585.364 2.605 2.605 0 0 0 2.33 0 4.104 4.104 0 0 1 3.67 0 2.605 2.605 0 0 0 2.33 0 4.104 4.104 0 0 1 3.67 0 2.605 2.605 0 0 0 2.33 0 4.104 4.104 0 0 1 2.585-.364v-.384c0-1.434-1.022-2.7-2.476-2.917A49.138 49.138 0 0 0 12 12.75ZM21.75 18.131a2.604 2.604 0 0 0-1.915.165 4.104 4.104 0 0 1-3.67 0 2.605 2.605 0 0 0-2.33 0 4.104 4.104 0 0 1-3.67 0 2.605 2.605 0 0 0-2.33 0 4.104 4.104 0 0 1-3.67 0 2.604 2.604 0 0 0-1.915-.165v2.494c0 1.035.84 1.875 1.875 1.875h15.75c1.035 0 1.875-.84 1.875-1.875v-2.494Z" />
+            </svg>
+            <div>01/01/1995</div>
+          </div>
+          <div style="display: flex; align-items: center;" class="mt-2 text-12">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="img-svg">
+              >
+              <path d="M1.5 8.67v8.58a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.67l-8.928 5.493a3 3 0 0 1-3.144 0L1.5 8.67Z" />
+              <path
+                d="M22.5 6.908V6.75a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3v.158l9.714 5.978a1.5 1.5 0 0 0 1.572 0L22.5 6.908Z" />
+            </svg>
+
+            <div>Nhi.nt@topmass.com</div>
+          </div>
+          <div style="display: flex; align-items: center;" class="mt-2 text-12">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="img-svg">
+              <path fill-rule="evenodd"
+                d="m11.54 22.351.07.04.028.016a.76.76 0 0 0 .723 0l.028-.015.071-.041a16.975 16.975 0 0 0 1.144-.742 19.58 19.58 0 0 0 2.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 0 0-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 0 0 2.682 2.282 16.975 16.975 0 0 0 1.145.742ZM12 13.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
+                clip-rule="evenodd" />
+            </svg>
+            <div>Quận Tân Bình, Hồ Chí Minh</div>
+          </div>
+          <div style="display: flex; align-items: center;" class="mt-2 text-12">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="img-svg">
+              <path fill-rule="evenodd"
+                d="M1.5 4.5a3 3 0 0 1 3-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 0 1-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 0 0 6.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 0 1 1.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 0 1-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5Z"
+                clip-rule="evenodd" />
+            </svg>
+            <div>0354168123</div>
+          </div>
+          <div style="display: flex; align-items: center;" class="mt-2 text-12">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="img-svg">
+              <path fill-rule="evenodd"
+                d="M19.902 4.098a3.75 3.75 0 0 0-5.304 0l-4.5 4.5a3.75 3.75 0 0 0 1.035 6.037.75.75 0 0 1-.646 1.353 5.25 5.25 0 0 1-1.449-8.45l4.5-4.5a5.25 5.25 0 1 1 7.424 7.424l-1.757 1.757a.75.75 0 1 1-1.06-1.06l1.757-1.757a3.75 3.75 0 0 0 0-5.304Zm-7.389 4.267a.75.75 0 0 1 1-.353 5.25 5.25 0 0 1 1.449 8.45l-4.5 4.5a5.25 5.25 0 1 1-7.424-7.424l1.757-1.757a.75.75 0 1 1 1.06 1.06l-1.757 1.757a3.75 3.75 0 1 0 5.304 5.304l4.5-4.5a3.75 3.75 0 0 0-1.035-6.037.75.75 0 0 1-.354-1Z"
+                clip-rule="evenodd" />
+            </svg>
+            <div>Link Profile: Topmass.com/ynhi987</div>
+          </div>
+        </div>
+        <div style="margin-top: 20px;">
+          <div class="mt-2">Học vấn</div>
+          <div class="text-12 mt-2">Trường Đại Học Văn Lang</div>
+          <div class="text-12 mt-2">Chuyên ngành: Kinh doanh quốc tế</div>
+          <div class="text-12 mt-2">Xếp loại: Giỏi</div>
+        </div>
+        <div style="margin-top: 20px;">
+          <div class="mt-2">Kỹ năng mềm</div>
+          <div class="text-12 mt-2" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>Quản lý dự án</div>
+            <div style="display: flex;">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                style="width: 16px; color: #F37A20; margin-right: 2px;">
+                <path fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                style="width: 16px; color: #F37A20; margin-right: 2px;">
+                <path fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                style="width: 16px; color: #F37A20; margin-right: 2px;">
+                <path fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                style="width: 16px; color: #F37A20; margin-right: 2px;">
+                <path fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                style="width: 16px; color: #F37A20; margin-right: 2px;">
+                <path fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd" />
+              </svg>
+
+
+            </div>
+          </div>
+          <div class="text-12 mt-2" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>Quản lý dự án</div>
+            <div style="display: flex;">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                style="width: 16px; color: #F37A20; margin-right: 2px;">
+                <path fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                style="width: 16px; color: #F37A20; margin-right: 2px;">
+                <path fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                style="width: 16px; color: #F37A20; margin-right: 2px;">
+                <path fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                style="width: 16px; color: #F37A20; margin-right: 2px;">
+                <path fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                style="width: 16px; color: #F37A20; margin-right: 2px;">
+                <path fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd" />
+              </svg>
+            </div>
+          </div>
+          <div class="text-12 mt-2" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>Quản lý dự án</div>
+            <div style="display: flex;">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                style="width: 16px; color: #F37A20; margin-right: 2px;">
+                <path fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                style="width: 16px; color: #F37A20; margin-right: 2px;">
+                <path fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                style="width: 16px; color: #F37A20; margin-right: 2px;">
+                <path fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                style="width: 16px; color: #F37A20; margin-right: 2px;">
+                <path fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                style="width: 16px; color: #F37A20; margin-right: 2px;">
+                <path fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd" />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top: 20px;">
+          <div class="mt-2">Kỹ năng</div>
+          <div class="text-12 mt-2" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>Photoshop</div>
+            <div style="display: flex;">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                style="width: 16px; color: #F37A20; margin-right: 2px;">
+                <path fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                style="width: 16px; color: #F37A20; margin-right: 2px;">
+                <path fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                style="width: 16px; color: #F37A20; margin-right: 2px;">
+                <path fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                style="width: 16px; color: #F37A20; margin-right: 2px;">
+                <path fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                style="width: 16px; color: #F37A20; margin-right: 2px;">
+                <path fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd" />
+              </svg>
+
+
+            </div>
+          </div>
+          <div class="text-12 mt-2" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>Microsoft Office</div>
+            <div style="display: flex;">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                style="width: 16px; color: #F37A20; margin-right: 2px;">
+                <path fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                style="width: 16px; color: #F37A20; margin-right: 2px;">
+                <path fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                style="width: 16px; color: #F37A20; margin-right: 2px;">
+                <path fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                style="width: 16px; color: #F37A20; margin-right: 2px;">
+                <path fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                style="width: 16px; color: #F37A20; margin-right: 2px;">
+                <path fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd" />
+              </svg>
+            </div>
+          </div>
+          <div class="text-12 mt-2" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>Google Analytics</div>
+            <div style="display: flex;">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                style="width: 16px; color: #F37A20; margin-right: 2px;">
+                <path fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                style="width: 16px; color: #F37A20; margin-right: 2px;">
+                <path fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                style="width: 16px; color: #F37A20; margin-right: 2px;">
+                <path fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                style="width: 16px; color: #F37A20; margin-right: 2px;">
+                <path fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                style="width: 16px; color: #F37A20; margin-right: 2px;">
+                <path fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                  clip-rule="evenodd" />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top: 20px;">
+          <div class="mt-2">Chứng chỉ</div>
+          <div class="mt-2 text-12">Tin học MOS</div>
+          <div class="mt-2 text-12">IELS 8.0</div>
+        </div>
+        <div style="margin-top: 20px;">
+          <div class="mt-2">Giải thưởng</div>
+          <div class="mt-2 text-12" style="font-style: italic;">Quản lý xuất sắc năm 2022 Công ty cổ phần Vietstar</div>
+        </div>
+      </div>
+      <div class="box-right">
+        <div class="ab-cv">
+          <img src="http://localhost:3000/imgs/ab-cv.png" alt="">
+        </div>
+        <div style="color: #F37A20; display: flex; align-items: center; padding: 20px 0;">
+          <div style="font-size: 12px; margin-right: 4px;">Được thiết kế bởi</div>
+          <img src="http://localhost:3000/imgs/logo-new.svg" alt="" style="width: 60px;">
+        </div>
+        <div class="name-cv">
+          Nguyễn Thị Ý Nhi
+        </div>
+        <div style="margin: 10px 0;">Sale manager</div>
+        <div class="title-cv">
+          Mục tiêu nghề nghiệp
+        </div>
+        <div style="margin-top: 10px;">
+          Tôi là một người tận tâm và kiên nhẫn với kinh nghiệm trong lĩnh vực chăm sóc khách hàng. Tôi có khả năng giao
+          tiếp hiệu quả, lắng nghe và giải quyết vấn đề của khách hàng một cách nhanh chóng và chuyên nghiệp. Mục tiêu
+          của tôi là mang lại sự hài lòng tối đa cho khách hàng, đồng thời xây dựng mối quan hệ lâu dài dựa trên sự tin
+          tưởng và tôn trọng.
+        </div>
+        <div>
+          <div class="title-cv" style="margin-top: 10px;">
+            Kinh nghiệm làm việc
+          </div>
+          <div style="margin-top: 10px; display: flex; justify-content: space-between;">
+            <div style="font-weight: bold;">Quản lý Team Chăm Sóc Khách Hàng</div>
+            <div class="font-weight: 400">09/2023 - 05/2024</div>
+          </div>
+          <div style="margin-top: 10px;">
+            <div>
+              - Hỗ trợ khách hàng: Giải quyết vấn đề qua điện thoại, email và chat, đảm bảo sự hài lòng của khách hàng.
+            </div>
+            <div>
+              - Xử lý khiếu nại: Đưa ra giải pháp và cải thiện trải nghiệm khách hàng.
+            </div>
+            <div>
+              - Tư vấn sản phẩm: Cung cấp thông tin chi tiết về sản phẩm và dịch vụ.
+            </div>
+            <div>
+              - Quản lý hồ sơ: Cập nhật và theo dõi thông tin khách hàng.
+            </div>
+            <div>
+              - Báo cáo và cải tiến: Theo dõi chỉ số hiệu suất và đề xuất cải tiến quy trình.
+            </div>
+            <div>
+              Thành tựu:
+            </div>
+            <div>
+              - Giảm tỷ lệ khiếu nại 20% và đạt tỷ lệ hài lòng 95%.
+            </div>
+            <div>
+              - Tăng tốc độ xử lý yêu cầu lên 30%.
+            </div>
+          </div>
+          <div style="margin-top: 10px; display: flex; justify-content: space-between;">
+            <div style="font-weight: bold;">Quản lý Team Chăm Sóc Khách Hàng</div>
+            <div class="font-weight: 400">09/2023 - 05/2024</div>
+          </div>
+          <div style="margin-top: 10px;">
+            <div>
+              - Hỗ trợ khách hàng: Giải quyết vấn đề qua điện thoại, email và chat, đảm bảo sự hài lòng của khách hàng.
+            </div>
+            <div>
+              - Xử lý khiếu nại: Đưa ra giải pháp và cải thiện trải nghiệm khách hàng.
+            </div>
+            <div>
+              - Tư vấn sản phẩm: Cung cấp thông tin chi tiết về sản phẩm và dịch vụ.
+            </div>
+            <div>
+              - Quản lý hồ sơ: Cập nhật và theo dõi thông tin khách hàng.
+            </div>
+            <div>
+              - Báo cáo và cải tiến: Theo dõi chỉ số hiệu suất và đề xuất cải tiến quy trình.
+            </div>
+            <div>
+              Thành tựu:
+            </div>
+            <div>
+              - Giảm tỷ lệ khiếu nại 20% và đạt tỷ lệ hài lòng 95%.
+            </div>
+            <div>
+              - Tăng tốc độ xử lý yêu cầu lên 30%.
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="title-cv" style="margin-top: 10px;">
+            Dự án
+          </div>
+          <div style="margin-top: 10px;">
+            <div style="font-weight: bold;">Tối ưu Website: Topmass (SEO/Performance Optimization Specialist)</div>
+            <div>Khách hàng: Nhà tuyển dụng Topmass</div>
+            <div>Vị trí: Quản lý team và đánh giá tối ưu từ khoá</div>
+          </div>
+        </div>
+        <div style="margin-top: 10px;">
+          <div style="font-weight: bold;">Tối ưu Website: Topmass (SEO/Performance Optimization Specialist)</div>
+          <div>Khách hàng: Nhà tuyển dụng Topmass</div>
+          <div>Vị trí: Quản lý team và đánh giá tối ưu từ khoá</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
