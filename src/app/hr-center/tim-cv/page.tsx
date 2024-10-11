@@ -123,7 +123,7 @@ export default function SearchCV() {
                   name="locations"
                   control={control}
                   options={provinces}
-                  placeholder="Chọn ngành nghề"
+                  placeholder="Chọn tỉnh thành"
                 />
               </div>
               <div className="mt-2 text-default uppercase">
@@ -215,8 +215,8 @@ export default function SearchCV() {
               </div>
               <div className="mt-4 text-white">
                 <button className="w-full bg-[#F37A20] rounded py-2 text-center text-white justify-center flex">
-                  Tìm CV (Dùng 5{" "}
-                  <img src="/imgs/arrow.svg" alt="" className="w-3 mx-2" />)
+                  Tìm CV 
+                  {/* <img src="/imgs/arrow.svg" alt="" className="w-3 mx-2" />) */}
                 </button>
               </div>
             </div>
