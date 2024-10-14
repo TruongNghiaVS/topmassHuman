@@ -51,6 +51,9 @@ export const GET_CANDIDATE_VIEW_JOB = "/api/recruiter/Job/GetAllViewerOfJob";
 export const SEARCH_CV = "/api/recruiter/SearchCV/Search";
 export const GET_PROFILE_SEARCH_CV =
   "/api/recruiter/SearchCV/GetProfileGenerate";
+export const GET_INFOMATIONDETAIL_SEARCH_CV =
+  "/api/recruiter/SearchCV/GetDetailInfo";
+
 
 //------------ Notification -----------//
 export const GET_ALL_NOTIFICATION = "/api/recruiter/Notification/GetAll";
