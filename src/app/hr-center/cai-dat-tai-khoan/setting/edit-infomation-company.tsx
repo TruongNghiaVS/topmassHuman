@@ -66,11 +66,10 @@ export default function EditInfomationCompany({
         "File size is too large",
         (value) => !value || (value && value.size <= 5 * 1024 * 1024) // 2MB
       ),
-    taxCode: yup
-      .string()
-      .matches(/^\d+$/, "mã số thuế phải là chữ số")
-      .min(10, "Mã số thuế tối thiểu 10 ký tự")
-      .max(12, "Mã số thuế tối đa 12 ký tự"),
+    taxCode: yup.string(),
+    // .matches(/^\d+$/, "mã số thuế phải là chữ số")
+    // .min(10, "Mã số thuế tối thiểu 10 ký tự")
+    // .max(12, "Mã số thuế tối đa 12 ký tự"),
     fullName: yup.string(),
     website: yup.string(),
     relId: yup.string(),
