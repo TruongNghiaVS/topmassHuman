@@ -207,9 +207,15 @@ export default function RecruimentCampaign() {
                         "inline-block px-4 py-1 rounded-xl text-default border border-[#F37A20]"
                       }`}
                     >
-                      {row.status
-                        ? "Tìm CV"
-                        : "Bật chiến dịch để thực hiện tìm CV"}
+                      {row.status ? (
+                        <div>
+                          <Link href={`/hr-center/tim-cv?idCampaign=${row.id}`}>
+                            Tìm CV
+                          </Link>
+                        </div>
+                      ) : (
+                        "Bật chiến dịch để thực hiện tìm CV"
+                      )}
                     </div>
                   </td>
                   <td className="p-4 ">

@@ -53,7 +53,7 @@ export const GET_PROFILE_SEARCH_CV =
   "/api/recruiter/SearchCV/GetProfileGenerate";
 export const GET_INFOMATIONDETAIL_SEARCH_CV =
   "/api/recruiter/SearchCV/GetDetailInfo";
-
+export const GET_ALL_CV_SAVE_SEARCH = "/api/recruiter/CV/GetAllSearchCVOfJob";
 
 //------------ Notification -----------//
 export const GET_ALL_NOTIFICATION = "/api/recruiter/Notification/GetAll";
@@ -69,3 +69,7 @@ export const ADD_REQUEST_CONTACT = "/api/recruiter/Web/AddCustomerContact";
 //--------- History ------------//
 export const HISTORY_LOGIN = "/api/recruiter/History/GetHistoryLogin";
 export const HISTORY_UPDATE = "/api/recruiter/History/GetLogUpdateAccount";
+
+//------------ SEARCH CV ------------//
+export const OPEN_CV = "/api/recruiter/Reward/OpenCV";
+export const SAVE_JOB_SEARCH = "/api/recruiter/SearchCV/SaveCV";

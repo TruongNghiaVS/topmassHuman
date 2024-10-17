@@ -21,3 +21,8 @@ export interface ISearchCvDetailProps {
   item: ICvSearch;
   idCampaign: number;
 }
+
+export interface ISaveCvSearch {
+  campaign: number;
+  jobId?: number;
+}

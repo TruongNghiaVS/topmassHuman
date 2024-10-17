@@ -417,3 +417,26 @@ export interface IHistoryProps {
   historys: IHistoryGroup[];
   title: string;
 }
+
+export interface ISearchCvView {
+  candidateCv: ICandidateSearch[];
+}
+
+export interface ICandidateSearch {
+  avatarLink: string;
+  campagnId: number;
+  campagnText: string;
+  createAt: string;
+  cvId: number;
+  email: string;
+  fullName: string;
+  id: number;
+  jobId: number;
+  jobName: number;
+  linkFile: string;
+  phone: string;
+  statusCode: number;
+  statusText: string;
+  viewMode: number;
+  viewModeText: string;
+}

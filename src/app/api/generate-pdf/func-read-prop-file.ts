@@ -1,14 +1,10 @@
 import path from "path";
 import dayjs from "dayjs";
 import { promises as fs } from "fs";
-import { starActive, starNotActive } from "./star";
+import { starActive, starNotActive } from "../generate-html/star";
 const listLevel = [1, 2, 3, 4, 5];
 
-export const getContact = async (
-  data: any,
-  hideEmail: boolean,
-  hidePhone: boolean
-) => {
+export const getContact = async (data: any) => {
   const contactPath = path.join(
     process.cwd(),
     "public",
@@ -19,9 +15,9 @@ export const getContact = async (
   }
   let htmlContent = await fs.readFile(contactPath, "utf8");
   htmlContent = htmlContent
-    .replace("{email}", hideEmail ? "********" : data.email)
+    .replace("{email}", data.email)
     .replace("{addressInfo}", data.addressInfo)
-    .replace("{phoneNumber}", hidePhone ? "**********" : data.phoneNumber);
+    .replace("{phoneNumber}", data.phoneNumber);
   return htmlContent;
 };
 

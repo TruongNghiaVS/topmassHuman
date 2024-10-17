@@ -7,7 +7,7 @@ import { ApplicationCV } from "./setting/application-cv";
 import { CandidateCv } from "./setting/candidate-cv";
 import { CvSearch } from "./setting/cv-search";
 import { useParams } from "next/navigation";
-import { GET_DETAIL_JOB } from "@/utils/api-url";
+import { GET_ALL_CV_SAVE_SEARCH, GET_DETAIL_JOB } from "@/utils/api-url";
 import useSWR from "swr";
 import { fetcher } from "@/utils/axios";
 
@@ -21,6 +21,10 @@ export default function RecruimentPosition() {
     fetcher
   );
 
+  const { data: candidateCv } = useSWR(
+    `${GET_ALL_CV_SAVE_SEARCH}?JobId=${idJob}`,
+    fetcher
+  );
   return (
     <div>
       <div className="bg-white flex whitespace-nowrap space-x-4 items-center p-4 border-b">
@@ -71,7 +75,7 @@ export default function RecruimentPosition() {
         {selected === 1 && <RecruimentNews idJob={idJob} />}
         {selected === 2 && <ApplicationCV idJob={idJob} />}
         {selected === 3 && <CandidateCv />}
-        {selected === 4 && <CvSearch />}
+        {selected === 4 && <CvSearch candidateCv={candidateCv?.data} />}
       </div>
     </div>
   );

@@ -1,9 +1,16 @@
 import TmInput from "@/component/hook-form/input";
 import TmSelect from "@/component/hook-form/select";
+import { ISearchCvView } from "@/interface/interface";
 import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
+import Link from "next/link";
 import { useForm } from "react-hook-form";
 
-export const CvSearch = () => {
+const getCvName = (link: string) => {
+  const names = link.split("/");
+  return names[names.length - 1];
+};
+
+export const CvSearch = ({ candidateCv }: ISearchCvView) => {
   const { control } = useForm({
     defaultValues: {
       name: "",
@@ -13,16 +20,6 @@ export const CvSearch = () => {
   });
 
   const header = ["Tên ứng viên", "Số điện thoại", "Email", "Trạng thái cv"];
-
-  const data = [
-    {
-      name: "Phạm Hoàng Thái",
-      cv_name: "CV_Marketing_Coordinator",
-      phone: "0967477852",
-      email: "test@gmail.com",
-      status: "Phù hợp",
-    },
-  ];
 
   return (
     <div>
@@ -84,14 +81,18 @@ export const CvSearch = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 text-xs">
-              {data.map((row, idx) => (
+              {candidateCv.map((row, idx) => (
                 <tr key={idx} className={`hover:bg-gray-100 text-center`}>
                   <td className="p-4 text-left">
                     <div className="mt-1">
                       <div className="flex lg:justify-between items-center lg:flex-row flex-col ">
                         <div>
-                          <div>{row.name}</div>
-                          <div className="text-default">{row.cv_name}</div>
+                          <div>{row.fullName}</div>
+                          <div className="text-default">
+                            <Link href={row.linkFile} target="_blank">
+                              {getCvName(row.linkFile)}
+                            </Link>
+                          </div>
                         </div>
                         <div className="bg-[#DAFFD7] text-[#137F04] px-3 py-1  mt-1 rounded-xl">
                           Mức độ phù hợp: 87%
@@ -111,7 +112,7 @@ export const CvSearch = () => {
                   </td>
                   <td className="p-4 ">
                     <div className="inline-block px-3 py-1 rounded-xl bg-[#DAFFD7] text-[#137F04]">
-                      {row.status}
+                      {row.statusText}
                     </div>
                   </td>
                 </tr>

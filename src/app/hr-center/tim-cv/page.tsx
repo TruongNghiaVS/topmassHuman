@@ -9,24 +9,54 @@ import InfomationCv from "./infomation-cv";
 import { useSearchParams } from "next/navigation";
 import { Provinces } from "@/module/helper/master-data";
 import { useLoading } from "@/app/context/loading";
-import axiosInstance from "@/utils/axios";
+import { fetcher } from "@/utils/axios";
 import { SEARCH_CV } from "@/utils/api-url";
 import { useState } from "react";
 import { ICvSearch } from "@/interface/cv";
+import useSWR from "swr";
+import { convertParams } from "@/utils/custom-hook";
+
+const years = Array.from({ length: 100 }, (_, i) => {
+  const item = {
+    label: `${new Date().getFullYear() - i}`,
+    value: new Date().getFullYear() - i,
+  };
+  return item;
+});
 
 export default function SearchCV() {
   const searchParams = useSearchParams();
   const campaignId = searchParams.get("idCampaign");
   const idCampaign = campaignId ? +campaignId : -1;
 
-  const [cvSearch, setCvSearch] = useState<ICvSearch[]>([]);
+  // const [cvSearch, setCvSearch] = useState<ICvSearch[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchObj, setSearchObj] = useState({
+    KeyWord: "",
+    LocationCode: "",
+    CvKey: "",
+    Gender: 0,
+    FromYear: -1,
+    ToYear: -1,
+    SchoolSearch: "",
+    EducationalLevelArray: "",
+    Limit: 10,
+    Page: currentPage,
+  });
+
+  const { data: cvSearch, error, isLoading } = useSWR(
+    SEARCH_CV + "?" + convertParams(searchObj),
+    fetcher
+  );
+
   const { control, handleSubmit } = useForm({
     defaultValues: {
       locations: [],
       KeyWord: "",
       CvKey: "",
       Gender: 0,
-      DayOfBirth: "",
+      FromYear: -1,
+      ToYear: -1,
       SchoolSearch: " ",
       cap_2: false,
       cap_3: false,
@@ -63,7 +93,8 @@ export default function SearchCV() {
         LocationCode: data.locations.join(","),
         CvKey: data.CvKey,
         Gender: data.Gender,
-        DayOfBirth: data.DayOfBirth,
+        FromYear: data.FromYear,
+        ToYear: data.ToYear,
         SchoolSearch: data.SchoolSearch,
         EducationalLevelArray: mapLevelSearch(
           data.cap_2,
@@ -72,11 +103,11 @@ export default function SearchCV() {
           data.university,
           data.after_university
         ),
+        Limit: 10,
+        Page: currentPage,
       };
 
-      const res = await axiosInstance.get(SEARCH_CV, { params: dataSearch });
-      setCvSearch(res.data.data);
-      console.log(res);
+      setSearchObj(dataSearch);
     } catch (error) {
     } finally {
       setLoading(false);
@@ -150,14 +181,25 @@ export default function SearchCV() {
                 />
               </div>
               <div className="mt-2">Năm sinh</div>
-              <div className="mt-2">
-                <TmInput
-                  name="DayOfBirth"
-                  type="date"
-                  control={control}
-                  placeholder="Từ"
-                  className="w-full"
-                />
+              <div className="flex space-x-2 mt-2">
+                <div className=" flex-1">
+                  <TmSelect
+                    name="FromYear"
+                    control={control}
+                    placeholder="Từ"
+                    className="w-full"
+                    options={years}
+                  />
+                </div>
+                <div className="flex-1">
+                  <TmSelect
+                    name="ToYear"
+                    control={control}
+                    placeholder="Đến"
+                    className="w-full"
+                    options={years}
+                  />
+                </div>
               </div>
               <div className="mt-2">Trình độ học vấn</div>
               <div className="mt-2 flex">
@@ -215,7 +257,7 @@ export default function SearchCV() {
               </div>
               <div className="mt-4 text-white">
                 <button className="w-full bg-[#F37A20] rounded py-2 text-center text-white justify-center flex">
-                  Tìm CV 
+                  Tìm CV
                   {/* <img src="/imgs/arrow.svg" alt="" className="w-3 mx-2" />) */}
                 </button>
               </div>
@@ -223,7 +265,7 @@ export default function SearchCV() {
           </form>
         </div>
         <div className="sm:col-span-2">
-          {cvSearch.map((item, idx) => {
+          {cvSearch?.data.map((item: ICvSearch, idx: number) => {
             return (
               <div className="" key={idx}>
                 <InfomationCv item={item} idCampaign={idCampaign} />

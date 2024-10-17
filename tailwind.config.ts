@@ -26,6 +26,7 @@ const config: Config = {
       },
       colors: {
         default: "#D14B00",
+        mainstream: "#F37A20",
         defaultText: "#D14B00",
         company: "rgba(152, 27, 30, 0.1)",
         type: "rgba(128,130,241,0.1)",

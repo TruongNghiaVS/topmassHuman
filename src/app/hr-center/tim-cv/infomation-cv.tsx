@@ -32,7 +32,13 @@ export default function InfomationCv({
               />
             </div>
             <div>
-              <div className="text-base">{item.fullName}</div>
+              <div className="text-base hover:text-[#F37A20]">
+                <Link
+                  href={`/hr-center/tim-cv/${item.searchId}?idCampaign=${idCampaign}`}
+                >
+                  {item.fullName}
+                </Link>
+              </div>
               <div className="inline-block mt-2 text-white bg-[#CC0000] rounded-xl px-2 py-0.5 text-xs">
                 Đang tìm việc
               </div>
@@ -76,7 +82,11 @@ export default function InfomationCv({
             <AcademicCapIcon className="w-4 mr-1 " /> {item.jobObjectiveText}
           </div>
           <div className="text-default">
-            <Link href={`/hr-center/tim-cv/${item.searchId}`}>Xem thêm...</Link>
+            <Link
+              href={`/hr-center/tim-cv/${item.searchId}?idCampaign=${idCampaign}`}
+            >
+              Xem thêm...
+            </Link>
           </div>
         </div>
       </div>
