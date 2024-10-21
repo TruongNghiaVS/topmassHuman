@@ -155,14 +155,14 @@ export default function EditInfomationCompany({
               avatarLink={currentUser?.companyInfo.logoLink}
             />
           </div>
-          <div className="flex-1">
+          {/* <div className="flex-1">
             <div className="">Ảnh bìa công ty</div>
             <AvatarUpload
               name="banner"
               control={control}
               avatarLink={currentUser?.companyInfo.coverLink}
             />
-          </div>
+          </div> */}
         </div>
         <div className="flex space-x-2 items-center mt-2">
           <div className="flex-1">

@@ -5,6 +5,7 @@ import TmInput from "@/component/hook-form/input";
 import { IChangePassword } from "@/interface/interface";
 import { CHANGE_PASSWORD } from "@/utils/api-url";
 import axiosInstance from "@/utils/axios";
+import { EyeIcon } from "@heroicons/react/16/solid";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -12,6 +13,11 @@ import { toast } from "react-toastify";
 import * as yup from "yup";
 
 export default function ChangePassword() {
+  const [showPassword, setShowPassword] = useState({
+    currentPassword: false,
+    password: false,
+    confirm_password: false,
+  });
   const { setLoading } = useLoading();
   const schema = yup.object().shape({
     currentPassword: yup.string().required("Vui lòng nhập mật khẩu củ"),
@@ -68,7 +74,21 @@ export default function ChangePassword() {
             control={control}
             placeholder="Mật khẩu hiện tại"
             name="currentPassword"
-            type="password"
+            type={showPassword.currentPassword ? "text" : "password"}
+            afterIcon={
+              <button
+                onClick={() => {
+                  setShowPassword((prevShowPassword) => {
+                    return {
+                      ...prevShowPassword,
+                      currentPassword: !prevShowPassword.currentPassword,
+                    };
+                  });
+                }}
+              >
+                <EyeIcon className="w-5" />
+              </button>
+            }
           />
         </div>
         <div className="mb-4">
@@ -79,7 +99,21 @@ export default function ChangePassword() {
             control={control}
             name="password"
             placeholder="Mật khẩu mới"
-            type="password"
+            type={showPassword.password ? "text" : "password"}
+            afterIcon={
+              <button
+                onClick={() => {
+                  setShowPassword((prevShowPassword) => {
+                    return {
+                      ...prevShowPassword,
+                      password: !prevShowPassword.password,
+                    };
+                  });
+                }}
+              >
+                <EyeIcon className="w-5" />
+              </button>
+            }
           />
         </div>
         <div className="mb-4">
@@ -90,7 +124,21 @@ export default function ChangePassword() {
             control={control}
             name="confirm_password"
             placeholder="Nhập lại mật khẩu mới"
-            type="password"
+            type={showPassword.confirm_password ? "text" : "password"}
+            afterIcon={
+              <button
+                onClick={() => {
+                  setShowPassword((prevShowPassword) => {
+                    return {
+                      ...prevShowPassword,
+                      confirm_password: !prevShowPassword.confirm_password,
+                    };
+                  });
+                }}
+              >
+                <EyeIcon className="w-5" />
+              </button>
+            }
           />
         </div>
         <button

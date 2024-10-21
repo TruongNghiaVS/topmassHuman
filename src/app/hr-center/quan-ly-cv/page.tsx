@@ -74,7 +74,7 @@ export default function ManagerCV() {
     keyword: yup.string(),
     campaign: yup.number(),
     status: yup.number(),
-    cv: yup.number(),
+    TypeData: yup.number(),
   });
 
   const { control, handleSubmit } = useForm<ISearchManagerCv>({
@@ -83,7 +83,7 @@ export default function ManagerCV() {
       keyword: "",
       campaign: -1,
       status: -1,
-      cv: -1,
+      TypeData: -1,
     },
   });
 
@@ -111,7 +111,7 @@ export default function ManagerCV() {
 
   return (
     <div className="px-6 py-3 ">
-      <div className="text-base font-normal">Quản lý cv ứng viên</div>
+      <div className="text-base font-normal">Quản lý CV ứng viên</div>
       <div className="mt-4 p-2 bg-white border rounded">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex space-x-2">
@@ -120,7 +120,7 @@ export default function ManagerCV() {
                 className="w-full"
                 name="key"
                 control={control}
-                placeholder="Tìm kiếm tên,Email,Số điện thoại"
+                placeholder="Tìm kiếm tên, Email, Số điện thoại"
               />
             </div>
             <div className="flex-1">
@@ -144,9 +144,13 @@ export default function ManagerCV() {
             <div className="flex-1">
               <TmSelect
                 className="w-full"
-                name="cv"
+                name="TypeData"
                 control={control}
-                options={[{ value: -1, label: "Tất cả" }]}
+                options={[
+                  { value: -1, label: "Tất cả" },
+                  { label: "Ứng viên đã ứng tuyển", value: 1 },
+                  { label: "Tìm kiếm CV", value: 3 },
+                ]}
                 placeholder="Nguồn cv"
               />
             </div>

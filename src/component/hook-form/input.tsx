@@ -6,6 +6,7 @@ const TmInput: React.FC<ITmInput> = ({
   name,
   control,
   icon,
+  afterIcon,
   placeholder = "",
   type = "text",
   className,
@@ -33,6 +34,7 @@ const TmInput: React.FC<ITmInput> = ({
             icon && "pl-10"
           } ${error ? "border-red-500" : "border-gray-300"}`}
         />
+        {afterIcon && <div className="absolute right-2">{afterIcon}</div>}
       </div>
       {error && <p className="text-red-500 text-sm mt-1">{error.message}</p>}
     </div>

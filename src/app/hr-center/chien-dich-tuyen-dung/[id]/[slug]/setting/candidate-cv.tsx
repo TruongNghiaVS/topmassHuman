@@ -55,7 +55,7 @@ export const CandidateCv = () => {
     resolver: yupResolver(schema),
     defaultValues: {
       keyword: "",
-      cv: -1,
+      TypeData: -1,
       status: -1,
     },
   });

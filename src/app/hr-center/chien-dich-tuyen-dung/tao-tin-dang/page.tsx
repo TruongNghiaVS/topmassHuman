@@ -4,7 +4,7 @@ import { LocationForm } from "@/app/hr-center/chien-dich-tuyen-dung/tao-tin-dang
 import TmInput from "@/component/hook-form/input";
 import TmInputNumber from "@/component/hook-form/input-number";
 import TmSelect from "@/component/hook-form/select";
-import { campaignForm, gender, salaryOptions } from "@/mockup-data/data";
+import { gender, salaryOptions } from "@/mockup-data/data";
 import {
   ArrowUturnLeftIcon,
   DocumentTextIcon,
@@ -16,7 +16,7 @@ import {
 } from "@heroicons/react/16/solid";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
-import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { TimeWorkingForm } from "./setting/time-working-form";
 import dynamic from "next/dynamic";
@@ -31,7 +31,6 @@ import {
   GET_DISTRICT,
   GET_EXPERIENCE,
   GET_JOB_TYPE,
-  GET_PROVINCE,
   GET_RANK_CANDIDATE,
 } from "@/utils/api-url";
 import {
@@ -43,9 +42,8 @@ import {
 import { useEffect, useState } from "react";
 import { Option } from "@/component/hook-form/interface/interface";
 import { SkillsForm } from "./setting/skills-form";
-import CustomSelectSearchForm from "@/component/hook-form/customSelectSearchForm";
-import CustomSelectSearch from "@/component/hook-form/customSelectSearchForm";
 import CustomSelect from "@/component/hook-form/customSelectSearchForm";
+import { Provinces } from "@/module/helper/master-data";
 
 const CustomCKEditor = dynamic(
   () => {
@@ -153,7 +151,6 @@ const schema = yup.object().shape({
 
 export default function CreateNew() {
   const { setLoading } = useLoading();
-  const [provinces, setProvinces] = useState<Option[]>([]);
   const [district, setDistrict] = useState<Option[]>([]);
   const [campaigns, setCampaigns] = useState<Option[]>([]);
   const [careers, setCareers] = useState<Option[]>([]);
@@ -161,18 +158,10 @@ export default function CreateNew() {
   const [ranks, setRanks] = useState<Option[]>([]);
   const [experiences, setExperiences] = useState<Option[]>([]);
   const [isSkipValidate, setIsSkipValidate] = useState(true);
-
+  const { provinces } = Provinces();
   const getAllProvinces = async () => {
     setLoading(true);
     try {
-      const response = await axiosInstance.get(GET_PROVINCE);
-      const listData = response.data.data.map((item: IProvinces) => {
-        return {
-          value: item.code,
-          label: item.name,
-        };
-      });
-      setProvinces(listData);
       const resCampaign = await axiosInstance.get(GET_ALL_CAMPAIGN, {
         params: {
           code: -1,
@@ -231,6 +220,7 @@ export default function CreateNew() {
     control,
     handleSubmit,
     getValues,
+    watch,
     reset,
     formState: { errors },
   } = useForm<IFormCreateNew>({
@@ -279,8 +269,9 @@ export default function CreateNew() {
     },
   });
 
+  const isAggrement = watch("aggrement");
+
   const handleFilterDistrict = async (value: string, index: number) => {
-    console.log(value);
     setLoading(true);
     try {
       const response = await axiosInstance.get(GET_DISTRICT, {
@@ -295,7 +286,7 @@ export default function CreateNew() {
         };
       });
 
-      setDistrict(listDistrict);
+      setDistrict([{ label: "Tất cả", value: "0" }, ...listDistrict]);
     } catch (error) {
     } finally {
       setLoading(false);
@@ -345,7 +336,7 @@ export default function CreateNew() {
             className="flex rounded-2xl py-1 px-2 bg-[#BFBFBF]"
           >
             <ArrowUturnLeftIcon className="w-4 mr-1" />
-            Trở vế
+            Trở về
           </Link>
           <div>Tạo tin đăng</div>
         </div>
@@ -356,7 +347,6 @@ export default function CreateNew() {
           <PlusCircleIcon className="w-4 mr-2" /> Thêm mới chiến dịch
         </Link>
       </div>
-      <div>{isSkipValidate.toString()}</div>
       <div className="mt-4 lg:px-40 px-2">
         <div className="font-medium">Thông tin chung</div>
         <form className="mt-2 pb-10">
@@ -527,7 +517,7 @@ export default function CreateNew() {
               <div className="flex-1">
                 <div className="flex justify-between items-start">
                   <div className="font-medium">
-                    Mức lương <span className="text-[#dc2f2f]">*</span>
+                    Thu nhập <span className="text-[#dc2f2f]">*</span>
                   </div>
                   <div className="flex space-x-2 items-center">
                     <TmInput
@@ -542,12 +532,14 @@ export default function CreateNew() {
                   <div className="flex-1">
                     <TmInput
                       name="salary_from"
+                      disabled={isAggrement}
                       control={control}
                       placeholder="0"
                     />
                   </div>
                   <div className="flex-1">
                     <TmInput
+                      disabled={isAggrement}
                       name="salary_to"
                       control={control}
                       placeholder="0"
@@ -609,12 +601,12 @@ export default function CreateNew() {
             </div>
             <CustomCKEditor name="benefit" control={control} />
           </div>
-          <div className="mt-4">
+          {/* <div className="mt-4">
             <div className="font-medium ">Kỹ năng cần có</div>
             <div>
               <SkillsForm control={control} name="skills" />
             </div>
-          </div>
+          </div> */}
           <div className="mt-6">
             <div className="font-medium">Thông tin chi tiết</div>
             <div className="mt-4">

@@ -141,15 +141,15 @@ export default function SearchCV() {
             <div className="p-2 bg-white">
               <div className="text-default uppercase">Tìm kiếm cơ bản</div>
               <div className="mt-2">
-                <div>Từ khoá cần tìm</div>
+                <div className="font-medium">Từ khoá cần tìm</div>
                 <TmInput
                   name="KeyWord"
                   control={control}
-                  placeholder="Nhập từ khoá"
+                  placeholder="Vị trí, tên công việc"
                 />
               </div>
-              <div className="mt-2">Tỉnh thành</div>
-              <div className="mt-2">
+              <div className="mt-2 font-medium">Tỉnh/TP</div>
+              <div className="">
                 <CustomMultipleSelectSearchForm
                   name="locations"
                   control={control}
@@ -160,9 +160,8 @@ export default function SearchCV() {
               <div className="mt-2 text-default uppercase">
                 Tìm kiếm nâng cao
               </div>
-              <div className="mt-2">
-                Trong CV <span className="text-default">Bắt buộc có</span> từ
-                khoá
+              <div className="mt-2 font-medium">
+                <span className="text-default">Từ khoá</span> trong CV
               </div>
               <div className="mt-2">
                 <TmInput
@@ -171,7 +170,7 @@ export default function SearchCV() {
                   placeholder="Nhập từ khoá"
                 />
               </div>
-              <div className="mt-2">Giới tính</div>
+              <div className="mt-2 font-medium">Giới tính</div>
               <div className="mt-2">
                 <TmRadio
                   name="Gender"
@@ -180,7 +179,7 @@ export default function SearchCV() {
                   classNameCustom="flex space-x-2"
                 />
               </div>
-              <div className="mt-2">Năm sinh</div>
+              <div className="mt-2 font-medium">Năm sinh</div>
               <div className="flex space-x-2 mt-2">
                 <div className=" flex-1">
                   <TmSelect
@@ -201,7 +200,7 @@ export default function SearchCV() {
                   />
                 </div>
               </div>
-              <div className="mt-2">Trình độ học vấn</div>
+              <div className="mt-2 font-medium">Trình độ học vấn</div>
               <div className="mt-2 flex">
                 <TmInput
                   name="cap_2"

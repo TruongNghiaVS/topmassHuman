@@ -33,7 +33,7 @@ export default function RecruimentPosition() {
           className="flex rounded-2xl py-1 px-2 bg-[#BFBFBF]"
         >
           <ArrowUturnLeftIcon className="w-4 mr-1" />
-          Trở vế
+          Trở về
         </Link>
         <div>{jobInfo?.name}</div>
       </div>

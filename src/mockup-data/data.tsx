@@ -182,7 +182,7 @@ export const detailOder = [
 
 export const optionCampaigns = [
   { value: "-1", label: "Tất cả chiến dịch" },
-  { value: "1", label: "chiến dịch đang mở" },
+  { value: "1", label: "Chiến dịch đang mở" },
   { value: "0", label: "Chiến dịch đang tắt" },
 ];
 export const campaigns = [

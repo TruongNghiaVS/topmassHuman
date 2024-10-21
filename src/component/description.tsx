@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export const Description = () => {
   const description = [
     {
@@ -19,7 +21,7 @@ export const Description = () => {
     {
       title: "Chi phí hợp lý",
       description:
-        "Hỗ trợ tin đăng miến phí và các gói dùng thử mỗi năm, tối ưu chi phí và quy trình tuyển dụng.",
+        "Hỗ trợ tin đăng miễn phí và các gói dùng thử mỗi năm, tối ưu chi phí và quy trình tuyển dụng.",
       img: "price.png",
       width: 39,
       height: 39,
@@ -70,11 +72,13 @@ export const Description = () => {
         <div className="mt-8 font-bold sm:text-2xl text-lg text-center">
           Trải nghiệm dịch vụ đăng tin tại Topmass
         </div>
-        <div className="text-center text-sm font-normal text-white mt-6 mb-10">
-          <span className="px-6 py-2 bg-gradient-to-r from-[#F89E1B] to-[#F37A20]">
-            Đăng ký ngay!
-          </span>
-        </div>
+        <Link href="/dang-ky">
+          <div className="text-center text-sm font-normal text-white mt-6 mb-10">
+            <span className="px-6 py-2 bg-gradient-to-r from-[#F89E1B] to-[#F37A20]">
+              Đăng ký ngay!
+            </span>
+          </div>
+        </Link>
       </div>
     </div>
   );

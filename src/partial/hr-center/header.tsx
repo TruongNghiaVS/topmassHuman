@@ -92,11 +92,12 @@ export const HeaderHrCenter = () => {
                 <Link href="/hr-center/thong-bao">
                   <div className="relative">
                     <BellIcon className="text-[#F37A20] mr-3 w-6" />
-                    {notis && notis.length > 0 && (
-                      <div className="absolute content-[''] text-xs text-center w-4 h-4 top-[-4px] right-2 rounded-full bg-[#C40202] text-white">
-                        {notis.length}
-                      </div>
-                    )}
+                    {notis &&
+                      notis.filter((item) => item.status === 0).length > 0 && (
+                        <div className="absolute content-[''] text-xs text-center w-4 h-4 top-[-4px] right-2 rounded-full bg-[#C40202] text-white">
+                          {notis.filter((item) => item.status === 0).length}
+                        </div>
+                      )}
                   </div>
                 </Link>
                 <img

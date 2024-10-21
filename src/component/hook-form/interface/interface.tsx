@@ -13,6 +13,7 @@ export interface ITmInput extends InputHTMLAttributes<HTMLInputElement> {
   icon?: any;
   placeholder?: string;
   type?: string;
+  afterIcon?: any;
   classNameCustom?: string;
 }
 

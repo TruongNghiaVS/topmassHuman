@@ -1,4 +1,8 @@
-import { GET_ALL_CAMPAIGN, GET_PROVINCE } from "@/utils/api-url";
+import {
+  GET_ALL_CAMPAIGN,
+  GET_CURRENT_USER,
+  GET_PROVINCE,
+} from "@/utils/api-url";
 import { fetcher } from "@/utils/axios";
 import useSWR from "swr";
 
@@ -15,7 +19,33 @@ export const Provinces = () => {
   const listProvinces = [
     {
       label: "Tất cả",
-      value: "",
+      value: "0",
+    },
+    ...provinces,
+  ];
+  return {
+    error,
+    isLoading,
+    provinces,
+    listProvinces,
+    mutate,
+  };
+};
+
+export const District = () => {
+  const { data, error, mutate, isLoading } = useSWR(GET_PROVINCE, fetcher);
+  const provinces = data
+    ? data?.data.map((item: any) => {
+        return {
+          value: item.code,
+          label: item.name,
+        };
+      })
+    : [];
+  const listProvinces = [
+    {
+      label: "Tất cả",
+      value: "0",
     },
     ...provinces,
   ];
@@ -54,5 +84,16 @@ export const Campaign = () => {
     campaign,
     listCampaign,
     mutate,
+  };
+};
+
+export const ProfileUser = () => {
+  const { data: currentUser, error, mutate } = useSWR(
+    GET_CURRENT_USER,
+    fetcher
+  );
+
+  return {
+    currentUser,
   };
 };

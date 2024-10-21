@@ -352,7 +352,7 @@ export interface ISearchManagerCv {
   keyword?: string;
   campaign?: number;
   status?: number;
-  cv?: number;
+  TypeData?: number;
 }
 
 export interface ICandidateViewJob {

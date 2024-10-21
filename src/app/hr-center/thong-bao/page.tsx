@@ -50,9 +50,9 @@ export default function Notification() {
     <div>
       <div className="p-4 bg-white">Thông báo từ hệ thống</div>
       <div className="m-6">
-        {notification.map((item) => {
+        {notification.map((item, idx) => {
           return (
-            <div key={item.title + item?.id?.toString()} className="bg-white">
+            <div key={idx} className="bg-white">
               <Link
                 href={`/hr-center/thong-bao/chi-tiet-thong-bao/${item.relId}`}
                 legacyBehavior

@@ -10,11 +10,11 @@ export const Footer = () => {
   const topMass = [
     {
       title: "Giới thiệu",
-      link: "/new/1",
+      link: "/ve-chung-toi",
     },
     {
       title: "Tuyển dụng",
-      link: "/new/1",
+      link: "/",
     },
     {
       title: "Liên hệ",
@@ -32,43 +32,31 @@ export const Footer = () => {
 
   const cv = [
     {
-      title: "Quản lý hồ sơ",
-      link: "/new/1",
+      title: "Chiến dịch tuyển dụng",
+      link: "/hr-center/chien-dich-tuyen-dung",
     },
     {
-      title: "Hướng dẫn viết CV",
-      link: "/new/1",
+      title: "Tạo tin đăng",
+      link: "/hr-center/chien-dich-tuyen-dung/tao-tin-dang",
     },
     {
-      title: "Thư viện CV mẫu",
-      link: "/new/1",
-    },
-    {
-      title: "CV theo ngành nghề",
-      link: "/new/1",
+      title: "Quản lý cv",
+      link: "/hr-center/quan-ly-cv",
     },
   ];
 
   const blog = [
     {
-      title: "Việc làm tốt nhất",
-      link: "/new/1",
+      title: "Tia sét tích điểm",
+      link: "#",
     },
     {
-      title: "Việc làm cho sinh viên",
-      link: "/new/1",
+      title: "Dịch vụ banner",
+      link: "#",
     },
     {
-      title: "Việc làm online",
-      link: "/new/1",
-    },
-    {
-      title: "Việc làm lương cao",
-      link: "/new/1",
-    },
-    {
-      title: "Việc làm tài chính",
-      link: "/new/1",
+      title: "Đổi cv",
+      link: "/hr-center/doi-cv",
     },
   ];
 
@@ -91,7 +79,7 @@ export const Footer = () => {
             </div>
             <div className="col-span-7">
               <div className="text-[28px] font-bold">
-                Thuộc sở hữu công ty Cổ phần tập đoàn{" "}
+                Thuộc sở hữu Công ty Cổ phần Tập đoàn{" "}
                 <span className="text-[#F89E1B]">Vietstar</span>
               </div>
               <div className="flex mt-2">
@@ -101,8 +89,8 @@ export const Footer = () => {
               </div>
               <div className="flex mt-2">
                 <MapPinIcon className="w-6 mr-2 text-[#F37A20]" />
-                Trụ sở làm việc: 54/31 Phổ Quang, Phường 02, Tân Bình, Hồ Chí
-                Minh
+                Trụ sở làm việc: 54/31 Phổ Quang, Phường 02, Quận Tân Bình,
+                TP.Hồ Chí Minh
               </div>
               <div className="w-[90%] h-2.5 bg-gradient-to-r from-[#d14b00] to-[#f89e1b] mt-6"></div>
             </div>

@@ -14,7 +14,7 @@ export default function DetailOrder() {
           className="flex rounded-2xl py-1 px-2 bg-[#BFBFBF]"
         >
           <ArrowUturnLeftIcon className="w-4 mr-1" />
-          Trở vế
+          Trở về
         </Link>
         <div>Chi tiết đơn hàng</div>
       </div>

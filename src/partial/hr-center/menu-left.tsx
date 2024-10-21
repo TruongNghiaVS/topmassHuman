@@ -9,12 +9,10 @@ import { MenuItemSmall } from "./menu-item-small";
 import useSWR from "swr";
 import { GET_CURRENT_USER } from "@/utils/api-url";
 import { fetcher } from "@/utils/axios";
+import { ProfileUser } from "@/module/helper/master-data";
 
 export default function MenuLeft() {
-  const { data: currentUser, error, mutate } = useSWR(
-    GET_CURRENT_USER,
-    fetcher
-  );
+  const { currentUser } = ProfileUser();
   const [isOpen, setIsOpen] = useState<boolean>(true);
   return (
     <div>

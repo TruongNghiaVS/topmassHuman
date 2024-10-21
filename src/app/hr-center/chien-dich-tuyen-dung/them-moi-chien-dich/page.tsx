@@ -52,7 +52,7 @@ export default function CreateCampaign() {
             className="flex rounded-2xl py-1 px-2 bg-[#BFBFBF]"
           >
             <ArrowUturnLeftIcon className="w-4 mr-1" />
-            Trở vế
+            Trở về
           </Link>
           <div>Thêm chiến dịch</div>
         </div>
@@ -79,8 +79,10 @@ export default function CreateCampaign() {
                 Tạo chiến dịch tuyển dụng mới
               </div>
               <div className="text-white font-normal">
-                Tên chiến dịch tuyển dụng
+                Tên chiến dịch tuyển dụng (
+                <span className="text-xs">Tối đa 150 ký tự</span>)
               </div>
+
               <form onSubmit={handleSubmit(onSubmit)}>
                 <TmInput
                   name="name"

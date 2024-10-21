@@ -122,18 +122,21 @@ export const Header = () => {
               <Link href="/hr-center/thong-bao">
                 <div className="relative">
                   <BellIcon className="text-[#F37A20] mr-3 w-6" />
-                  {notis && notis.length > 0 && (
-                    <div className="absolute content-[''] text-xs text-center w-4 h-4 top-[-4px] right-2 rounded-full bg-[#C40202] text-white">
-                      {notis.length}
-                    </div>
-                  )}
+                  {notis &&
+                    notis.filter((item) => item.status === 0).length > 0 && (
+                      <div className="absolute content-[''] text-xs text-center w-4 h-4 top-[-4px] right-2 rounded-full bg-[#C40202] text-white">
+                        {notis.filter((item) => item.status === 0).length}
+                      </div>
+                    )}
                 </div>
               </Link>
-              <img
-                src="/imgs/messenger.svg"
-                alt=""
-                className="w-6 h-auto mr-3"
-              />
+              <Link href="/nhan-tin">
+                <img
+                  src="/imgs/messenger.svg"
+                  alt=""
+                  className="w-6 h-auto mr-3"
+                />
+              </Link>
               <div className="flex reflex items-center relative group/title ">
                 <div className="inline-block p-0.5 rounded-full bg-[#F37A20] mr-1">
                   <UserIcon className="text-white w-6" />

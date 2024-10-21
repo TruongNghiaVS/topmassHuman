@@ -1,3 +1,5 @@
+"use client";
+
 import { SunglassesBootstrapIcon } from "@/theme/icons/sunglassesBootstrapIcon";
 import {
   DocumentCheckIcon,
@@ -8,8 +10,11 @@ import {
 } from "@heroicons/react/16/solid";
 import { EnvelopeIcon, PhoneIcon } from "@heroicons/react/24/outline";
 import { Chart } from "@/component/chart";
+import { ProfileUser } from "@/module/helper/master-data";
 
 export default function DashBoard() {
+  const { currentUser } = ProfileUser();
+
   const data = {
     labels: [
       "20/08/2024",
@@ -107,17 +112,17 @@ export default function DashBoard() {
               <UserIcon className="w-10 text-white" />
             </div>
             <div className="flex-1	">
-              <div className="font-normal">MKT Vietstar Minh</div>
+              <div className="font-normal">{currentUser?.name}</div>
               <div className="text-xs font-normal inline-block px-2 py-1 rounded bg-[#E2E1E0]">
-                Mã NTD: TM9881
+                Mã NTD: {currentUser?.RecruiterCode}
               </div>
               <div className="flex-1 text-xs font-normal sm:flex mt-4  ">
                 <div className="flex items-center sm:mr-10 ">
-                  <EnvelopeIcon className="w-4 mr-2" /> test@vietstargroup.vn
+                  <EnvelopeIcon className="w-4 mr-2" /> {currentUser?.email}
                 </div>
                 <div className="flex items-center sm:mt-0 mt-2">
                   <PhoneIcon className="w-4 mr-2" />
-                  0345678912
+                  {currentUser?.phone}
                 </div>
               </div>
             </div>

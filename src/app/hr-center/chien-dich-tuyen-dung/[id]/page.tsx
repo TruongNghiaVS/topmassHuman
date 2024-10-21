@@ -76,7 +76,7 @@ export default function DetailCampaign({ params }: { params: { id: number } }) {
     "Tình trạng",
     "Trạng thái duyệt",
     "Tìm CV",
-    "Tên dịch vụ",
+    "Tên chiến dịch",
     "Thời gian tạo",
   ];
 
@@ -177,7 +177,7 @@ export default function DetailCampaign({ params }: { params: { id: number } }) {
             className="flex rounded-2xl py-1 px-2 bg-[#BFBFBF]"
           >
             <ArrowUturnLeftIcon className="w-4 mr-1" />
-            Trở vế
+            Trở về
           </Link>
           <div>{getCampaignName()}</div>
         </div>
@@ -302,7 +302,17 @@ export default function DetailCampaign({ params }: { params: { id: number } }) {
                         "inline-block px-4 py-1 rounded text-default border border-[#F37A20]"
                       }`}
                     >
-                      {row.status === 1 ? "Tìm CV" : "Bật chiến dịch để tìm CV"}
+                      {row.status ? (
+                        <div>
+                          <Link
+                            href={`/hr-center/tim-cv?idCampaign=${row.campaignId}`}
+                          >
+                            Tìm CV
+                          </Link>
+                        </div>
+                      ) : (
+                        "Bật chiến dịch để thực hiện tìm CV"
+                      )}
                     </div>
                   </td>
                   <td className="p-4 ">

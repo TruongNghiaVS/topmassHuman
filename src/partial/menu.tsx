@@ -11,6 +11,7 @@ export const Menu = () => {
       subMenu: [],
       border: false,
       patch_check: "/gioi-thieu",
+      link: "/ve-chung-toi",
     },
     // {
     //   title: "Dịch Vụ",
