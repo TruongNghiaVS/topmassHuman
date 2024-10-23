@@ -25,13 +25,12 @@ export interface ITmInputNumber extends ITmInput {
 
 export interface IUpload extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
-  avatarLink?: string;
   control: Control<any>;
   classNameImg?: string;
   title?: string;
-  classNameCustomShowFile?: string;
+  acceptFile?: string;
+  link?: string;
 }
-
 export interface ITmSelect extends InputHTMLAttributes<HTMLSelectElement> {
   name: string;
   control: Control<any>;

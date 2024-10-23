@@ -84,13 +84,13 @@ export const Footer = () => {
               </div>
               <div className="flex mt-2">
                 <DocumentTextIcon className="w-6 mr-2 text-[#F37A20]" />
-                Giấy phép đăng ký kinh doanh số:{" "}
-                <span className="font-bold">0315196162</span>
+                Giấy phép đăng ký kinh doanh số:
+                <span className="font-bold ml-1">0315196162</span>
               </div>
               <div className="flex mt-2">
                 <MapPinIcon className="w-6 mr-2 text-[#F37A20]" />
-                Trụ sở làm việc: 54/31 Phổ Quang, Phường 02, Quận Tân Bình,
-                TP.Hồ Chí Minh
+                Trụ sở làm việc: 54/31 Phổ Quang, Phường 02, Quận Tân Bình, TP.
+                Hồ Chí Minh
               </div>
               <div className="w-[90%] h-2.5 bg-gradient-to-r from-[#d14b00] to-[#f89e1b] mt-6"></div>
             </div>

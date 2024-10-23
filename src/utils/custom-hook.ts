@@ -38,3 +38,8 @@ export const renderRangeSalary = (
     "0"
   )} - ${convertToMillionDongFixed(salaryTo, "0")} triệu`;
 };
+
+export const getFileName = (file: string) => {
+  const arrFile = file.split("/");
+  return arrFile[arrFile.length - 1];
+};

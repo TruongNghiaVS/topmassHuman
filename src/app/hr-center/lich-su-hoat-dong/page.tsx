@@ -2,23 +2,34 @@
 import TmInput from "@/component/hook-form/input";
 import { HISTORY_LOGIN, HISTORY_UPDATE } from "@/utils/api-url";
 import { fetcher } from "@/utils/axios";
-import {
-  BoltIcon,
-  ClockIcon,
-  IdentificationIcon,
-  UserCircleIcon,
-} from "@heroicons/react/24/outline";
+import { ClockIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import useSWR from "swr";
 import { HistoryView } from "./history-view";
+import { convertParams } from "@/utils/custom-hook";
+import dayjs from "dayjs";
 
 export default function ActivityHistory() {
   const [active, setActive] = useState<number>(0);
+  const [filterLogin, setFilterLogin] = useState({
+    From: dayjs().format("YYYY-MM-DD"),
+    To: dayjs().format("YYYY-MM-DD"),
+  });
+  const [filterUpdate, setFilterUpdate] = useState({
+    From: dayjs().format("YYYY-MM-DD"),
+    To: dayjs().format("YYYY-MM-DD"),
+  });
   const { control } = useForm();
 
-  const { data: historyLogin } = useSWR(HISTORY_LOGIN, fetcher);
-  const { data: historyUpdate } = useSWR(HISTORY_UPDATE, fetcher);
+  const { data: historyLogin } = useSWR(
+    `${HISTORY_LOGIN}?${convertParams(filterLogin)}`,
+    fetcher
+  );
+  const { data: historyUpdate } = useSWR(
+    `${HISTORY_UPDATE}?${convertParams(filterUpdate)}`,
+    fetcher
+  );
 
   return (
     <div className="px-6 py-3 bg-white min-h-screen">
@@ -67,6 +78,8 @@ export default function ActivityHistory() {
                 <HistoryView
                   title="Tất cả lịch sử"
                   historys={historyLogin?.data}
+                  filter={filterLogin}
+                  setFilter={setFilterLogin}
                 />
               </div>
             )}
@@ -189,6 +202,8 @@ export default function ActivityHistory() {
                 <HistoryView
                   title="Cập nhật tài khoản"
                   historys={historyUpdate?.data}
+                  filter={filterUpdate}
+                  setFilter={setFilterUpdate}
                 />
               </div>
             )}

@@ -1,7 +1,9 @@
 import {
   GET_ALL_CAMPAIGN,
   GET_CURRENT_USER,
+  GET_EXPERIENCE,
   GET_PROVINCE,
+  GET_RANK_CANDIDATE,
 } from "@/utils/api-url";
 import { fetcher } from "@/utils/axios";
 import useSWR from "swr";
@@ -95,5 +97,62 @@ export const ProfileUser = () => {
 
   return {
     currentUser,
+  };
+};
+
+export const Experiences = () => {
+  const { data, error, mutate, isLoading } = useSWR(GET_EXPERIENCE, fetcher);
+
+  const experiences = data
+    ? data?.map((item: any) => {
+        return {
+          value: item.id.toString(),
+          label: item.text,
+        };
+      })
+    : [];
+  const listExperiences = [
+    {
+      label: "Tất cả",
+      value: "-1",
+    },
+    ...experiences,
+  ];
+  return {
+    error,
+    isLoading,
+    experiences,
+    listExperiences,
+    mutate,
+  };
+};
+
+export const Rank = () => {
+  const { data, error, mutate, isLoading } = useSWR(
+    GET_RANK_CANDIDATE,
+    fetcher
+  );
+
+  const ranks = data
+    ? data?.map((item: any) => {
+        return {
+          value: item.id.toString(),
+          label: item.text,
+        };
+      })
+    : [];
+  const listRanks = [
+    {
+      label: "Tất cả",
+      value: "-1",
+    },
+    ...ranks,
+  ];
+  return {
+    error,
+    isLoading,
+    ranks,
+    listRanks,
+    mutate,
   };
 };

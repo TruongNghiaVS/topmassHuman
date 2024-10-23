@@ -1,11 +1,20 @@
 "use client";
 
 import { XCircelFillBootstrapIcon } from "@/theme/icons/xCircelFiilBootstrapIcon";
+import { GET_DETAIL_HISTORY_CHANGE_CV } from "@/utils/api-url";
+import { fetcher } from "@/utils/axios";
+import { getFileName } from "@/utils/custom-hook";
 import { CheckCircleIcon } from "@heroicons/react/16/solid";
-import { PopupChangeCv } from "../popup-change-cv";
-import { useState } from "react";
+import dayjs from "dayjs";
+import useSWR from "swr";
 
-export default function DetailChangeCv() {
+export default function DetailChangeCv({ params }: { params: { id: number } }) {
+  const { id } = params;
+  const { data: detail, error } = useSWR(
+    `${GET_DETAIL_HISTORY_CHANGE_CV}?id=${id}`,
+    fetcher
+  );
+
   const header = ["STT", "File CV", "Tình trạng", "Lý do từ chối"];
 
   const data = [
@@ -52,16 +61,28 @@ export default function DetailChangeCv() {
       <div className="container mx-auto mt-4">
         <div className="text-2xl">Chi tiết đổi CV</div>
         <div className="mt-4 flex justify-between items-center">
-          <div className="">Đổi CV 001</div>
-          <div className="">Ngày thực hiện: 24/08/2024</div>
+          <div className="font-bold">{detail?.title}</div>
+          <div className="">
+            Ngày thực hiện: {dayjs(detail?.businessTime).format("DD/MM/YYYY")}
+          </div>
           <div className="">
             Trạng thái:{" "}
-            <span className="px-2 py-1 rounded-2xl bg-[#A9E2FF] text-[#0067CE]">
-              Đã xác thực
-            </span>
+            {detail?.status === 0 ? (
+              <span className="bg-[#FFB3A4] text-[#FF4936] inline-block px-3 py-1 rounded-xl">
+                Đang chờ duyệt
+              </span>
+            ) : detail?.status === 1 ? (
+              <span className="bg-[#A9E2FF] text-[#0067CE] inline-block px-3 py-1 rounded-xl">
+                Xác thực
+              </span>
+            ) : (
+              <span className="bg-[#E5E5E5] text-[#777777] inline-block px-3 py-1 rounded-xl">
+                Từ chối
+              </span>
+            )}
           </div>
           <div className="flex space-x-1">
-            <div>Tia sét nhận được: +20 </div>
+            <div>Tia sét nhận được: +{detail?.point} </div>
             <img src="/imgs/arrow_blue.svg" alt="" className="w-3" />
           </div>
         </div>
@@ -83,15 +104,17 @@ export default function DetailChangeCv() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#F37A20] text-xs ">
-                {data.map((row, idx) => (
+                {detail?.linkCVs.map((row: any, idx: number) => (
                   <tr
                     key={idx}
                     className={`text-center divide-x divide-[#F37A20]`}
                   >
-                    <td className="p-4">{row.id}</td>
+                    <td className="p-4">{idx + 1}</td>
                     <td className="p-4 text-left">
                       <div className="mt-1">
-                        <div className="text-[#008CFF]">{row.cv_name}</div>
+                        <div className="text-[#008CFF]">
+                          {getFileName(row.linkfile)}
+                        </div>
                       </div>
                     </td>
                     <td className="p-4 ">
@@ -108,7 +131,7 @@ export default function DetailChangeCv() {
                       )}
                     </td>
 
-                    <td className="p-4">{row.reason}</td>
+                    <td className="p-4">{row.noted}</td>
                   </tr>
                 ))}
               </tbody>
@@ -119,15 +142,15 @@ export default function DetailChangeCv() {
           <div className="grid grid-cols-3 px-4">
             <div className="font-medium text-base">
               <div>Vị trí ứng tuyển</div>
-              <div>Nhân viên kinh doanh</div>
+              <div>{detail?.position}</div>
             </div>
             <div className="font-medium text-base">
               <div>Chức vụ</div>
-              <div>Nhân viên</div>
+              <div>{detail?.rankName}</div>
             </div>
             <div className="font-medium text-base">
               <div>Năm kinh nghiệm</div>
-              <div>2 - 3 năm</div>
+              <div>{detail?.experienceName}</div>
             </div>
           </div>
         </div>

@@ -103,11 +103,7 @@ export default function UpdateInfomation({
         <div className="text-base mb-4">Cập nhật thông tin cá nhân</div>
         <div className="sm:block grid justify-center">
           <div className="">
-            <AvatarUpload
-              name="avatar"
-              control={control}
-              avatarLink={avatarLink}
-            />
+            <AvatarUpload name="avatar" control={control} link={avatarLink} />
           </div>
           <div className="mt-2">Email: {currentUser?.email}</div>
         </div>

@@ -8,7 +8,7 @@ const AvatarUpload: React.FC<IUpload> = ({
   name,
   control,
   classNameImg,
-  avatarLink = "",
+  link = "",
 }) => {
   const {
     field: { value, onChange, onBlur },
@@ -24,7 +24,7 @@ const AvatarUpload: React.FC<IUpload> = ({
   const readImageFromUrl = async (url: string) => {
     try {
       // Fetch the image as a Blob
-      const response = await axios.get(avatarLink, {
+      const response = await axios.get(link, {
         responseType: "blob", // Important to get the response as a blob
       });
       console.log(response);
@@ -55,10 +55,10 @@ const AvatarUpload: React.FC<IUpload> = ({
   };
 
   useEffect(() => {
-    if (avatarLink.length > 0) {
-      readImageFromUrl(avatarLink);
+    if (link.length > 0) {
+      readImageFromUrl(link);
     }
-  }, [avatarLink]);
+  }, [link]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files ? event.target.files[0] : null;
@@ -83,9 +83,9 @@ const AvatarUpload: React.FC<IUpload> = ({
 
   return (
     <div className="sm:block grid justify-center">
-      {preview || avatarLink ? (
+      {preview || link ? (
         <img
-          src={preview ? (preview as string) : avatarLink}
+          src={preview ? (preview as string) : link}
           alt="Avatar Preview"
           className={`rounded-full w-28 h-28 ${classNameImg}`}
         />

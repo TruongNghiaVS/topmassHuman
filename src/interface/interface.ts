@@ -86,6 +86,10 @@ export interface IChangeCv {
   files?: FileList;
 }
 
+export interface ICancleChangeCv {
+  note: string;
+}
+
 export interface ILoginForm {
   onClose?: () => void;
 }
@@ -413,9 +417,16 @@ export interface IHistoryGroup {
   data: IHistory[];
 }
 
+export interface IFilterHistory {
+  From: string;
+  To: string;
+}
+
 export interface IHistoryProps {
   historys: IHistoryGroup[];
+  filter: IFilterHistory;
   title: string;
+  setFilter: Dispatch<SetStateAction<{ From: string; To: string }>>;
 }
 
 export interface ISearchCvView {
@@ -439,4 +450,27 @@ export interface ICandidateSearch {
   statusText: string;
   viewMode: number;
   viewModeText: string;
+}
+
+export interface IPartner {
+  coverFullLink: string;
+  logoFullLink: string;
+  fullName: string;
+  slug: string;
+  id: number;
+  followCount: number;
+}
+
+export interface IPartnerProps {
+  partners: IPartner[];
+}
+
+export interface IModalChangeCv {
+  isOpen: boolean;
+  onClose: () => void;
+  mutate: KeyedMutator<any>;
+}
+
+export interface IModalCancleChangeCv extends IModalChangeCv {
+  id: number;
 }

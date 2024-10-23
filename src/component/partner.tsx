@@ -6,9 +6,9 @@ import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/16/solid";
+import { IPartnerProps } from "@/interface/interface";
 
-export const Partner = () => {
-  const lst = [1, 2, 3, 4, 5, 6, 7, 8];
+export const Partner = ({ partners }: IPartnerProps) => {
   return (
     <>
       <div className=" mt-[60px] px-0 max-1280:px-2">
@@ -46,27 +46,33 @@ export const Partner = () => {
                 prevEl: "#prev-hot-job",
                 nextEl: "#next-hot-job",
               }}
-              modules={[Navigation]}
+              modules={[Navigation, Autoplay]}
               className="mySwiper !pt-5 !pb-16"
             >
-              {lst.map((value) => {
+              {partners?.map((item, index) => {
                 return (
-                  <SwiperSlide key={value.toString() + "test"}>
+                  <SwiperSlide key={index}>
                     <div className="">
-                      <div className="flex justify-center">
-                        <img
-                          src="/imgs/logo-work.png"
-                          alt=""
-                          className="w-auto"
-                        />
+                      <div className="flex justify-center items-center">
+                        <div className="w-[220px] h-[220px] flex justify-center items-center">
+                          <img
+                            src={
+                              item.logoFullLink
+                                ? item.logoFullLink
+                                : "/imgs/logo-work.png"
+                            }
+                            alt=""
+                            className="w-full"
+                          />
+                        </div>
                       </div>
                       <div className=" uppercase text-center my-5">
-                        Công ty cổ phần tập đoàn VietStar
+                        {item.fullName}
                       </div>
-                      <div className="flex items-center justify-center">
+                      {/* <div className="flex items-center justify-center">
                         <img src="/imgs/bag.png" alt="" className="w-4 mr-2" />5
                         vị trí đang tuyển
-                      </div>
+                      </div> */}
                     </div>
                   </SwiperSlide>
                 );

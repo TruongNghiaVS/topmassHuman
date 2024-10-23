@@ -73,3 +73,13 @@ export const HISTORY_UPDATE = "/api/recruiter/History/GetLogUpdateAccount";
 //------------ SEARCH CV ------------//
 export const OPEN_CV = "/api/recruiter/Reward/OpenCV";
 export const SAVE_JOB_SEARCH = "/api/recruiter/SearchCV/SaveCV";
+
+//------------ PARTNER -------------//
+export const GET_ALL_PARTNER = "/api/recruiter/Company/GetAllPartner";
+
+//---------- Change CV -----------//
+export const GET_HISTORY_CHANGE_CV = "/api/recruiter/ExchangeCV/GetHistory";
+export const GET_DETAIL_HISTORY_CHANGE_CV =
+  "/api/recruiter/ExchangeCV/GetDetail";
+export const ADD_EXCHANGE_CV = "/api/recruiter/ExchangeCV/ExchangeCV";
+export const CANCLE_EXCHANGE_CV = "/api/recruiter/ExchangeCV/CancleItem";

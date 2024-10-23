@@ -152,7 +152,7 @@ export default function EditInfomationCompany({
             <AvatarUpload
               control={control}
               name="logo"
-              avatarLink={currentUser?.companyInfo.logoLink}
+              link={currentUser?.companyInfo.logoLink}
             />
           </div>
           {/* <div className="flex-1">

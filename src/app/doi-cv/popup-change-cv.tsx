@@ -5,33 +5,31 @@ import TmInput from "@/component/hook-form/input";
 import TmSelect from "@/component/hook-form/select";
 import CustomUploadMulti from "@/component/hook-form/upload-multiphe-file";
 import Modal from "@/component/modal";
-import { IChangeCv } from "@/interface/interface";
+import { IChangeCv, IModalChangeCv } from "@/interface/interface";
 import { positions, year_experiences } from "@/mockup-data/data";
+import { Experiences, Rank } from "@/module/helper/master-data";
+import { ADD_EXCHANGE_CV, UPLOAD_IMG } from "@/utils/api-url";
+import axiosInstance, { axiosInstanceImg } from "@/utils/axios";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
+import { useLoading } from "../context/loading";
+import { toast } from "react-toastify";
 
-interface IModalChangeCv {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-export const PopupChangeCv = ({ isOpen, onClose }: IModalChangeCv) => {
+export const PopupChangeCv = ({ isOpen, onClose, mutate }: IModalChangeCv) => {
+  const { experiences } = Experiences();
+  const { ranks } = Rank();
+  const { setLoading } = useLoading();
   const schema = yup.object().shape({
     files: yup
       .mixed<FileList>()
       .test("required", "Vui lòng chọn cv để thay đổi", (value) => {
         return value && value.length > 0;
       })
-      .test("fileType", "Chỉ upload file JPEG,JPG,PNG,PDF ", (value) => {
+      .test("fileType", "Chỉ upload PDF ", (value) => {
         if (value && value.length > 0) {
-          const allowedFormats = [
-            "image/jpeg",
-            "image/jpg",
-            "image/png",
-            "application/pdf",
-          ];
+          const allowedFormats = ["application/pdf"];
           return Array.from(value).every((file: File) =>
             allowedFormats.includes(file.type)
           );
@@ -66,8 +64,35 @@ export const PopupChangeCv = ({ isOpen, onClose }: IModalChangeCv) => {
     },
   });
 
-  const onSubmit: SubmitHandler<IChangeCv> = (data: any) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<IChangeCv> = async (data: any) => {
+    setLoading(true);
+    try {
+      let linkFiles: string[] = [];
+      if (data.files.length > 0) {
+        const arrFile: File[] = Array.from(data.files);
+
+        linkFiles = await Promise.all(
+          arrFile.map(async (file: File) => {
+            const res = await axiosInstanceImg.post(UPLOAD_IMG, { file: file });
+            return res.data.fullLink;
+          })
+        );
+      }
+
+      const res = await axiosInstance.post(ADD_EXCHANGE_CV, {
+        title: data.name,
+        position: data.candidate_position,
+        rank: data.position,
+        experience: data.year_experience,
+        linkCVs: ["string"],
+      });
+      toast.success("Thêm mới đổi CV thành công");
+      mutate();
+    } catch (error) {
+      toast.success("Thêm mới đổi CV thất bại");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -86,9 +111,10 @@ export const PopupChangeCv = ({ isOpen, onClose }: IModalChangeCv) => {
           </div>
           <div className="mt-4">
             <CustomUploadMulti
+              title="Tải tệp hoặc File từ máy tính"
               control={control}
               name="files"
-              classNameCustomShowFile="!flex-col !items-start border border-[#F37A20] rounded-lg p-2 !text-xs"
+              acceptFile=".pdf"
             />
           </div>
           <div className="mt-4 text-[#D60000] text-[13px]">
@@ -118,7 +144,7 @@ export const PopupChangeCv = ({ isOpen, onClose }: IModalChangeCv) => {
                   <TmSelect
                     name="position"
                     control={control}
-                    options={positions}
+                    options={ranks}
                     placeholder="Chức vụ"
                   />
                 </div>
@@ -131,7 +157,7 @@ export const PopupChangeCv = ({ isOpen, onClose }: IModalChangeCv) => {
                   <TmSelect
                     name="year_experience"
                     control={control}
-                    options={year_experiences}
+                    options={experiences}
                     placeholder="Kinh nghiệm"
                   />
                 </div>
