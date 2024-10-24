@@ -125,15 +125,13 @@ export default function ChangeCv() {
                     <td className="p-4">
                       <button
                         className={
-                          row.status === 1 || row.status === 0
-                            ? "text-[#FF4936]"
-                            : "text-[#777777]"
+                          row.status === 0 ? "text-[#FF4936]" : "text-[#777777]"
                         }
                         onClick={() => {
                           setIdCancle(row.id);
                           setIsOpenModalCancle(true);
                         }}
-                        disabled={row.status !== 0 && row.status !== 1}
+                        disabled={row.status !== 0}
                       >
                         Huỷ
                       </button>
