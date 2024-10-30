@@ -27,6 +27,7 @@ const CustomMultipleSelectSearchForm: React.FC<SearchSelectProps> = ({
   });
 
   const handleSelect = (option: Option) => {
+    setSearch("");
     if (!value.includes(option.value)) {
       onChange([...value, option.value]);
     } else {
@@ -50,7 +51,7 @@ const CustomMultipleSelectSearchForm: React.FC<SearchSelectProps> = ({
     <div className="relative w-full">
       <div className="flex flex-col">
         <div
-          className="mt-2 flex flex-wrap space-x-1 space-y-1 border p-1 bg-white rounded-lg items-center cursor-text	hover:border hover:border-[#F37A20]"
+          className="mt-2 flex flex-wrap space-x-1 border p-1 bg-white rounded-lg items-center cursor-text	hover:border hover:border-[#F37A20]"
           onClick={() => {
             setIsOpen(!isOpen);
             handleParentClick();
@@ -63,7 +64,7 @@ const CustomMultipleSelectSearchForm: React.FC<SearchSelectProps> = ({
             return (
               <span
                 key={val}
-                className="p-2 bg-[#F37A20] text-white rounded-md flex items-center"
+                className="p-2 bg-[#F37A20] mt-1 text-white rounded-md flex items-center"
               >
                 {selectedOption?.label}
                 <button

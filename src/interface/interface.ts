@@ -19,6 +19,7 @@ export interface IRegister {
   email: string;
   password: string;
   taxCode: string;
+  confirm_password: string;
 }
 
 export interface IResetpassword {

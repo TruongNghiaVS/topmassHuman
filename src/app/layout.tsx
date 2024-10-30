@@ -12,6 +12,7 @@ import { LoadingProvider } from "./context/loading";
 import GlobalLoadingIndicator from "@/component/loading-component";
 import { Suspense } from "react";
 import { SWRConfig } from "swr";
+import useAuth from "@/hook/useAuthToken";
 
 const roboto = localFont({
   src: [
@@ -56,6 +57,8 @@ export default function RootLayout({
     "/khoi-tao-mat-khau",
     "/xac-thuc-tai-khoan",
   ];
+  useAuth();
+
   return (
     <html lang="en">
       <body className={`${roboto.variable} font-roboto  min-h-screen `}>

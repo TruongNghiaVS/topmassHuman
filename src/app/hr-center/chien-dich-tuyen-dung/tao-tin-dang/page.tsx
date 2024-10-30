@@ -325,8 +325,6 @@ export default function CreateNew() {
     }, 200);
   };
 
-  console.log(errors.locations);
-
   return (
     <div className="bg-white min-h-screen">
       <div className="p-4 border-b flex justify-between sm:flex-row flex-col space-y-2 sm:space-y-0">
@@ -354,7 +352,11 @@ export default function CreateNew() {
             <div className="font-medium">
               Tên tiêu đề <span className="text-[#dc2f2f]">*</span>
             </div>
-            <TmInput name="name" control={control} placeholder="Tên tiêu đề" />
+            <TmInput
+              name="name"
+              control={control}
+              placeholder="Tiêu đề không được để trống"
+            />
           </div>
           <div className="mt-4">
             <div className="font-medium">Chiến dịch</div>
@@ -362,7 +364,7 @@ export default function CreateNew() {
               name="campagnId"
               control={control}
               options={campaigns}
-              placeholder="Chiến dịch"
+              placeholder="Chọn chiến dịch"
             />
           </div>
           <div className="flex mt-4 space-x-2">
@@ -373,7 +375,7 @@ export default function CreateNew() {
               <TmInput
                 name="position"
                 control={control}
-                placeholder="VD:Tuyển nhân viên marketing"
+                placeholder="VD:Tuyển nhân viên marketing..."
               />
             </div>
             <div className="flex-1">
@@ -381,11 +383,11 @@ export default function CreateNew() {
                 Ngành nghề <span className="text-[#dc2f2f]">*</span>
               </div>
               <div>
-                <TmSelect
+                <CustomSelect
                   name="profession"
                   control={control}
                   options={careers}
-                  placeholder="Ngành nghề"
+                  placeholder="Chọn ngành nghề"
                 />
               </div>
             </div>
@@ -405,6 +407,8 @@ export default function CreateNew() {
             </div>
           </div>
           <div className="mt-4">
+            <div className="font-medium text-base">Khu vực</div>
+
             {fields.map((field, index) => (
               <div
                 key={field.id}
@@ -418,7 +422,8 @@ export default function CreateNew() {
                 >
                   <XMarkIcon className="w-6" />
                 </button>
-                <div className="">
+
+                <div className="mt-2">
                   <div className="flex space-x-2 items-start ">
                     <MapPinIcon className="w-7" />
                     <div className="whitespace-nowrap">

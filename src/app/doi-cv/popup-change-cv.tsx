@@ -88,6 +88,7 @@ export const PopupChangeCv = ({ isOpen, onClose, mutate }: IModalChangeCv) => {
       });
       toast.success("Thêm mới đổi CV thành công");
       mutate();
+      onClose();
     } catch (error) {
       toast.success("Thêm mới đổi CV thất bại");
     } finally {

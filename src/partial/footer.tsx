@@ -40,7 +40,7 @@ export const Footer = () => {
       link: "/hr-center/chien-dich-tuyen-dung/tao-tin-dang",
     },
     {
-      title: "Quản lý cv",
+      title: "Quản lý CV",
       link: "/hr-center/quan-ly-cv",
     },
   ];
@@ -48,15 +48,15 @@ export const Footer = () => {
   const blog = [
     {
       title: "Tia sét tích điểm",
+      link: "/hr-center/bang-tin",
+    },
+    {
+      title: "Dịch vụ Banner",
       link: "#",
     },
     {
-      title: "Dịch vụ banner",
-      link: "#",
-    },
-    {
-      title: "Đổi cv",
-      link: "/hr-center/doi-cv",
+      title: "Đổi CV",
+      link: "/doi-cv",
     },
   ];
 
@@ -68,12 +68,12 @@ export const Footer = () => {
             <div className="lg:col-span-5 col-span-4 bg-[url(/imgs/bg-logo-footer.png)] bg-no-repeat bg-[lenght:100% 100%] py-4 mb-2">
               <Link href="#">
                 <Image
-                  src="/imgs/logo-new.svg"
+                  src="/imgs/logo-footer.png"
                   width={100}
                   height={100}
                   priority={true}
                   alt=""
-                  className="w-[180px] "
+                  className="w-[220px] "
                 ></Image>
               </Link>
             </div>
@@ -106,12 +106,12 @@ export const Footer = () => {
                 <PhoneIcon className="w-4 mr-1" />
                 Hotline hỗ trợ cho người tìm việc
               </div>
-              <div className="text-lg	">0938797478</div>
+              <div className="text-lg	">1900255836</div>
               <div className="text-[13px] flex items-center">
                 <PhoneIcon className="w-4 mr-1" />
                 Hotline hỗ trợ cho nhà tuyển dụng
               </div>
-              <div className="text-lg	">0938797478</div>
+              <div className="text-lg	">1900255836</div>
             </div>
             <div className="col-span-2">
               <div className="md:grid grid-cols-3">

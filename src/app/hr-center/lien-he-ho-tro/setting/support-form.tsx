@@ -123,7 +123,7 @@ export default function SupportForm() {
             type="submit"
             className="w-full mt-4 py-3 text-white bg-[#FF7D55] rounded-lg text-base font-bold"
           >
-            Cập nhật
+            Gửi báo cáo
           </button>
         </form>
       </div>

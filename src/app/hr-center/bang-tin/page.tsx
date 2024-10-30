@@ -108,13 +108,22 @@ export default function DashBoard() {
         </div>
         <div className="rounded-lg bg-white p-4">
           <div className="rounded-lg p-4 flex bg-[#BFBFBF] items-center ">
-            <div className="inline-block p-0.5 rounded-full bg-[#F37A20] mr-3 ">
-              <UserIcon className="w-10 text-white" />
-            </div>
+            {currentUser?.avatarLink.length > 0 ? (
+              <img
+                src={currentUser?.avatarLink}
+                alt=""
+                className="w-14 rounded-full mr-3"
+              />
+            ) : (
+              <div className="inline-block p-0.5 rounded-full bg-[#F37A20] mr-3 ">
+                <UserIcon className="w-10 text-white" />
+              </div>
+            )}
+
             <div className="flex-1	">
               <div className="font-normal">{currentUser?.name}</div>
               <div className="text-xs font-normal inline-block px-2 py-1 rounded bg-[#E2E1E0]">
-                Mã NTD: {currentUser?.RecruiterCode}
+                Mã NTD: {currentUser?.recruiterCode}
               </div>
               <div className="flex-1 text-xs font-normal sm:flex mt-4  ">
                 <div className="flex items-center sm:mr-10 ">

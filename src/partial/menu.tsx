@@ -97,7 +97,7 @@ export const Menu = () => {
                     "rounded-2xl bg-gradient-to-r from-[#F89E1B] to-[#F37A20]"
                   } "`}
               >
-                <div className="bg-white rounded-2xl px-1 inline-flex items-center">
+                <div className="bg-white text-base rounded-2xl px-1 inline-flex items-center">
                   {item.title}{" "}
                   {item.image && (
                     <img

@@ -22,7 +22,7 @@ export default function InfomationCompany({
       {!edit ? (
         <div>
           <div className="flex justify-between items-center">
-            <div className="font-medium">Thông tin công ty</div>
+            <div className="font-medium text-xl">Thông tin công ty</div>
             <button
               className="px-2 py-0.5 rounded-lg rounded-2xl text-default bg-[#FCC575]"
               onClick={() => setEdit(true)}
@@ -38,42 +38,49 @@ export default function InfomationCompany({
                   : "/imgs/logo-work.png"
               }
               alt=""
-              className=" rounded-full w-20	"
+              className=" rounded-full w-20 h-20	"
             />
             <div className="font-medium">
-              <div>{currentUser?.companyInfo.fullName}</div>
+              <div className="text-base">
+                {currentUser?.companyInfo.fullName}
+              </div>
               <div>{currentUser?.companyInfo.addressInfo}</div>
             </div>
           </div>
           <div className="flex space-x-2 mt-2">
             <div className="flex-1">
-              Mã số thuế: {currentUser?.companyInfo.taxCode}
+              <span className="font-medium">Mã số thuế</span>:{" "}
+              {currentUser?.companyInfo.taxCode}
             </div>
             <div className="flex-1">
-              Website: {currentUser?.companyInfo.website}
+              <span className="font-medium">Website</span>:{" "}
+              {currentUser?.companyInfo.website}
             </div>
           </div>
           <div className="flex space-x-2 mt-2">
             <div className="flex-1">
-              Lĩnh vực hoạt động: {getRelName(currentUser?.companyInfo.relId)}
+              <span className="font-medium">Lĩnh vực hoạt động</span>:{" "}
+              {getRelName(currentUser?.companyInfo.relId)}
             </div>
             <div className="flex-1">
-              Qui mô: {currentUser?.companyInfo.capacity}
+              <span className="font-medium">Qui mô</span>:{" "}
+              {currentUser?.companyInfo.capacity}
             </div>
           </div>
           <div className="flex space-x-2 mt-2">
             <div className="flex-1">
-              Email: {currentUser?.companyInfo.email}
+              <span className="font-medium">Email</span>:{" "}
+              {currentUser?.companyInfo.email}
             </div>
             <div className="flex-1">
-              Số điện thoại: {currentUser?.companyInfo.phone}
+              <span className="font-medium">Số điện thoại</span>:{" "}
+              {currentUser?.companyInfo.phone}
             </div>
           </div>
+
           <div className="mt-2">
-            Địa chỉ: {currentUser?.companyInfo.addressInfo}
-          </div>
-          <div className="mt-2">
-            Mô tả công ty: Về {currentUser?.companyInfo.fullName}
+            <span className="font-medium">Mô tả công ty</span>: Về{" "}
+            {currentUser?.companyInfo.fullName}
           </div>
           <div
             className="mt-2 px-4"

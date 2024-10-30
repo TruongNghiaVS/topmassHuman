@@ -109,7 +109,7 @@ export default function UpdateInfomation({
         </div>
         <div className="sm:grid grid-cols-2 gap-4 mt-4">
           <div className="mb-4">
-            <div>Tên</div>
+            <div>Họ và tên</div>
             <TmInput control={control} placeholder="Tên" name="fullName" />
           </div>
           <div className="mb-4">

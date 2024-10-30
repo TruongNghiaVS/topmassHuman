@@ -56,7 +56,7 @@ export const Description = () => {
                     />
                   </div>
                   <div>
-                    <div className="md:text-lg text-base font-bold mb-2">
+                    <div className="md:text-xl text-base font-bold mb-2">
                       {value.title}
                     </div>
                     <div className="text-sm font-normal">

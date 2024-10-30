@@ -1,3 +1,5 @@
+"use client";
+
 import {
   ArrowLeftCircleIcon,
   ArrowRightCircleIcon,
@@ -6,9 +8,6 @@ import {
 import { MenuItem } from "./menu-items";
 import { useState } from "react";
 import { MenuItemSmall } from "./menu-item-small";
-import useSWR from "swr";
-import { GET_CURRENT_USER } from "@/utils/api-url";
-import { fetcher } from "@/utils/axios";
 import { ProfileUser } from "@/module/helper/master-data";
 
 export default function MenuLeft() {

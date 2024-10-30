@@ -12,10 +12,12 @@ import { useLoading } from "@/app/context/loading";
 import Cookies from "js-cookie";
 import { ILogin, ILoginForm } from "@/interface/interface";
 import { LOGIN } from "@/utils/api-url";
+import { EnvelopeIcon, EyeIcon, KeyIcon } from "@heroicons/react/16/solid";
+import { useState } from "react";
 
 export const LoginForm = ({ onClose }: ILoginForm) => {
   const { setLoading } = useLoading();
-
+  const [showPassword, setShowPassword] = useState(false);
   const schema = yup.object().shape({
     userName: yup
       .string()
@@ -51,24 +53,8 @@ export const LoginForm = ({ onClose }: ILoginForm) => {
         onClose();
       }
     } catch (error) {
-      if (error instanceof AxiosError) {
-        toast.error(
-          (props: any) => {
-            return props.data.dataError.map((itemError: any) => {
-              return (
-                <div key={itemError.errorCode}>
-                  {itemError.errorCode}: {itemError.errorMesage}
-                </div>
-              );
-            });
-          },
-          {
-            data: {
-              dataError: error.response?.data.dataEror,
-            },
-          }
-        );
-      }
+      console.log(error);
+      toast.error("Đăng nhập thất bại");
     } finally {
       setLoading(false);
     }
@@ -92,6 +78,7 @@ export const LoginForm = ({ onClose }: ILoginForm) => {
           <TmInput
             control={control}
             placeholder="Email"
+            icon={<EnvelopeIcon className="w-5" />}
             name="userName"
             type="email"
           />
@@ -103,8 +90,19 @@ export const LoginForm = ({ onClose }: ILoginForm) => {
           <TmInput
             control={control}
             name="password"
+            icon={<KeyIcon className="w-5" />}
             placeholder="Mật khẩu"
-            type="password"
+            type={showPassword ? "text" : "password"}
+            afterIcon={
+              <button
+                type="button"
+                onClick={() => {
+                  setShowPassword(!showPassword);
+                }}
+              >
+                <EyeIcon className="w-5" />
+              </button>
+            }
           />
         </div>
         <div className="font-normal text-base text-right mb-4 text-[#F37A20]">
@@ -122,7 +120,7 @@ export const LoginForm = ({ onClose }: ILoginForm) => {
         <Link href="/dang-ky" className="text-[#F37A20]">
           Đăng ký
         </Link>{" "}
-        ngay
+        tại đây
       </div>
     </div>
   );

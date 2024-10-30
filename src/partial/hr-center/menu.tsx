@@ -14,6 +14,7 @@ export const MenuHrCenter = () => {
     {
       title: "Đăng tin",
       subMenu: [],
+      link: "/hr-center/chien-dich-tuyen-dung/tao-tin-dang",
       border: false,
       active: false,
       image: false,

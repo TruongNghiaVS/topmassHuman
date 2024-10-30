@@ -77,6 +77,7 @@ export default function ChangePassword() {
             type={showPassword.currentPassword ? "text" : "password"}
             afterIcon={
               <button
+                type="button"
                 onClick={() => {
                   setShowPassword((prevShowPassword) => {
                     return {
@@ -102,6 +103,7 @@ export default function ChangePassword() {
             type={showPassword.password ? "text" : "password"}
             afterIcon={
               <button
+                type="button"
                 onClick={() => {
                   setShowPassword((prevShowPassword) => {
                     return {
@@ -127,6 +129,7 @@ export default function ChangePassword() {
             type={showPassword.confirm_password ? "text" : "password"}
             afterIcon={
               <button
+                type="button"
                 onClick={() => {
                   setShowPassword((prevShowPassword) => {
                     return {

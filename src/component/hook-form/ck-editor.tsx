@@ -17,11 +17,59 @@ const CustomCKEditor: React.FC<CustomCKEditorProps> = ({ name, control }) => {
     control,
   });
 
+  const uploadImage = async (file: File) => {
+    const formData = new FormData();
+    formData.append("upload", file);
+
+    const response = await fetch("/api/upload-img-editor", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error("Image upload failed");
+    }
+
+    const { url } = await response.json();
+    return url; // CKEditor requires the URL to be returned in this format
+  };
+
   return (
-    <div className="my-4">
+    <div className="my-4 ckeditor-wrapper">
       <CKEditor
         editor={ClassicEditor}
         data={value || ""}
+        config={{
+          toolbar: [
+            "Undo",
+            "Redo",
+            "|",
+            "heading",
+            "|",
+            "bold",
+            "italic",
+            "|",
+            "link",
+            "bulletedList",
+            "numberedList",
+            "imageUpload",
+            "mediaEmbed",
+            "insertTable",
+          ],
+        }}
+        onReady={(editor) => {
+          editor.plugins.get("FileRepository").createUploadAdapter = (
+            loader: any
+          ) => {
+            return {
+              upload: async () => {
+                const file = await loader.file;
+                const url = await uploadImage(file);
+                return { default: url }; // Trả về URL cho CKEditor
+              },
+            };
+          };
+        }}
         onChange={(event: any, editor: any) => {
           const data = editor.getData();
           onChange(data);

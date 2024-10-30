@@ -33,6 +33,7 @@ export const HistoryView = ({
             <TmInput
               name="to_date"
               control={control}
+              min={filter.From}
               value={filter.To}
               onChange={(e) => handleChangeFilter(e.target.value, "To")}
               type="date"

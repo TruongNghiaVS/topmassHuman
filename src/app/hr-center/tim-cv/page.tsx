@@ -246,14 +246,14 @@ export default function SearchCV() {
                 />
                 Sau đại học (Thạc Sỹ/Tiến Sỹ)
               </div>
-              <div className="mt-2">Trường học</div>
+              {/* <div className="mt-2">Trường học</div>
               <div className="mt-2">
                 <TmInput
                   name="SchoolSearch"
                   control={control}
                   placeholder="Trường học"
                 />
-              </div>
+              </div> */}
               <div className="mt-4 text-white">
                 <button className="w-full bg-[#F37A20] rounded py-2 text-center text-white justify-center flex">
                   Tìm CV

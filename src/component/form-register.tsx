@@ -12,6 +12,14 @@ import { toast } from "react-toastify";
 import { AxiosError } from "axios";
 import { REGISTER } from "@/utils/api-url";
 import { useState } from "react";
+import {
+  BuildingOffice2Icon,
+  EnvelopeIcon,
+  EyeIcon,
+  IdentificationIcon,
+  KeyIcon,
+  PhoneIcon,
+} from "@heroicons/react/16/solid";
 
 const schema = yup.object().shape({
   name: yup.string().required("Vui lòng nhập tên"),
@@ -32,11 +40,22 @@ const schema = yup.object().shape({
     .matches(/^\d+$/, "mã số thuế phải là chữ số")
     .min(10, "Mã số thuế tối thiểu 10 ký tự")
     .max(12, "Mã số thuế tối đa 12 ký tự"),
+  confirm_password: yup
+    .string()
+    .oneOf(
+      [yup.ref("password"), undefined],
+      "Nhập lại mật khẩu không chính xác"
+    )
+    .required("Vui lòng nhập xác nhận mật khẩu"),
 });
 
 export const FormRegister = () => {
   const { setLoading } = useLoading();
   const [isSuccess, setIsSuccess] = useState(false);
+  const [showPassword, setShowPassword] = useState({
+    password: false,
+    confirm_password: false,
+  });
   const { handleSubmit, control, reset } = useForm<IRegister>({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -45,6 +64,7 @@ export const FormRegister = () => {
       email: "",
       password: "",
       taxCode: "",
+      confirm_password: "",
     },
   });
 
@@ -93,24 +113,6 @@ export const FormRegister = () => {
       {!isSuccess ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-2">
-            <div className="">
-              Tên công ty <span className="text-[#dc2f2f]">*</span>
-            </div>
-            <TmInput control={control} name="name" placeholder="Tên công ty" />
-          </div>
-          <div className="mb-2">
-            <div className="">
-              Số điện thoại <span className="text-[#dc2f2f]">*</span>
-            </div>
-            <div className="flex-grow">
-              <TmInput
-                control={control}
-                name="phone"
-                placeholder="Số điện thoại"
-              />
-            </div>
-          </div>
-          <div className="mb-2">
             <div>
               Email <span className="text-[#dc2f2f]">*</span>
             </div>
@@ -118,6 +120,7 @@ export const FormRegister = () => {
               control={control}
               placeholder="Sử dụng email có thật để xác thực"
               name="email"
+              icon={<EnvelopeIcon className="w-5" />}
               type="email"
             />
           </div>
@@ -128,8 +131,75 @@ export const FormRegister = () => {
             <TmInput
               control={control}
               name="password"
-              placeholder="Từ 6 tới 50 ký tự,1 chữ hoa, 1 chữ số"
-              type="password"
+              placeholder="Từ 6 tới 25 ký tự,1 chữ hoa, 1 chữ số"
+              type={showPassword.password ? "text" : "password"}
+              icon={<KeyIcon className="w-5" />}
+              afterIcon={
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowPassword((prevShowPassword) => {
+                      return {
+                        ...prevShowPassword,
+                        password: !prevShowPassword.password,
+                      };
+                    });
+                  }}
+                >
+                  <EyeIcon className="w-5" />
+                </button>
+              }
+            />
+          </div>
+          <div className="mb-4">
+            <div>
+              Nhập lại mật khẩu <span className="text-[#dc2f2f]">*</span>
+            </div>
+            <TmInput
+              control={control}
+              name="confirm_password"
+              placeholder="Nhập lại mật khẩu mới"
+              type={showPassword.confirm_password ? "text" : "password"}
+              icon={<KeyIcon className="w-5" />}
+              afterIcon={
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowPassword((prevShowPassword) => {
+                      return {
+                        ...prevShowPassword,
+                        confirm_password: !prevShowPassword.confirm_password,
+                      };
+                    });
+                  }}
+                >
+                  <EyeIcon className="w-5" />
+                </button>
+              }
+            />
+          </div>
+          <div className="mb-2">
+            <div className="">
+              Số điện thoại <span className="text-[#dc2f2f]">*</span>
+            </div>
+            <div className="flex-grow">
+              <TmInput
+                control={control}
+                name="phone"
+                icon={<PhoneIcon className="w-5" />}
+                placeholder="Số điện thoại"
+              />
+            </div>
+          </div>
+          <div className="mb-2">
+            <div className="">
+              Tên công ty <span className="text-[#dc2f2f]">*</span>
+            </div>
+            <TmInput
+              control={control}
+              name="name"
+              placeholder="Tên công ty"
+              icon={<BuildingOffice2Icon className="w-5" />}
             />
           </div>
           <div className="mb-2">
@@ -140,6 +210,7 @@ export const FormRegister = () => {
               control={control}
               placeholder="Mã số thuế"
               name="taxCode"
+              icon={<IdentificationIcon className="w-5" />}
             />
           </div>
           <button
