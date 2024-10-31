@@ -151,7 +151,7 @@ export default function ManagerCV() {
                   { label: "Ứng viên đã ứng tuyển", value: 1 },
                   { label: "Tìm kiếm CV", value: 3 },
                 ]}
-                placeholder="Nguồn cv"
+                placeholder="Nguồn CV"
               />
             </div>
             <button

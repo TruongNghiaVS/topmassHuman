@@ -17,22 +17,22 @@ const CustomCKEditor: React.FC<CustomCKEditorProps> = ({ name, control }) => {
     control,
   });
 
-  const uploadImage = async (file: File) => {
-    const formData = new FormData();
-    formData.append("upload", file);
+  // const uploadImage = async (file: File) => {
+  //   const formData = new FormData();
+  //   formData.append("upload", file);
 
-    const response = await fetch("/api/upload-img-editor", {
-      method: "POST",
-      body: formData,
-    });
+  //   const response = await fetch("/api/upload-img-editor", {
+  //     method: "POST",
+  //     body: formData,
+  //   });
 
-    if (!response.ok) {
-      throw new Error("Image upload failed");
-    }
+  //   if (!response.ok) {
+  //     throw new Error("Image upload failed");
+  //   }
 
-    const { url } = await response.json();
-    return url; // CKEditor requires the URL to be returned in this format
-  };
+  //   const { url } = await response.json();
+  //   return url; // CKEditor requires the URL to be returned in this format
+  // };
 
   return (
     <div className="my-4 ckeditor-wrapper">
@@ -52,24 +52,22 @@ const CustomCKEditor: React.FC<CustomCKEditorProps> = ({ name, control }) => {
             "link",
             "bulletedList",
             "numberedList",
-            "imageUpload",
-            "mediaEmbed",
             "insertTable",
           ],
         }}
-        onReady={(editor) => {
-          editor.plugins.get("FileRepository").createUploadAdapter = (
-            loader: any
-          ) => {
-            return {
-              upload: async () => {
-                const file = await loader.file;
-                const url = await uploadImage(file);
-                return { default: url }; // Trả về URL cho CKEditor
-              },
-            };
-          };
-        }}
+        // onReady={(editor) => {
+        //   editor.plugins.get("FileRepository").createUploadAdapter = (
+        //     loader: any
+        //   ) => {
+        //     return {
+        //       upload: async () => {
+        //         const file = await loader.file;
+        //         const url = await uploadImage(file);
+        //         return { default: url }; // Trả về URL cho CKEditor
+        //       },
+        //     };
+        //   };
+        // }}
         onChange={(event: any, editor: any) => {
           const data = editor.getData();
           onChange(data);

@@ -38,7 +38,7 @@ export default function InfomationCompany({
                   : "/imgs/logo-work.png"
               }
               alt=""
-              className=" rounded-full w-20 h-20	"
+              className=" rounded-full w-20 h-20 object-cover	"
             />
             <div className="font-medium">
               <div className="text-base">
