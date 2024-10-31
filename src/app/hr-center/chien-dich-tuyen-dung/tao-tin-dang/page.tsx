@@ -487,7 +487,7 @@ export default function CreateNew() {
                     name="type_of_work"
                     control={control}
                     options={jobTypes}
-                    placeholder="Loại công việc"
+                    placeholder="Chọn loại công việc"
                   />
                 </div>
               </div>
@@ -500,7 +500,7 @@ export default function CreateNew() {
                     name="rank"
                     control={control}
                     options={ranks}
-                    placeholder="Cấp bậc"
+                    placeholder="Chọn cấp bậc"
                   />
                 </div>
               </div>
@@ -515,7 +515,7 @@ export default function CreateNew() {
                     name="experience"
                     control={control}
                     options={experiences}
-                    placeholder="Kinh nghiệm"
+                    placeholder="Chọn kinh nghiệm"
                   />
                 </div>
               </div>
