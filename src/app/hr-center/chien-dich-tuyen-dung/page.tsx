@@ -156,7 +156,7 @@ export default function RecruimentCampaign() {
             <tbody className="divide-y divide-gray-200 text-xs">
               {campaigns?.map((row: any, idx: number) => (
                 <tr key={idx} className={`hover:bg-gray-100 text-center`}>
-                  <td className="p-4">
+                  <td className="p-4 text-start">
                     <div>
                       <Link
                         href={`/hr-center/chien-dich-tuyen-dung/${row.id}`}

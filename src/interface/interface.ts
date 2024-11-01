@@ -354,9 +354,9 @@ export interface IManagerCv {
 }
 
 export interface ISearchManagerCv {
-  keyword?: string;
-  campaign?: number;
-  status?: number;
+  Key?: string;
+  Campaign?: number;
+  Status?: number;
   TypeData?: number;
 }
 

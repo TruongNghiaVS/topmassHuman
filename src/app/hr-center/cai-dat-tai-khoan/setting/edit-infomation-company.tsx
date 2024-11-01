@@ -181,7 +181,6 @@ export default function EditInfomationCompany({
           </div>
           <div className="flex-1">
             <div className="">Lĩnh vực hoạt động</div>
-
             <TmSelect
               name="relId"
               control={control}
@@ -218,6 +217,7 @@ export default function EditInfomationCompany({
             <TmInput name="phone" control={control} />
           </div>
         </div>
+        <div className="mt-2">Giới thiệu về công ty</div>
 
         <div className="mt-2">
           <CustomCKEditor name="shortDes" control={control} />

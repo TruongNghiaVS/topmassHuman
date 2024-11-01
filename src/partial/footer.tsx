@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   DocumentTextIcon,
+  EnvelopeIcon,
   MapPinIcon,
   PhoneIcon,
 } from "@heroicons/react/16/solid";
@@ -101,17 +102,15 @@ export const Footer = () => {
         <div className="container mx-auto text-white">
           <div className="md:grid grid-cols-3">
             <div className="col-span-1 mb-2">
-              <div className="text-4xl	font-bold">Liên hệ</div>
-              <div className="text-[13px] flex items-center">
+              <div className="text-lg	font-bold">Liên hệ</div>
+              <div className="text-[13px] mb-1 flex items-center">
                 <PhoneIcon className="w-4 mr-1" />
-                Hotline hỗ trợ cho người tìm việc
+                Hotline: 1900 255 836
               </div>
-              <div className="text-lg	">1900255836</div>
               <div className="text-[13px] flex items-center">
-                <PhoneIcon className="w-4 mr-1" />
-                Hotline hỗ trợ cho nhà tuyển dụng
+                <EnvelopeIcon className="w-4 mr-1" />
+                Email: support@topmass.vn
               </div>
-              <div className="text-lg	">1900255836</div>
             </div>
             <div className="col-span-2">
               <div className="md:grid grid-cols-3">

@@ -71,8 +71,8 @@ export default function ManagerCV() {
   }, [listManagerCV, setManagerCv]);
 
   const schema = yup.object().shape({
-    keyword: yup.string(),
-    campaign: yup.number(),
+    Key: yup.string(),
+    Campaign: yup.number(),
     status: yup.number(),
     TypeData: yup.number(),
   });
@@ -80,9 +80,9 @@ export default function ManagerCV() {
   const { control, handleSubmit } = useForm<ISearchManagerCv>({
     resolver: yupResolver(schema),
     defaultValues: {
-      keyword: "",
-      campaign: -1,
-      status: -1,
+      Key: "",
+      Campaign: -1,
+      Status: -1,
       TypeData: -1,
     },
   });
@@ -126,7 +126,7 @@ export default function ManagerCV() {
             <div className="flex-1">
               <TmSelect
                 className="w-full"
-                name="recruitment"
+                name="Campaign"
                 control={control}
                 options={campaign}
                 placeholder="Chọn chiến dịch tuyển dụng"
@@ -135,10 +135,10 @@ export default function ManagerCV() {
             <div className="flex-1">
               <TmSelect
                 className="w-full"
-                name="status"
+                name="Status"
                 control={control}
                 options={statusApply}
-                placeholder="Trạng thái"
+                placeholder="Tất cả"
               />
             </div>
             <div className="flex-1">
