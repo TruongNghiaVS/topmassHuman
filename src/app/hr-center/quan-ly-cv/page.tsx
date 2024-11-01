@@ -71,7 +71,7 @@ export default function ManagerCV() {
   }, [listManagerCV, setManagerCv]);
 
   const schema = yup.object().shape({
-    Key: yup.string(),
+    keyWord: yup.string(),
     Campaign: yup.number(),
     status: yup.number(),
     TypeData: yup.number(),

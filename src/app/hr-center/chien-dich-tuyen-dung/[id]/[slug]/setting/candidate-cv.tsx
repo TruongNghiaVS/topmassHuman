@@ -47,16 +47,16 @@ export const CandidateCv = () => {
 
   const schema = yup.object().shape({
     keyword: yup.string(),
-    cv: yup.number(),
+    TypeData: yup.number(),
     status: yup.number(),
   });
 
   const { control, handleSubmit } = useForm<ISearchManagerCv>({
     resolver: yupResolver(schema),
     defaultValues: {
-      keyword: "",
+      Key: "",
       TypeData: -1,
-      status: -1,
+      Status: -1,
     },
   });
 
@@ -87,7 +87,7 @@ export const CandidateCv = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mt-4 flex sm:space-x-2 space-y-2 sm:space-y-0 px-2 flex-col sm:flex-row items-end">
           <TmInput
-            name="keyword"
+            name="Key"
             icon={<MagnifyingGlassIcon className="w-4" />}
             control={control}
             placeholder="Tìm kiếm ứng viên, tên, số điện thoại"
@@ -98,7 +98,7 @@ export const CandidateCv = () => {
               <div className="text-xs">Hiển thị</div>
               <TmSelect
                 control={control}
-                name="cv"
+                name="TypeData"
                 classNameCustom="flex-1"
                 placeholder="Tất cả"
                 options={[
@@ -111,7 +111,7 @@ export const CandidateCv = () => {
               <div className="text-xs">Trạng thái</div>
               <TmSelect
                 control={control}
-                name="status"
+                name="Status"
                 classNameCustom="flex-1"
                 placeholder="Tất cả"
                 options={statusApply}
