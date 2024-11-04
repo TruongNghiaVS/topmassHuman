@@ -2,7 +2,7 @@ export default function About() {
   return (
     <div className="max-1280:mx-2 mt-4">
       <div className="container mx-auto">
-        <h1 className="font-bold uppercase text-lg">
+        <h1 className="font-bold uppercase text-lg text-[#F37A20]">
           Giới thiệu dịch vụ nhà tuyển dụng tại Topmass
         </h1>
         <div>
@@ -13,7 +13,9 @@ export default function About() {
           dụng, quản lý tin đã đăng, đến theo dõi kết quả ứng tuyển và tìm kiếm
           ứng viên tiềm năng.
         </div>
-        <h2 className="mt-4 uppercase text-lg">Chức năng nổi bật:</h2>
+        <h2 className="mt-4 uppercase text-lg text-[#F37A20]">
+          Chức năng nổi bật:
+        </h2>
         <div>
           <ul className="list-disc ml-6">
             <li>
@@ -49,7 +51,7 @@ export default function About() {
             </li>
           </ul>
         </div>
-        <h2 className="mt-4 uppercase text-lg">
+        <h2 className="mt-4 uppercase text-lg text-[#F37A20]">
           Chính sách bảo mật và cam kết:
         </h2>
         <div>
@@ -73,7 +75,9 @@ export default function About() {
             </li>
           </ul>
         </div>
-        <h2 className="mt-4 uppercase text-lg">Nền tảng hỗ trợ đa dạng:</h2>
+        <h2 className="mt-4 uppercase text-lg text-[#F37A20]">
+          Nền tảng hỗ trợ đa dạng:
+        </h2>
         <div>
           <ul className="list-disc ml-6">
             <li>

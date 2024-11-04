@@ -94,7 +94,7 @@ export const Header = () => {
           <div className="flex">
             <div className="flex items-center mr-[50px]">
               <Link
-                href="http://42.115.94.180:8588/"
+                href="https://topmass.vn/"
                 target="_blank"
                 className="text-xs mr-[30px]"
               >

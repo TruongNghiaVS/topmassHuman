@@ -25,9 +25,17 @@ export default function MenuLeft() {
           {isOpen ? (
             <div>
               <div className="flex items-center">
-                <div className="inline-block p-0.5 rounded-full bg-[#F37A20] mr-3 ">
-                  <UserIcon className="w-10 text-white" />
-                </div>
+                {currentUser?.avatarLink.length > 0 ? (
+                  <img
+                    src={currentUser?.avatarLink}
+                    alt=""
+                    className="w-14 rounded-full mr-3"
+                  />
+                ) : (
+                  <div className="inline-block p-0.5 rounded-full bg-[#F37A20] mr-3 ">
+                    <UserIcon className="w-10 text-white" />
+                  </div>
+                )}
                 <div>
                   <div className="font-normal">{currentUser?.name}</div>
                   <div className="text-xs font-normal">
