@@ -475,3 +475,31 @@ export interface IModalChangeCv {
 export interface IModalCancleChangeCv extends IModalChangeCv {
   id: number;
 }
+
+export interface ISearchCv {
+  KeyWord?: string;
+  Locations?: string[];
+  CvKey?: string;
+  Gender?: number;
+  FromYear?: number;
+  ToYear?: number;
+  SchoolSearch?: string;
+  cap_2?: boolean;
+  cap_3?: boolean;
+  college?: boolean;
+  university?: boolean;
+  after_university?: boolean;
+}
+
+export interface ISearchCvState {
+  KeyWord: string | undefined;
+  LocationCode: string | undefined;
+  CvKey: string | undefined;
+  Gender: number | undefined;
+  FromYear: number | undefined;
+  ToYear: number | undefined;
+  SchoolSearch: string | undefined;
+  EducationalLevelArray: string;
+  Limit: number;
+  Page: number;
+}

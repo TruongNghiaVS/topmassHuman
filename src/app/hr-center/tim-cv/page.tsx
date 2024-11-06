@@ -4,7 +4,7 @@ import CustomMultipleSelectSearchForm from "@/component/hook-form/customMultiple
 import TmInput from "@/component/hook-form/input";
 import TmRadio from "@/component/hook-form/radio";
 import TmSelect from "@/component/hook-form/select";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import InfomationCv from "./infomation-cv";
 import { useSearchParams } from "next/navigation";
 import { Provinces } from "@/module/helper/master-data";
@@ -15,6 +15,9 @@ import { useState } from "react";
 import { ICvSearch } from "@/interface/cv";
 import useSWR from "swr";
 import { convertParams } from "@/utils/custom-hook";
+import * as yup from "yup";
+import { ISearchCv, ISearchCvState } from "@/interface/interface";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const years = Array.from({ length: 52 }, (_, i) => {
   const item = {
@@ -28,10 +31,8 @@ export default function SearchCV() {
   const searchParams = useSearchParams();
   const campaignId = searchParams.get("idCampaign");
   const idCampaign = campaignId ? +campaignId : -1;
-
-  // const [cvSearch, setCvSearch] = useState<ICvSearch[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchObj, setSearchObj] = useState({
+  const [searchObj, setSearchObj] = useState<ISearchCvState>({
     KeyWord: "",
     LocationCode: "",
     CvKey: "",
@@ -44,14 +45,44 @@ export default function SearchCV() {
     Page: currentPage,
   });
 
+  const schema = yup.object().shape({
+    KeyWord: yup.string(),
+    Location: yup.array().of(yup.string()),
+    CvKey: yup.string(),
+    Gender: yup.number(),
+    FromYear: yup.number(),
+    ToYear: yup
+      .number()
+      .test(
+        "is-greater-than-or-equal-to-minValue",
+        "Năm kết thúc phải lớn hơn năm bắt đầu",
+        function (ToYear) {
+          const { FromYear } = this.parent;
+          return FromYear > -1 &&
+            ToYear !== undefined &&
+            ToYear > -1 &&
+            FromYear > ToYear
+            ? false
+            : true;
+        }
+      ),
+    SchoolSearch: yup.string(),
+    cap_2: yup.boolean(),
+    cap_3: yup.boolean(),
+    college: yup.boolean(),
+    university: yup.boolean(),
+    after_university: yup.boolean(),
+  });
+
   const { data: cvSearch, error, isLoading } = useSWR(
     SEARCH_CV + "?" + convertParams(searchObj),
     fetcher
   );
 
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit } = useForm<ISearchCv>({
+    resolver: yupResolver(schema),
     defaultValues: {
-      locations: [],
+      Locations: [],
       KeyWord: "",
       CvKey: "",
       Gender: 0,
@@ -85,23 +116,23 @@ export default function SearchCV() {
 
   const { setLoading } = useLoading();
 
-  const onSubmit = async (data: any) => {
+  const onSubmit: SubmitHandler<ISearchCv> = async (data) => {
     setLoading(true);
     try {
       const dataSearch = {
         KeyWord: data.KeyWord,
-        LocationCode: data.locations.join(","),
+        LocationCode: data.Locations?.join(","),
         CvKey: data.CvKey,
         Gender: data.Gender,
         FromYear: data.FromYear,
         ToYear: data.ToYear,
         SchoolSearch: data.SchoolSearch,
         EducationalLevelArray: mapLevelSearch(
-          data.cap_2,
-          data.cap_3,
-          data.college,
-          data.university,
-          data.after_university
+          data.cap_2 || false,
+          data.cap_3 || false,
+          data.college || false,
+          data.university || false,
+          data.after_university || false
         ),
         Limit: 10,
         Page: currentPage,
@@ -151,7 +182,7 @@ export default function SearchCV() {
               <div className="mt-2 font-medium">Tỉnh/TP</div>
               <div className="">
                 <CustomMultipleSelectSearchForm
-                  name="locations"
+                  name="Locations"
                   control={control}
                   options={provinces}
                   placeholder="Chọn tỉnh thành"

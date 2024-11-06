@@ -9,7 +9,7 @@ export const SupportContact = () => {
       </div>
       <div className="flex space-x-2 mt-2">
         <div className="flex-1 flex items-center">
-          <PhoneIcon className="w-4 mr-2 text-default" /> 1900 255 878
+          <PhoneIcon className="w-4 mr-2 text-default" /> 1900 255 836
         </div>
         <div className="flex-1 flex items-center">
           <EnvelopeIcon className="w-4 mr-2 text-default" /> Support@topmass.vn

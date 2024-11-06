@@ -80,13 +80,12 @@ export const Footer = () => {
             </div>
             <div className="col-span-7">
               <div className="text-[28px] font-bold">
-                Thuộc sở hữu Công ty Cổ phần Tập đoàn{" "}
-                <span className="text-[#F89E1B]">Vietstar</span>
+                Thuộc sở hữu Công ty Cổ phần Nguồn nhân lực Topmass Việt Nam
               </div>
               <div className="flex mt-2">
                 <DocumentTextIcon className="w-6 mr-2 text-[#F37A20]" />
                 Giấy phép đăng ký kinh doanh số:
-                <span className="font-bold ml-1">0315196162</span>
+                <span className="font-bold ml-1">0315264380</span>
               </div>
               <div className="flex mt-2">
                 <MapPinIcon className="w-6 mr-2 text-[#F37A20]" />

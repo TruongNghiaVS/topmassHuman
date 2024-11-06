@@ -155,14 +155,14 @@ export default function EditInfomationCompany({
               link={currentUser?.companyInfo.logoLink}
             />
           </div>
-          {/* <div className="flex-1">
-            <div className="">Ảnh bìa công ty</div>
+          <div className="flex-1">
+            <div className="">Ảnh bìa công ty (kích thước 1200x250)</div>
             <AvatarUpload
               name="banner"
               control={control}
-              avatarLink={currentUser?.companyInfo.coverLink}
+              link={currentUser?.companyInfo.coverLink}
             />
-          </div> */}
+          </div>
         </div>
         <div className="flex space-x-2 items-center mt-2">
           <div className="flex-1">
