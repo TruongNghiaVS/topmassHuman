@@ -9,6 +9,7 @@ export default function Regulation() {
           QUY ĐỊNH DÀNH CHO NHÀ TUYỂN DỤNG
         </div>
         <div>
+          <div className="font-bold mb-4">I. Quy định chung:</div>
           <ul className="list-disc pl-10 space-y-2 mb-4">
             <li>
               Chính sách bảo mật và quy định sử dụng này được áp dụng cho mọi
