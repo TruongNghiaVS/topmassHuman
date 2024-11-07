@@ -26,15 +26,31 @@ body {
 }
 
 h1 {
-  @apply text-4xl font-bold;
+  @apply text-4xl font-bold mb-4;
 }
 
 h2 {
-  @apply text-3xl font-semibold;
+  @apply text-xl font-bold mb-2;
 }
 
 h3 {
-  @apply text-2xl font-medium;
+  @apply text-lg font-bold mb-2;
+}
+
+h4 {
+  @apply text-sm font-bold mb-2;
+}
+
+h5 {
+  @apply text-sm font-bold mb-2;
+}
+
+h6 {
+  @apply text-sm font-bold mb-2;
+}
+
+p {
+  @apply mb-4
 }
 
 .ckeditor-wrapper ol,

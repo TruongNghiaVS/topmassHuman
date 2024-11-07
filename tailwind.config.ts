@@ -14,6 +14,7 @@ const config: Config = {
       },
       screens: {
         "max-1280": { max: "1280px" },
+        xl: "1200px",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -32,6 +33,10 @@ const config: Config = {
         type: "rgba(128,130,241,0.1)",
         hoverJob: "rgb(255 249 249 / 70%)",
         swiperPagin: "#F37A20",
+      },
+      listStyleType: {
+        circle: "circle",
+        "upper-roman": "upper-roman",
       },
     },
   },
