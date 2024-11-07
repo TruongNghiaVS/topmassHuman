@@ -19,6 +19,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { GET_ALL_NOTIFICATION } from "@/utils/api-url";
 import { fetcher } from "@/utils/axios";
+import { MenuMobile } from "./menu-mobile";
 
 export const Header = () => {
   const headerRef = useRef<HTMLDivElement | null>(null);
@@ -73,11 +74,11 @@ export const Header = () => {
 
   return (
     <>
-      <section id="header" ref={headerRef} className="sm:block hidden">
+      <section id="header" ref={headerRef}>
         <div
           className={`${
             isFixed ? "fixed" : ""
-          }  flex justify-between items-center bg-white left-0 top-0 right-0 pt-3 px-[22px] z-[3]`}
+          }  flex justify-between lg:block hidden items-center bg-white left-0 top-0 right-0 pt-3 px-[22px] z-[3]`}
         >
           <div className="logo-header">
             <Link href="/">
@@ -160,6 +161,27 @@ export const Header = () => {
                 <img src="/imgs/arrow.svg" alt="" className="w-6" />
               </div>
             </div>
+          </div>
+        </div>
+        <div
+          className={`${
+            isFixed ? "fixed" : ""
+          }  lg:hidden block bg-white left-0 top-0 right-0 z-[10]`}
+        >
+          <div className="relative flex justify-center items-center">
+            <img
+              src="/imgs/bg-logo-footer.png"
+              alt=""
+              className="max-h-[50px] absolute right-5 top-0 bottom-0"
+            />
+            <Link href="/">
+              <img
+                src="/imgs/logo-new.svg"
+                alt="/"
+                className="w-auto h-[50px] py-3 "
+              />
+            </Link>
+            <MenuMobile />
           </div>
         </div>
       </section>

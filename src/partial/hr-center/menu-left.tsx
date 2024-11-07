@@ -54,9 +54,17 @@ export default function MenuLeft() {
             </div>
           ) : (
             <div className="grid justify-center">
-              <div className="inline-flex  p-0.5 rounded-full bg-[#F37A20] ">
-                <UserIcon className="w-8 text-white" />
-              </div>
+              {currentUser?.avatarLink.length > 0 ? (
+                <img
+                  src={currentUser?.avatarLink}
+                  alt=""
+                  className="w-10 rounded-full "
+                />
+              ) : (
+                <div className="inline-block p-0.5 rounded-full bg-[#F37A20] ">
+                  <UserIcon className="w-10 text-white" />
+                </div>
+              )}
               <MenuItemSmall />
             </div>
           )}
@@ -74,9 +82,17 @@ export default function MenuLeft() {
       </div>
       <div className="block xl:hidden w-[50px] mt-4">
         <div className="grid justify-center">
-          <div className="inline-flex  p-0.5 rounded-full bg-[#F37A20] ">
-            <UserIcon className="w-8 text-white" />
-          </div>
+          {currentUser?.avatarLink.length > 0 ? (
+            <img
+              src={currentUser?.avatarLink}
+              alt=""
+              className="w-10 rounded-full "
+            />
+          ) : (
+            <div className="inline-block p-0.5 rounded-full bg-[#F37A20]">
+              <UserIcon className="w-10 text-white" />
+            </div>
+          )}
           <MenuItemSmall />
         </div>
       </div>
