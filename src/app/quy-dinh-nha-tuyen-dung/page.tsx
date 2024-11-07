@@ -1,6 +1,3 @@
-import { ArrowUturnLeftIcon } from "@heroicons/react/16/solid";
-import Link from "next/link";
-
 export default function Regulation() {
   return (
     <div className="bg-white max-1280:mx-2">
@@ -19,10 +16,11 @@ export default function Regulation() {
               <span className="font-medium">
                 Công ty Cổ phần Nguồn Nhân Lực Topmass Việt Nam
               </span>{" "}
-              (sau đây gọi là "Công ty"). Bằng việc truy cập và sử dụng Website
-              Topmass, bạn, với tư cách là "Người dùng" hoặc "Khách hàng" (trừ
-              khi ngữ cảnh yêu cầu khác), mặc nhiên chấp thuận tuân thủ các điều
-              khoản và điều kiện sử dụng được quy định dưới đây.
+              (sau đây gọi là &quot;Công ty&quot;). Bằng việc truy cập và sử
+              dụng Website Topmass, bạn, với tư cách là &quot;Người dùng&quot;
+              hoặc &quot;Khách hàng&quot; (trừ khi ngữ cảnh yêu cầu khác), mặc
+              nhiên chấp thuận tuân thủ các điều khoản và điều kiện sử dụng được
+              quy định dưới đây.
             </li>
             <li>
               Nếu bạn không đồng ý với bất kỳ điều khoản nào trong Chính sách
@@ -117,9 +115,9 @@ export default function Regulation() {
               Website này được sở hữu và vận hành bởi Công ty Cổ phần Vietstar
               Group. Topmass.vn chứa nhiều loại nội dung như thông tin, tin tức,
               văn bản, hình ảnh, âm thanh, video, và nhiều nội dung khác (gọi
-              chung là "nội dung"). Người dùng có thể truy cập và sử dụng các
-              khu vực tương tác của trang web như đăng tin tuyển dụng, tải lên
-              các tệp phương tiện, và tạo hồ sơ cá nhân.
+              chung là &quot;nội dung&quot;). Người dùng có thể truy cập và sử
+              dụng các khu vực tương tác của trang web như đăng tin tuyển dụng,
+              tải lên các tệp phương tiện, và tạo hồ sơ cá nhân.
             </li>
             <li>
               Để sử dụng đầy đủ các tính năng và dịch vụ của Topmass.vn, người
@@ -566,7 +564,8 @@ export default function Regulation() {
             cho phép đăng tải nội dung trên Internet và Website Topmass mà không
             có bất kỳ hạn chế nào. Nếu bạn sử dụng nội dung thuộc quyền sở hữu
             của bên thứ ba, bạn phải ghi rõ nguồn và bản quyền, chẳng hạn như
-            "Bản quyền thuộc về [tên chủ sở hữu]; sử dụng theo ủy quyền."
+            &quot;Bản quyền thuộc về [tên chủ sở hữu]; sử dụng theo ủy
+            quyền.&quot;
           </p>
           <p>
             Bằng việc đăng tải nội dung lên các khu vực tương tác của Website

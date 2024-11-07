@@ -398,7 +398,7 @@ export default function PrivatePolicy() {
             <li>
               Gửi email tới địa chỉ{" "}
               <span className="font-semibold">support@topmass.vn</span> với tiêu
-              đề "Yêu cầu xóa tài khoản."
+              đề &quot;Yêu cầu xóa tài khoản.&quot;
             </li>
             <li>
               Sau khi nhận được yêu cầu từ bạn, Topmass sẽ liên hệ lại để xác
@@ -667,13 +667,14 @@ export default function PrivatePolicy() {
           </p>
           <p>
             <span className="font-medium">12.3.</span> Trang web của chúng tôi
-            còn tích hợp các Tính năng Truyền thông Xã hội như nút "Thích",
-            "Chia sẻ" hoặc "Bình luận" của Facebook và các widget tương tác
-            khác. Những tính năng này có thể thu thập địa chỉ IP của bạn, trang
-            mà bạn đang truy cập trên trang web của chúng tôi, và có thể cài đặt
-            cookies để đảm bảo tính năng hoạt động hiệu quả. Việc tương tác với
-            các Tính năng Truyền thông Xã hội này được điều chỉnh theo chính
-            sách bảo mật của bên cung cấp.
+            còn tích hợp các Tính năng Truyền thông Xã hội như nút
+            &quot;Thích&quot;, &quot;Chia sẻ&quot; hoặc &quot;Bình luận&quot;
+            của Facebook và các widget tương tác khác. Những tính năng này có
+            thể thu thập địa chỉ IP của bạn, trang mà bạn đang truy cập trên
+            trang web của chúng tôi, và có thể cài đặt cookies để đảm bảo tính
+            năng hoạt động hiệu quả. Việc tương tác với các Tính năng Truyền
+            thông Xã hội này được điều chỉnh theo chính sách bảo mật của bên
+            cung cấp.
           </p>
         </div>
         <div>
