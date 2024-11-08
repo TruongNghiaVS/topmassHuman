@@ -60,7 +60,7 @@ export const HeaderHrCenter = () => {
         <div
           className={`${
             isFixed ? "fixed" : ""
-          }  flex justify-between lg:block hidden items-center bg-[#383636] left-0 top-0 right-0 pt-3 px-[22px] z-[3]`}
+          }  lg:flex justify-between hidden items-center bg-[#383636] left-0 top-0 right-0 pt-3 px-[22px] z-[3]`}
         >
           <div className="logo-header">
             <Link href="/">
