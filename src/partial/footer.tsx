@@ -66,16 +66,9 @@ export const Footer = () => {
       <div className=" bg-white px-0 max-1280:px-2">
         <div className="container mx-auto pt-[60px] pb-[30px] gap-x-28	">
           <div className="lg:grid grid-cols-12 items-center">
-            <div className="lg:col-span-5 col-span-4 bg-[url(/imgs/bg-logo-footer.png)] bg-no-repeat bg-[lenght:100% 100%] py-4 mb-2">
+            <div className="lg:col-span-5 col-span-4 py-4 mb-2">
               <Link href="#">
-                <Image
-                  src="/imgs/logo-footer.png"
-                  width={100}
-                  height={100}
-                  priority={true}
-                  alt=""
-                  className="w-[220px] "
-                ></Image>
+                <img src="/imgs/logo-footer.png" alt="" />
               </Link>
             </div>
             <div className="col-span-7">
