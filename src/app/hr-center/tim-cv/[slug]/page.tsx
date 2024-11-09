@@ -6,6 +6,7 @@ import TmSelect from "@/component/hook-form/select";
 import Modal from "@/component/modal";
 import { ISaveCvSearch } from "@/interface/cv";
 import { Campaign } from "@/module/helper/master-data";
+import { CloudDownLoadFillBoostrapIcon } from "@/theme/icons/cloudDownloadFIllBootstrapIcon";
 import {
   GET_ALL_JOB,
   GET_INFOMATIONDETAIL_SEARCH_CV,
@@ -14,6 +15,7 @@ import {
   UPLOAD_IMG,
 } from "@/utils/api-url";
 import axiosInstance, { axiosInstanceImg, fetcher } from "@/utils/axios";
+import { ArrowDownTrayIcon, LockOpenIcon } from "@heroicons/react/16/solid";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -62,6 +64,8 @@ export default function ProfileDetailCv({
   };
 
   useEffect(() => {
+    getHtml();
+
     const iframe = iframeRef.current;
 
     if (iframe) {
@@ -109,6 +113,7 @@ export default function ProfileDetailCv({
       });
       setIsOpenModal(false);
       mutate();
+      getHtml();
       toast.success("Mở cv thành công");
       console.log(res);
     } catch (error) {
@@ -139,7 +144,7 @@ export default function ProfileDetailCv({
       // Create a temporary link element for downloading the file
       const a = document.createElement("a");
       a.href = url;
-      a.download = dataInfomation?.fullName;
+      a.download = `CV-${dataInfomation?.fullName}-${dataInfomation?.posipositionText}-Topmass`;
       document.body.appendChild(a);
       a.click();
 
@@ -154,10 +159,6 @@ export default function ProfileDetailCv({
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    getHtml();
-  }, []);
 
   const schema = yup.object().shape({
     campaign: yup
@@ -217,125 +218,66 @@ export default function ProfileDetailCv({
   return (
     <div className="m-3 ">
       <div className="p-2 bg-white">
-        <div className="flex space-x-3 ">
-          <div className="w-40">
-            <img src="/imgs/bg-authorize.png" className="w-full" alt="" />
-          </div>
-          <div>
-            <div className="flex space-x-2">
-              <div className="font-medium min-w-40">Ứng viên:</div>
-              <div>{dataInfomation?.fullName}</div>
-            </div>
-            <div className="flex space-x-2">
-              <div className="font-medium min-w-40">Giới tính:</div>
-              <div>{dataInfomation?.genderText}</div>
-            </div>
-            <div className="flex space-x-2">
-              <div className="font-medium min-w-40">Tỉnh/thành phố:</div>
-              <div>{dataInfomation?.locationText}</div>
+        <div className="grid grid-cols-5 space-x-4">
+          <div className="col-span-4">
+            <div className="mt-4">
+              <iframe
+                ref={iframeRef}
+                src=""
+                srcDoc={htmlString}
+                className="w-full"
+                style={{
+                  height: iframeHeight,
+                  overflow: "hidden",
+                }}
+              ></iframe>
             </div>
           </div>
-        </div>
-        <div className="mt-4 p-4 items-end ">
-          {dataInfomation?.isHideInfo && (
+          <div className="col-span-1 px-2 py-4 space-y-2">
             <button
-              type="button"
+              className={`w-full py-2 text-white bg-colorBase flex items-center justify-center rounded ${
+                !dataInfomation?.isHideInfo ? "bg-slate-400" : ""
+              }`}
+              disabled={!dataInfomation?.isHideInfo}
               onClick={() => setIsOpenModal(true)}
-              className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 "
             >
-              Dùng {dataInfomation?.point} tia sét để mở CV
+              <LockOpenIcon className="w-4 mr-2" /> Mở khoá
             </button>
-          )}
-
-          {!dataInfomation?.isHideInfo && (
-            <div>
-              <button
-                type="button"
-                onClick={() => {
-                  setType("downloadCV");
-                  setIsOpenModal(true);
-                }}
-                className="text-white bg-gray-800 hover:bg-gray-900 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
-              >
-                Tải file
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setType("saveCV");
-                  setIsOpenModal(true);
-                }}
-                className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
-              >
-                Lưu
-              </button>
-            </div>
-          )}
-        </div>
-        <div className="mt-4 p-4">
-          <div className="py-2 text-[#F37A20] text-xl font-bold">
-            Thông tin nghề nghiệp
+            <button
+              className={`w-full py-2 text-white bg-colorBase flex items-center justify-center rounded ${
+                dataInfomation?.isHideInfo ? "bg-slate-400" : ""
+              }`}
+              onClick={() => {
+                setType("saveCV");
+                setIsOpenModal(true);
+              }}
+              disabled={dataInfomation?.isHideInfo}
+            >
+              <CloudDownLoadFillBoostrapIcon className="w-4 mr-2" /> Lưu CV
+            </button>
+            <button
+              className={`w-full py-2 text-white bg-colorBase flex items-center justify-center rounded ${
+                dataInfomation?.isHideInfo ? "bg-slate-400" : ""
+              }`}
+              onClick={() => {
+                setType("downloadCV");
+                setIsOpenModal(true);
+              }}
+              disabled={dataInfomation?.isHideInfo}
+            >
+              <ArrowDownTrayIcon className="w-4 mr-2" /> Tải CV
+            </button>
           </div>
-          <div className="mt-2 grid grid-cols-2">
-            <div>
-              <div className="flex space-x-2">
-                <div className="font-medium min-w-40">Năm kinh ngiệm:</div>
-                <div>{dataInfomation?.experienceText}</div>
-              </div>
-              {/* <div className="flex space-x-2">
-                <div className="font-medium min-w-40">Bằng cấp:</div>
-                <div>bằng đại học</div>
-              </div> */}
-              <div className="flex space-x-2">
-                <div className="font-medium min-w-40">Cấo bậc:</div>
-                <div>{dataInfomation?.levelText}</div>
-              </div>
-              {/* <div className="flex space-x-2">
-                <div className="font-medium min-w-40">Nghề nghiệp:</div>
-                <div>IT</div>
-              </div> */}
-              <div className="flex space-x-2">
-                <div className="font-medium min-w-40">Cập nhật:</div>
-                <div>04/10/2024</div>
-              </div>
-            </div>
-            <div>
-              {/* <div className="flex space-x-2">
-                <div className="font-medium min-w-40">Ngoại ngữ:</div>
-                <div>Tiêngs anh</div>
-              </div> */}
-              <div className="flex space-x-2">
-                <div className="font-medium min-w-40">Mức lương mong muốn:</div>
-                <div>{dataInfomation?.salaryExpertText}</div>
-              </div>
-              <div className="flex space-x-2">
-                <div className="font-medium min-w-40">Địa điểm:</div>
-                <div>{dataInfomation?.locationText}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-4">
-          <iframe
-            ref={iframeRef}
-            src=""
-            srcDoc={htmlString}
-            className="w-full"
-            style={{
-              height: iframeHeight,
-              overflow: "hidden",
-            }}
-          ></iframe>
         </div>
       </div>
       <Modal isOpen={isOpenModal} onClose={() => setIsOpenModal(false)}>
         {type === "seeCV" && (
           <div>
-            <div className="text-center">
-              Bạn có đồng ý sử dụng {dataInfomation?.point} để mở CV
+            <div className=" flex space-x-2 justify-center">
+              Bạn có đồng ý sử dụng {dataInfomation?.point}{" "}
+              <img src="/imgs/arrow.svg" alt="" className="w-2 mr-1" /> để mở CV
             </div>
-            <div className="flex justify-center mt-4 space-x-2">
+            <div className="flex justify-center space-x-2 mt-4 ">
               <button
                 className="bg-gray-500 hover:bg-gray-700 text-white px-4 py-1 rounded"
                 onClick={() => setIsOpenModal(false)}
