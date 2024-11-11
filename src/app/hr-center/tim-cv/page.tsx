@@ -18,6 +18,7 @@ import { convertParams } from "@/utils/custom-hook";
 import * as yup from "yup";
 import { ISearchCv, ISearchCvState } from "@/interface/interface";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Paging } from "@/component/paging";
 
 const years = Array.from({ length: 52 }, (_, i) => {
   const item = {
@@ -162,8 +163,6 @@ export default function SearchCV() {
 
   const { provinces } = Provinces();
 
-  const list = [1, 2, 3, 4, 5];
-
   return (
     <div className="px-6 py-3 ">
       <div className="grid lg:grid-cols-3 md:grid-cols-1 gap-4">
@@ -302,6 +301,11 @@ export default function SearchCV() {
               </div>
             );
           })}
+          <Paging
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+            lengthData={cvSearch?.data.length}
+          />
         </div>
       </div>
     </div>

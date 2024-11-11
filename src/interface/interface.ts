@@ -503,3 +503,9 @@ export interface ISearchCvState {
   Limit: number;
   Page: number;
 }
+
+export interface IPaging {
+  setCurrentPage: Dispatch<SetStateAction<number>>;
+  lengthData: number;
+  currentPage: number;
+}

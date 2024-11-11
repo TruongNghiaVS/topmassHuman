@@ -115,7 +115,6 @@ export default function ProfileDetailCv({
       mutate();
       getHtml();
       toast.success("Mở cv thành công");
-      console.log(res);
     } catch (error) {
       toast.error("Mở cv thất bại");
     } finally {
@@ -194,7 +193,6 @@ export default function ProfileDetailCv({
     setLoading(true);
     try {
       const file = await convertToFile();
-      console.log(data);
       const response = await axiosInstanceImg.post(UPLOAD_IMG, {
         file: file,
       });
@@ -244,14 +242,11 @@ export default function ProfileDetailCv({
               <LockOpenIcon className="w-4 mr-2" /> Mở khoá
             </button>
             <button
-              className={`w-full py-2 text-white bg-colorBase flex items-center justify-center rounded ${
-                dataInfomation?.isHideInfo ? "bg-slate-400" : ""
-              }`}
+              className={`w-full py-2 text-white bg-colorBase flex items-center justify-center rounded`}
               onClick={() => {
                 setType("saveCV");
                 setIsOpenModal(true);
               }}
-              disabled={dataInfomation?.isHideInfo}
             >
               <CloudDownLoadFillBoostrapIcon className="w-4 mr-2" /> Lưu CV
             </button>

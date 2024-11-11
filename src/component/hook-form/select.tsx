@@ -31,7 +31,6 @@ const TmSelect: React.FC<ITmSelect> = ({
   };
 
   const getValue = (value: any) => {
-    console.log(value);
     return typeof value === "string" ? "" : -1;
   };
 
