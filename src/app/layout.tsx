@@ -61,6 +61,9 @@ export default function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/imgs/favicon.png" type="image/png" />
+      </head>
       <body className={`${roboto.variable} font-roboto  min-h-screen `}>
         <LoadingProvider>
           <SWRConfig
