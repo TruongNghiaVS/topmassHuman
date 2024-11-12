@@ -280,7 +280,7 @@ export default function DetailCampaign({ params }: { params: { id: number } }) {
                   </td>
                   <td className="p-4 ">
                     <div
-                      className={`inline-block px-2 py-1 rounded-xl ${
+                      className={`inline-block px-2 py-1 rounded-xl whitespace-nowrap ${
                         row.status === 1
                           ? "bg-[#DAFFD7] text-[#137F04]"
                           : "bg-[#FFE9E9] text-[#AF0000]"
@@ -305,6 +305,7 @@ export default function DetailCampaign({ params }: { params: { id: number } }) {
                       {row.status ? (
                         <div>
                           <Link
+                            className="whitespace-nowrap"
                             href={`/hr-center/tim-cv?idCampaign=${row.campaignId}`}
                           >
                             Tìm CV

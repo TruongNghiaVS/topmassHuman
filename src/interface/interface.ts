@@ -501,7 +501,6 @@ export interface ISearchCvState {
   SchoolSearch: string | undefined;
   EducationalLevelArray: string;
   Limit: number;
-  Page: number;
 }
 
 export interface IPaging {

@@ -11,7 +11,6 @@ export const Paging = ({
 
   useEffect(() => {
     const length = Math.ceil(lengthData / 10);
-    console.log(lengthData);
     const arrLength = Array.from({ length: length }, (_, i) => {
       return i + 1;
     }).filter((i) => i > 0);
@@ -25,7 +24,7 @@ export const Paging = ({
           id="prev-hot-job"
           className="border border-[#F37A20] rounded-full border-[1px] p-1 mr-2"
           onClick={() => {
-            setCurrentPage(currentPage - 1);
+            setCurrentPage(currentPage);
           }}
           disabled={currentPage === 1}
         >
@@ -35,6 +34,7 @@ export const Paging = ({
           return (
             <button
               key={item}
+              onClick={() => setCurrentPage(item)}
               className={`min-w-[26px] mr-1 border border-[#F37A20] ${
                 currentPage === item
                   ? "bg-[#F37A20] text-white"

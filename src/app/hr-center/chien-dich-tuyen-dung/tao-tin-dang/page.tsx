@@ -403,7 +403,7 @@ export default function CreateNew() {
               <div className="font-medium">
                 Số lượng tuyển <span className="text-[#dc2f2f]">*</span>
               </div>
-              <TmInputNumber name="quantity" control={control} />
+              <TmInputNumber name="quantity" control={control} step={1} />
             </div>
           </div>
           <div className="mt-4">
@@ -535,7 +535,7 @@ export default function CreateNew() {
                 </div>
                 <div className="flex items-start">
                   <div className="flex-1">
-                    <TmInput
+                    <TmInputNumber
                       name="salary_from"
                       disabled={isAggrement}
                       control={control}
@@ -543,7 +543,7 @@ export default function CreateNew() {
                     />
                   </div>
                   <div className="flex-1">
-                    <TmInput
+                    <TmInputNumber
                       disabled={isAggrement}
                       name="salary_to"
                       control={control}

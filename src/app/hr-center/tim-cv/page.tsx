@@ -43,7 +43,6 @@ export default function SearchCV() {
     SchoolSearch: "",
     EducationalLevelArray: "",
     Limit: 10,
-    Page: currentPage,
   });
 
   const schema = yup.object().shape({
@@ -76,7 +75,7 @@ export default function SearchCV() {
   });
 
   const { data: cvSearch, error, isLoading } = useSWR(
-    SEARCH_CV + "?" + convertParams(searchObj),
+    SEARCH_CV + "?" + convertParams(searchObj) + `&Page=${currentPage}`,
     fetcher
   );
 
@@ -301,11 +300,15 @@ export default function SearchCV() {
               </div>
             );
           })}
-          <Paging
-            setCurrentPage={setCurrentPage}
-            currentPage={currentPage}
-            lengthData={cvSearch?.data.length}
-          />
+          {cvSearch?.total > 0 ? (
+            <Paging
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+              lengthData={cvSearch?.total}
+            />
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>
