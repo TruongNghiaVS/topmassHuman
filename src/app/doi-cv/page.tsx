@@ -55,7 +55,7 @@ export default function ChangeCv() {
   ];
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-white min-h-screen max-1280:px-2">
       <div className="mx-auto container">
         <div className="flex justify-between items-center mt-4">
           <div className="font-bold">Lịch sử đổi CV</div>

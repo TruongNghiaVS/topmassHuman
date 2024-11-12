@@ -115,7 +115,7 @@ export default function Contact() {
             <ul className="pl-8 list-disc mb-4 space-y-2">
               <li>
                 <span className="font-medium">Trưởng Phòng:</span>Minh Phạm - Số
-                Điện Thoại: 1900 255 638
+                Điện Thoại: 1900 255 836
               </li>
             </ul>
             <p className="border-b border-black">

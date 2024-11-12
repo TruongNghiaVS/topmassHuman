@@ -58,7 +58,7 @@ export default function DetailChangeCv({ params }: { params: { id: number } }) {
 
   return (
     <div className="bg-white min-h-screen">
-      <div className="container mx-auto mt-4">
+      <div className="container mx-auto mt-4 max-1280:px-2">
         <div className="text-2xl">Chi tiết đổi CV</div>
         <div className="mt-4 flex justify-between items-center">
           <div className="font-bold">{detail?.title}</div>
