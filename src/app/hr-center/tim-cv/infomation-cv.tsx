@@ -19,7 +19,7 @@ export default function InfomationCv({
     <div>
       <div className="grid sm:grid-cols-3 grid-cols-1 gap-x-4 p-4 bg-white pb-6 border-b">
         <div className="col-span-1">
-          <div className="flex">
+          <div className="flex space-x-1">
             <div>
               <img
                 src={
@@ -28,7 +28,7 @@ export default function InfomationCv({
                     : "/imgs/no-avatar.png"
                 }
                 alt=""
-                className="w-auto p-0.5 bg-[#F37A20] rounded-full mr-2"
+                className="w-10 h-10 p-0.5 bg-[#F37A20] rounded-full mr-2"
               />
             </div>
             <div>
@@ -70,7 +70,7 @@ export default function InfomationCv({
         <div className="sm:col-span-2 sm:mt-0 mt-2">
           <div>Kinh nghiệm ({item.experienceText})</div>
           <div className="flex items-start">
-            <BriefcaseIcon className="w-4 mr-1 " /> {item.educationText}
+            <BriefcaseIcon className="w-4 mr-1 " /> {item.experienceContent}
           </div>
           <div className="mt-2">Học vấn</div>
           <div className="flex items-start">
@@ -79,7 +79,12 @@ export default function InfomationCv({
           </div>
           <div className="mt-2">Mục tiêu sự nghiệp</div>
           <div className="flex items-start">
-            <AcademicCapIcon className="w-4 mr-1 " /> {item.jobObjectiveText}
+            <div>
+              <AcademicCapIcon className="w-4 mr-1 " />{" "}
+            </div>
+            <div
+              dangerouslySetInnerHTML={{ __html: item.jobObjectiveText }}
+            ></div>
           </div>
           <div className="text-default">
             <Link

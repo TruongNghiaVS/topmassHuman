@@ -15,6 +15,7 @@ export interface ICvSearch {
   totalView: number;
   fullName: string;
   avatarlink: string;
+  experienceContent: string;
 }
 
 export interface ISearchCvDetailProps {

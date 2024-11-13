@@ -37,7 +37,6 @@ export default function ProfileDetailCv({
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [type, setType] = useState("seeCV");
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const [iframeHeight, setIframeHeight] = useState("0px");
   const [jobs, setJobs] = useState<Option[]>([]);
   const { campaign } = Campaign();
   const { data: dataInfomation, mutate } = useSWR(
@@ -64,21 +63,10 @@ export default function ProfileDetailCv({
   };
 
   useEffect(() => {
-    getHtml();
-
-    const iframe = iframeRef.current;
-
-    if (iframe) {
-      iframe.onload = () => {
-        const iframeDocument =
-          iframe.contentDocument || iframe.contentWindow?.document;
-        if (iframeDocument) {
-          const height = iframeDocument.documentElement.scrollHeight;
-          setIframeHeight(`${height}px`);
-        }
-      };
+    if (dataInfomation && dataInfomation.sourceType !== 2) {
+      getHtml();
     }
-  }, [htmlString]);
+  }, [htmlString, dataInfomation]);
 
   const { setLoading } = useLoading();
 
@@ -113,7 +101,9 @@ export default function ProfileDetailCv({
       });
       setIsOpenModal(false);
       mutate();
-      getHtml();
+      if (dataInfomation && dataInfomation.sourceType !== 2) {
+        getHtml();
+      }
       toast.success("Mở cv thành công");
     } catch (error) {
       toast.error("Mở cv thất bại");
@@ -136,8 +126,15 @@ export default function ProfileDetailCv({
   const handleDownloadCV = async () => {
     setLoading(true);
     try {
-      const response = await readPDFBuffer();
-      const blob = await response.blob();
+      let blob: any = "";
+      if (dataInfomation && dataInfomation.sourceType !== 2) {
+        const response = await readPDFBuffer();
+        blob = await response.blob();
+      } else {
+        const response = await fetch(dataInfomation?.cvLink);
+        blob = await response.blob();
+      }
+
       const url = window.URL.createObjectURL(blob);
 
       // Create a temporary link element for downloading the file
@@ -153,6 +150,7 @@ export default function ProfileDetailCv({
       setIsOpenModal(false);
       toast.success("Download cv thành công");
     } catch (error) {
+      console.log(error);
       toast.error("Download cv thất bại");
     } finally {
       setLoading(false);
@@ -192,14 +190,20 @@ export default function ProfileDetailCv({
   const onSubmit: SubmitHandler<ISaveCvSearch> = async (data) => {
     setLoading(true);
     try {
-      const file = await convertToFile();
-      const response = await axiosInstanceImg.post(UPLOAD_IMG, {
-        file: file,
-      });
+      let link = "";
+      if (dataInfomation.sourceType !== 2) {
+        const file = await convertToFile();
+        const response = await axiosInstanceImg.post(UPLOAD_IMG, {
+          file: file,
+        });
+        link = response.data.fullLink;
+      } else {
+        link = dataInfomation.cvLink;
+      }
 
       const dataUpdate = {
         searchId: +slug,
-        linkFile: response.data.fullLink,
+        linkFile: link,
         ...data,
       };
 
@@ -219,16 +223,27 @@ export default function ProfileDetailCv({
         <div className="grid grid-cols-5 space-x-4">
           <div className="col-span-4">
             <div className="mt-4">
-              <iframe
-                ref={iframeRef}
-                src=""
-                srcDoc={htmlString}
-                className="w-full"
-                style={{
-                  height: iframeHeight,
-                  overflow: "hidden",
-                }}
-              ></iframe>
+              {dataInfomation?.sourceType === 2 ? (
+                <iframe
+                  ref={iframeRef}
+                  src={dataInfomation?.cvLink}
+                  className="w-full"
+                  style={{
+                    height: "100vh",
+                    overflow: "hidden",
+                  }}
+                />
+              ) : (
+                <iframe
+                  ref={iframeRef}
+                  srcDoc={htmlString}
+                  className="w-full"
+                  style={{
+                    height: "100vh",
+                    overflow: "hidden",
+                  }}
+                />
+              )}
             </div>
           </div>
           <div className="col-span-1 px-2 py-4 space-y-2">
