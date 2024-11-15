@@ -20,6 +20,7 @@ import { toast } from "react-toastify";
 import { GET_ALL_NOTIFICATION } from "@/utils/api-url";
 import { fetcher } from "@/utils/axios";
 import { MenuMobile } from "./menu-mobile";
+import { ProfileUser } from "@/module/helper/master-data";
 
 export const Header = () => {
   const headerRef = useRef<HTMLDivElement | null>(null);
@@ -34,7 +35,7 @@ export const Header = () => {
     `${GET_ALL_NOTIFICATION}?status=0`,
     fetcher
   );
-
+  const { currentUser } = ProfileUser();
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -153,8 +154,10 @@ export const Header = () => {
             <div className={` hidden items-center ${isLogin && "!flex"}`}>
               <div className="grid mr-2">
                 <div className="text-[8px]">Bạn đang có</div>
-                <div className="w-full bg-gradient-to-r text-base from-[#F89E1B] to-[#F37A20] rounded-lg text-center text-white">
-                  20
+                <div className="w-full text-xs bg-gradient-to-r text-base from-[#F89E1B] to-[#F37A20] rounded-lg text-center text-white">
+                  {currentUser?.numberLightning <= 0
+                    ? 0
+                    : currentUser?.numberLightning}
                 </div>
               </div>
               <div>

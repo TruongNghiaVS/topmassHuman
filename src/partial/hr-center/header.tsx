@@ -12,6 +12,7 @@ import { GET_ALL_NOTIFICATION } from "@/utils/api-url";
 import { fetcher } from "@/utils/axios";
 import { INotification } from "@/interface/interface";
 import { MenuMobile } from "./menu-mobile";
+import { ProfileUser } from "@/module/helper/master-data";
 
 export const HeaderHrCenter = () => {
   const headerRef = useRef<HTMLDivElement | null>(null);
@@ -25,6 +26,8 @@ export const HeaderHrCenter = () => {
     `${GET_ALL_NOTIFICATION}?Status=0`,
     fetcher
   );
+
+  const { currentUser } = ProfileUser();
 
   useEffect(() => {
     if (token) {
@@ -43,7 +46,6 @@ export const HeaderHrCenter = () => {
     };
 
     window.addEventListener("scroll", handleScroll);
-
     if (listNotis) {
       setNotis(listNotis.data);
     }
@@ -120,7 +122,9 @@ export const HeaderHrCenter = () => {
                   <div className="grid mr-2">
                     <div className="text-[8px] text-white">Bạn đang có</div>
                     <div className="w-full text-xs bg-gradient-to-r text-base from-[#F89E1B] to-[#F37A20] rounded-lg text-center text-white">
-                      20
+                      {currentUser?.numberLightning <= 0
+                        ? 0
+                        : currentUser?.numberLightning}
                     </div>
                   </div>
                   <div>
