@@ -254,6 +254,7 @@ export interface IJob {
   packageName: string;
   reason: number;
   reasonText: string;
+  displaySTatusText: string;
   relId: number;
   status: number;
   resultCode: number;
