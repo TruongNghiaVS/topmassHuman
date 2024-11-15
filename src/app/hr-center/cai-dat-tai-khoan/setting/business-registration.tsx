@@ -2,6 +2,7 @@ import { useLoading } from "@/app/context/loading";
 import CustomUpload from "@/component/hook-form/custom-upload";
 import {
   ICompanyBusiness,
+  ICurrentUser,
   IUpdateInfomation,
   IUpdateInformationProps,
 } from "@/interface/interface";
@@ -78,20 +79,54 @@ export default function BusinessRegistration({
     return result;
   };
 
+  const conditionalRender=( currentUserInfo : ICurrentUser)=> {
+  
+      if( currentUser ==null)
+      {
+        return <></>;
+      }
+      if( currentUser.businessLicenseInfo==null)
+      {
+        return <></>;
+      }
+      const statusCodeGet = currentUser.businessLicenseInfo.statusCode;
+      if( statusCodeGet === 3)
+      {
+          return  ( 
+
+            <div className="bg-[#64D885] rounded-2xl px-2 py-1">
+            {currentUser?.businessLicenseInfo.statusText}
+          </div>
+          )
+      } 
+      else if(statusCodeGet === 2 )
+      {
+        return (
+          <div className="bg-[#FF0000] rounded-2xl px-2 py-1 text-default">
+          {currentUser?.businessLicenseInfo.statusText}
+        </div>)
+      }
+      else if(statusCodeGet === 1 )  {
+        return (
+          <div className="bg-[#FCC575] rounded-2xl px-2 py-1 text-default">
+          {currentUser?.businessLicenseInfo.statusText}
+        </div>)
+     }
+     else 
+     {
+      return <></>;
+     }
+ }
+ 
+
   return (
+    
+
     <div>
       <div className="flex space-x-2 items-center">
         <div className="font-semibold">Thông tin giấy đăng ký doanh nghiệp</div>
-        {currentUser?.businessLicenseInfo.statusCode &&
-        currentUser?.businessLicenseInfo.statusCode === 2 ? (
-          <div className="bg-[#64D885] rounded-2xl px-2 py-1">
-            {currentUser?.businessLicenseInfo.statusText}
-          </div>
-        ) : (
-          <div className="bg-[#FCC575] rounded-2xl px-2 py-1 text-default">
-            {currentUser?.businessLicenseInfo.statusText}
-          </div>
-        )}
+        {conditionalRender(currentUser)}
+
       </div>
       <div className="mt-4">
         {currentUser?.businessLicenseInfo.linkFile.length > 0 && (

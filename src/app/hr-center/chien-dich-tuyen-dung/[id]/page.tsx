@@ -286,13 +286,13 @@ export default function DetailCampaign({ params }: { params: { id: number } }) {
                           : "bg-[#FFE9E9] text-[#AF0000]"
                       }`}
                     >
-                      {row.reasonText}
+                      {row.displaySTatusText}
                     </div>
                     {row.status === 2 && <div className="mt-1">Xem lý do</div>}
                   </td>
                   <td className="p-4 ">
                     <div className={`inline-block px-2 py-1 rounded-xl`}>
-                      {row.resultText}
+                      {row.reasonText}
                     </div>
                   </td>
                   <td className={`p-4`}>
