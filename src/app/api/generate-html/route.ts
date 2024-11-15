@@ -14,6 +14,7 @@ import {
   getReward,
   getSkill,
   getSoftSkill,
+  getTools,
 } from "./func-read-prop-file";
 
 export const dynamic = "force-dynamic";
@@ -63,12 +64,14 @@ export async function GET(request: Request) {
     const reward = await getReward(res.data.data.allReward);
     const skill = await getSkill(res.data.data.allSkill);
     const softSkill = await getSoftSkill(res.data.data.allsoftSkill);
+    const tool = await getTools(res.data.data.allTools);
 
     htmlContent = htmlContent
       .replace(`{contact}`, contact)
       .replace("{education}", education)
       .replace("{soft_skill}", softSkill)
       .replace("{skill}", skill)
+      .replace("{tool}", tool)
       .replace("{reward}", reward)
       .replace("{certificates}", certificate)
       .replace("{name}", profileUser.fullName)

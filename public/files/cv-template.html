@@ -11,6 +11,11 @@
   body {
     color: #555555;
     margin: 0;
+    font-size: 14px
+  }
+
+  p {
+    margin: 4px 0 !important;
   }
 
   .fix-screen {
@@ -21,6 +26,7 @@
   .grid-box {
     display: grid;
     grid-template-columns: 1fr 2fr;
+    min-height: 100vh;
   }
 
   .box-left {
@@ -116,6 +122,30 @@
     background-color: #F37A20;
     color: #ffffff;
   }
+
+  .ab-bg {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    z-index: -1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ab-bg img {
+    width: 100%;
+  }
+
+  .mt-10 {
+    margin-top: 10px;
+  }
+
+  .font-semibold {
+    font-weight: 600;
+  }
 </style>
 
 <body>
@@ -127,20 +157,23 @@
           <div class="box-absolute absolute-left"></div>
           <div class="box-absolute absolute-right"></div>
         </div>
-        <div>{contact}</div>
+        <div style="margin-top: 10px;">{contact}</div>
         <div>{education}</div>
-        <div>{soft_skill}</div>
         <div>{skill}</div>
-        <div>{reward}</div>
+        <div>{tool}</div>
         <div>{certificates}</div>
+        <div>{reward}</div>
       </div>
       <div class="box-right">
-        <div class="ab-cv">
-          <img src="http://localhost:3000/imgs/ab-cv.png" alt="">
+        <div class="ab-bg">
+          <img src="https://tuyendung.topmass.vn/imgs/bg-template-cv.png" alt="">
         </div>
-        <div style="color: #F37A20; display: flex; align-items: center; padding: 20px 0;">
+        <div class="ab-cv">
+          <img src="https://tuyendung.topmass.vn/imgs/ab-cv.png" alt="">
+        </div>
+        <div style="color: #F37A20; display: flex; align-items: center;">
           <div style="font-size: 12px; margin-right: 4px;">Được thiết kế bởi</div>
-          <img src="http://localhost:3000/imgs/logo-new.svg" alt="" style="width: 60px;">
+          <img src="https://tuyendung.topmass.vn/imgs/logo-new.svg" alt="" style="width: 60px;">
         </div>
         <div class="name-cv">
           {name}
