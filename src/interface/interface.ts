@@ -139,7 +139,7 @@ export interface ICurrentUser {
   businessLicenseInfo: {
     linkFile: string;
     statusText: string;
-    statusCode: 0;
+    statusCode: number;
     note: string;
   };
 }
