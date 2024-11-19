@@ -29,6 +29,8 @@ export const ModalChangeStatus = ({
   status,
   mutate,
 }: IModalChangeStatusProps) => {
+  console.log(id, status);
+
   const { setLoading } = useLoading();
   const schema = yup.object().shape({
     noteCode: yup.number().required("Trạng thái không được để trống"),
@@ -73,7 +75,7 @@ export const ModalChangeStatus = ({
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mt-4">
           <div>
-            Mật khẩu hiện tại <span className="text-[#dc2f2f]">*</span>
+            Trạng thái CV <span className="text-[#dc2f2f]">*</span>
           </div>
           <TmSelect
             control={control}

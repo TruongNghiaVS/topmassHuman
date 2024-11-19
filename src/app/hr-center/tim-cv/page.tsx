@@ -118,6 +118,7 @@ export default function SearchCV() {
 
   const onSubmit: SubmitHandler<ISearchCv> = async (data) => {
     setLoading(true);
+    setCurrentPage(1);
     try {
       const dataSearch = {
         KeyWord: data.KeyWord,
@@ -135,7 +136,6 @@ export default function SearchCV() {
           data.after_university || false
         ),
         Limit: 10,
-        Page: currentPage,
       };
 
       setSearchObj(dataSearch);

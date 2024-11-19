@@ -47,7 +47,7 @@ export const ApplicationCV = ({ idJob }: IDetailCvProps) => {
         label: item.text,
         value: item.id,
       }));
-      setStatusApply(data);
+      setStatusApply([{ label: "Tất cả", value: -1 }, ...data]);
     } catch (error) {
     } finally {
       setLoading(false);
@@ -76,7 +76,13 @@ export const ApplicationCV = ({ idJob }: IDetailCvProps) => {
     },
   });
 
-  const header = ["Tên ứng viên", "Số điện thoại", "Email", "Trạng thái"];
+  const header = [
+    "Tên ứng viên",
+    "Số điện thoại",
+    "Email",
+    "Hiển thị",
+    "Trạng thái",
+  ];
 
   const getCvName = (link: string) => {
     const names = link.split("/");
@@ -147,8 +153,8 @@ export const ApplicationCV = ({ idJob }: IDetailCvProps) => {
                 control={control}
                 name="viewMode"
                 classNameCustom="flex-1"
-                placeholder="Tất cả"
                 options={[
+                  { label: "Tất cả", value: -1 },
                   { label: "Đã xem", value: 1 },
                   { label: "Chưa xem", value: 0 },
                 ]}
@@ -160,7 +166,6 @@ export const ApplicationCV = ({ idJob }: IDetailCvProps) => {
                 control={control}
                 name="statusCode"
                 classNameCustom="flex-1"
-                placeholder="Tất cả"
                 options={statusApply}
               />
             </div>
@@ -184,7 +189,7 @@ export const ApplicationCV = ({ idJob }: IDetailCvProps) => {
                       key={item}
                       className="p-4 text-center whitespace-nowrap font-medium uppercase sm:min-w-fit min-w-[200px]"
                     >
-                      {item}{" "}
+                      {item}
                     </th>
                   );
                 })}
@@ -209,9 +214,7 @@ export const ApplicationCV = ({ idJob }: IDetailCvProps) => {
                         className={`ml-2 px-1 rounded-xl text-black ${
                           row.viewMode === 1 && "bg-[#DAFFD7] text-[#137F04]"
                         } `}
-                      >
-                        {row.viewMode === 0 ? "Chưa xem" : "Đã xem"}
-                      </span>
+                      ></span>
                     </div>
                     <div className="bg-[#DAFFD7] text-[#137F04] inline-flex px-3 py-1  mt-1 rounded-xl">
                       Mức độ phù hợp: 87%
@@ -226,6 +229,9 @@ export const ApplicationCV = ({ idJob }: IDetailCvProps) => {
                     <div className="inline-block px-3 py-1 rounded-xl bg-[#E9F0FF] text-[#004ED8]">
                       {row.email}
                     </div>
+                  </td>
+                  <td className="p-4 ">
+                    {row.viewMode === 0 ? "Chưa xem" : "Đã xem"}
                   </td>
                   <td className="p-4 ">
                     <div className="flex space-x-2">

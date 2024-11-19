@@ -19,10 +19,10 @@ export const Paging = ({
 
   return (
     <div>
-      <div className="text-center mx-auto flex justify-center mt-4">
+      <div className="text-center mx-auto flex justify-center mt-4 space-x-1">
         <button
           id="prev-hot-job"
-          className="border border-[#F37A20] rounded-full border-[1px] p-1 mr-2"
+          className="border min-w-[34px] min-h-[34px] border-[#F37A20] rounded-full border-[1px]  px-2"
           onClick={() => {
             setCurrentPage(currentPage);
           }}
@@ -35,7 +35,7 @@ export const Paging = ({
             <button
               key={item}
               onClick={() => setCurrentPage(item)}
-              className={`min-w-[26px] mr-1 border border-[#F37A20] ${
+              className={`min-w-[34px] min-h-[34px] border border-[#F37A20] ${
                 currentPage === item
                   ? "bg-[#F37A20] text-white"
                   : "text-[#F37A20]"
@@ -47,7 +47,7 @@ export const Paging = ({
         })}
         <button
           id="next-hot-job"
-          className="border border-[#F37A20] rounded-full border-[1px] p-1 ml-2"
+          className="border min-w-[34px] min-h-[34px] border-[#F37A20] rounded-full border-[1px] px-2"
           onClick={() => {
             setCurrentPage(currentPage + 1);
           }}

@@ -433,6 +433,7 @@ export interface IHistoryProps {
 
 export interface ISearchCvView {
   candidateCv: ICandidateSearch[];
+  mutate: KeyedMutator<any>;
 }
 
 export interface ICandidateSearch {

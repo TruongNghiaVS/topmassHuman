@@ -21,7 +21,7 @@ export default function RecruimentPosition() {
     fetcher
   );
 
-  const { data: candidateCv } = useSWR(
+  const { data: candidateCv, mutate } = useSWR(
     `${GET_ALL_CV_SAVE_SEARCH}?JobId=${idJob}`,
     fetcher
   );
@@ -75,7 +75,9 @@ export default function RecruimentPosition() {
         {selected === 1 && <RecruimentNews idJob={idJob} />}
         {selected === 2 && <ApplicationCV idJob={idJob} />}
         {selected === 3 && <CandidateCv />}
-        {selected === 4 && <CvSearch candidateCv={candidateCv?.data} />}
+        {selected === 4 && (
+          <CvSearch candidateCv={candidateCv?.data} mutate={mutate} />
+        )}
       </div>
     </div>
   );

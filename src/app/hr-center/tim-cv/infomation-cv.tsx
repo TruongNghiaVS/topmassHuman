@@ -20,7 +20,7 @@ export default function InfomationCv({
       <div className="grid sm:grid-cols-3 grid-cols-1 gap-x-4 p-4 bg-white pb-6 border-b">
         <div className="col-span-1">
           <div className="flex space-x-1">
-            <div>
+            <div className="flex-auto w-20">
               <img
                 src={
                   item.avatarlink.length > 0
@@ -31,7 +31,7 @@ export default function InfomationCv({
                 className="w-10 h-10 p-0.5 bg-[#F37A20] rounded-full mr-2"
               />
             </div>
-            <div>
+            <div className="flex-auto w-72">
               <div className="text-base hover:text-[#F37A20]">
                 <Link
                   href={`/hr-center/tim-cv/${item.searchId}?idCampaign=${idCampaign}`}

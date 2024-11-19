@@ -163,7 +163,11 @@ export default function ProfileDetailCv({
       .typeError("")
       .required("Vui Vui lòng chọn chiến dịch")
       .min(0, "Vui lòng chọn chiến dịch"),
-    jobId: yup.number().typeError(""),
+    jobId: yup
+      .number()
+      .typeError("")
+      .required("Vui Vui lòng chọn tin đăng")
+      .min(0, "Vui lòng chọn tin đăng"),
   });
 
   const { control, handleSubmit } = useForm<ISaveCvSearch>({
@@ -252,7 +256,10 @@ export default function ProfileDetailCv({
                 !dataInfomation?.isHideInfo ? "bg-slate-400" : ""
               }`}
               disabled={!dataInfomation?.isHideInfo}
-              onClick={() => setIsOpenModal(true)}
+              onClick={() => {
+                setIsOpenModal(true);
+                setType("seeCV");
+              }}
             >
               <LockOpenIcon className="w-4 mr-2" /> Mở khoá
             </button>

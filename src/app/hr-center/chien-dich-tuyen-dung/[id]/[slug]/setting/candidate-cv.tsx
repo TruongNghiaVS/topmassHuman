@@ -31,7 +31,7 @@ export const CandidateCv = () => {
         label: item.text,
         value: item.id,
       }));
-      setStatusApply(data);
+      setStatusApply([{ label: "Tất cả", value: -1 }, ...data]);
     } catch (error) {
     } finally {
       setLoading(false);
@@ -100,10 +100,10 @@ export const CandidateCv = () => {
                 control={control}
                 name="TypeData"
                 classNameCustom="flex-1"
-                placeholder="Tất cả"
                 options={[
-                  { label: "Đã xem", value: "Đã xem" },
-                  { label: "Chưa xem", value: "Chưa xem" },
+                  { label: "Tất cả", value: -1 },
+                  { label: "Chưa xem", value: 0 },
+                  { label: "Đã xem", value: 1 },
                 ]}
               />
             </div>
@@ -113,7 +113,6 @@ export const CandidateCv = () => {
                 control={control}
                 name="Status"
                 classNameCustom="flex-1"
-                placeholder="Tất cả"
                 options={statusApply}
               />
             </div>

@@ -25,5 +25,5 @@ export interface ISearchCvDetailProps {
 
 export interface ISaveCvSearch {
   campaign: number;
-  jobId?: number;
+  jobId: number;
 }

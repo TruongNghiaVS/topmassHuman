@@ -1,16 +1,50 @@
 import TmInput from "@/component/hook-form/input";
 import TmSelect from "@/component/hook-form/select";
 import { ISearchCvView } from "@/interface/interface";
-import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
+import {
+  MagnifyingGlassIcon,
+  PencilSquareIcon,
+} from "@heroicons/react/16/solid";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
+import { ModalChangeStatus } from "./modal-change-status";
+import { useEffect, useState } from "react";
+import { Option } from "@/component/hook-form/interface/interface";
+import { useLoading } from "@/app/context/loading";
+import { GET_STATUS_APPLY_CV } from "@/utils/api-url";
+import axiosInstance from "@/utils/axios";
 
 const getCvName = (link: string) => {
   const names = link.split("/");
   return names[names.length - 1];
 };
 
-export const CvSearch = ({ candidateCv }: ISearchCvView) => {
+export const CvSearch = ({ candidateCv, mutate }: ISearchCvView) => {
+  const [idUpdate, setIdUpdate] = useState(-1);
+  const [statusUpdate, setStatusUpdate] = useState(-1);
+  const [statusApply, setStatusApply] = useState<Option[]>([]);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const { setLoading } = useLoading();
+
+  const getStatusApply = async () => {
+    setLoading(true);
+    try {
+      const response = await axiosInstance.get(GET_STATUS_APPLY_CV);
+      const data = response.data.map((item: any) => ({
+        label: item.text,
+        value: item.id,
+      }));
+      setStatusApply(data);
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getStatusApply();
+  }, []);
+
   const { control } = useForm({
     defaultValues: {
       name: "",
@@ -19,7 +53,13 @@ export const CvSearch = ({ candidateCv }: ISearchCvView) => {
     },
   });
 
-  const header = ["Tên ứng viên", "Số điện thoại", "Email", "Trạng thái cv"];
+  const header = [
+    "Tên ứng viên",
+    "Số điện thoại",
+    "Email",
+    "Hiển thị",
+    "Trạng thái cv",
+  ];
 
   return (
     <div>
@@ -111,8 +151,22 @@ export const CvSearch = ({ candidateCv }: ISearchCvView) => {
                     </div>
                   </td>
                   <td className="p-4 ">
-                    <div className="inline-block px-3 py-1 rounded-xl bg-[#DAFFD7] text-[#137F04]">
-                      {row.statusText}
+                    {/* <div className="inline-block px-3 py-1 rounded-xl bg-[#DAFFD7] text-[#137F04]"></div> */}
+                  </td>
+                  <td className="p-4 ">
+                    <div className="flex space-x-2">
+                      <div className="inline-block px-3 py-1 rounded-xl bg-[#DAFFD7] text-[#137F04]">
+                        {row.statusText}
+                      </div>
+                      <button
+                        onClick={() => (
+                          setIsOpenModal(true),
+                          setIdUpdate(row.id),
+                          setStatusUpdate(row.statusCode)
+                        )}
+                      >
+                        <PencilSquareIcon className="w-4 hover:text-[#F37A20]" />
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -121,6 +175,14 @@ export const CvSearch = ({ candidateCv }: ISearchCvView) => {
           </table>
         </div>
       </div>
+      <ModalChangeStatus
+        id={idUpdate}
+        isOpenModal={isOpenModal}
+        onClose={() => setIsOpenModal(false)}
+        listStatus={statusApply}
+        status={statusUpdate}
+        mutate={mutate}
+      />
     </div>
   );
 };
