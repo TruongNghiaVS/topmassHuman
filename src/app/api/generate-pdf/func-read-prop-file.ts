@@ -17,7 +17,8 @@ export const getContact = async (data: any) => {
   htmlContent = htmlContent
     .replace("{email}", data.email)
     .replace("{addressInfo}", data.addressInfo)
-    .replace("{phoneNumber}", data.phoneNumber);
+    .replace("{phoneNumber}", data.phoneNumber)
+    .replace("{dayOfBirth}", dayjs(data.dateOfBirth).format("DD/MM/YYYY"));
   return htmlContent;
 };
 

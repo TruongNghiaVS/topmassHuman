@@ -15,7 +15,11 @@ import {
   UPLOAD_IMG,
 } from "@/utils/api-url";
 import axiosInstance, { axiosInstanceImg, fetcher } from "@/utils/axios";
-import { ArrowDownTrayIcon, LockOpenIcon } from "@heroicons/react/16/solid";
+import {
+  ArrowDownTrayIcon,
+  LockClosedIcon,
+  LockOpenIcon,
+} from "@heroicons/react/16/solid";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -261,7 +265,12 @@ export default function ProfileDetailCv({
                 setType("seeCV");
               }}
             >
-              <LockOpenIcon className="w-4 mr-2" /> Mở khoá
+              {!dataInfomation?.isHideInfo ? (
+                <LockOpenIcon className="w-4 mr-2" />
+              ) : (
+                <LockClosedIcon className="w-4 mr-2" />
+              )}{" "}
+              Mở khoá
             </button>
             <button
               className={`w-full py-2 text-white bg-colorBase flex items-center justify-center rounded`}

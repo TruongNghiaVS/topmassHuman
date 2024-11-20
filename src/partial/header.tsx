@@ -132,13 +132,13 @@ export const Header = () => {
                     )}
                 </div>
               </Link>
-              <Link href="/nhan-tin">
+              {/* <Link href="/nhan-tin">
                 <img
                   src="/imgs/messenger.svg"
                   alt=""
                   className="w-6 h-auto mr-3"
                 />
-              </Link>
+              </Link> */}
               <div className="flex reflex items-center relative group/title ">
                 <div className="inline-block p-0.5 rounded-full bg-[#F37A20] mr-1">
                   <UserIcon className="text-white w-6" />
