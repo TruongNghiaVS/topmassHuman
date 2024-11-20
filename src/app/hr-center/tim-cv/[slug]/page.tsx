@@ -9,6 +9,7 @@ import { Campaign } from "@/module/helper/master-data";
 import { CloudDownLoadFillBoostrapIcon } from "@/theme/icons/cloudDownloadFIllBootstrapIcon";
 import {
   GET_ALL_JOB,
+  GET_CURRENT_USER,
   GET_INFOMATIONDETAIL_SEARCH_CV,
   OPEN_CV,
   SAVE_JOB_SEARCH,
@@ -45,6 +46,11 @@ export default function ProfileDetailCv({
   const { campaign } = Campaign();
   const { data: dataInfomation, mutate } = useSWR(
     `${GET_INFOMATIONDETAIL_SEARCH_CV}?searchId=${slug}`,
+    fetcher
+  );
+
+  const { data: currentUser, error, mutate: mutateUser } = useSWR(
+    GET_CURRENT_USER,
     fetcher
   );
 
@@ -105,6 +111,7 @@ export default function ProfileDetailCv({
       });
       setIsOpenModal(false);
       mutate();
+      mutateUser();
       if (dataInfomation && dataInfomation.sourceType !== 2) {
         getHtml();
       }
