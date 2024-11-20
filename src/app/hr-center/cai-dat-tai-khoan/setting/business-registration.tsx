@@ -88,7 +88,7 @@ export default function BusinessRegistration({
             currentUser?.businessLicenseInfo.statusCode === 1
               ? "bg-[#FCC575] text-white"
               : currentUser?.businessLicenseInfo.statusCode === 2
-              ? "bg-[#FF0000 text-white"
+              ? "bg-[#eb4034] text-white"
               : "bg-[#64D885] text-rose-600"
           }`}
         >
