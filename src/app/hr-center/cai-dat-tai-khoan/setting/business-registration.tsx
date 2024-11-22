@@ -1,9 +1,8 @@
 import { useLoading } from "@/app/context/loading";
 import CustomUpload from "@/component/hook-form/custom-upload";
+import TmRadio from "@/component/hook-form/radio";
 import {
   ICompanyBusiness,
-  ICurrentUser,
-  IUpdateInfomation,
   IUpdateInformationProps,
 } from "@/interface/interface";
 import { ADD_BUSINESSLICENSE, UPLOAD_IMG } from "@/utils/api-url";
@@ -37,10 +36,14 @@ export default function BusinessRegistration({
       .test("fileSize", "File size is too large", (value) => {
         return value && value.size <= 5 * 1024 * 1024;
       }),
+    DocumentType: yup.string().required("Vui lòng chọn loại giấy tờ"),
   });
 
   const { handleSubmit, control } = useForm<ICompanyBusiness>({
     resolver: yupResolver(schema),
+    defaultValues: {
+      DocumentType: currentUser?.businessLicenseInfo.documnetType,
+    },
   });
 
   const onSubmit: SubmitHandler<ICompanyBusiness> = async (data) => {
@@ -55,6 +58,7 @@ export default function BusinessRegistration({
           setLoading(true);
           const dataUpdate = await axiosInstance.post(ADD_BUSINESSLICENSE, {
             documentLink: response.data.shortLink,
+            documentType: data.DocumentType,
           });
           if (dataUpdate) {
             toast.success("Cập nhật thông tin thành công");
@@ -81,20 +85,50 @@ export default function BusinessRegistration({
 
   return (
     <div>
-      <div className="flex space-x-2 items-center">
+      <div className="">
         <div className="font-semibold">Thông tin giấy đăng ký doanh nghiệp</div>
+      </div>
+      <div className="mt-2">
+        <div className="underline text-colorBase font-medium">
+          Lựa chọn một trong các chứng từ sau để xác thực tài khoản:
+        </div>
+        <TmRadio
+          name="DocumentType"
+          control={control}
+          classNameCustom="flex flex-col"
+          options={[
+            { label: "Giấy đăng ký kinh doanh", value: "0" },
+            { label: "Giấy uỷ quyền", value: "1" },
+            { label: "Thẻ nhân viên", value: "2" },
+            { label: "Giấy xác nhận  mẫu dấu", value: "3" },
+            { label: "Giấy xác nhận mã số thuế", value: "4" },
+          ]}
+        />
+      </div>
+      <div className="mt-2 flex space-x-1">
+        <div className="font-medium">Trạng thái chứng từ: </div>
         <div
-          className={`rounded-2xl px-2 py-1 ${
+          className={` ${
             currentUser?.businessLicenseInfo.statusCode === 1
-              ? "bg-[#FCC575] text-white"
+              ? "text-[#FCC575]"
               : currentUser?.businessLicenseInfo.statusCode === 2
-              ? "bg-[#eb4034] text-white"
-              : "bg-[#64D885] text-rose-600"
+              ? "text-[#eb4034]"
+              : "text-rose-600"
           }`}
         >
           {currentUser?.businessLicenseInfo?.statusText}
         </div>
       </div>
+      {currentUser?.businessLicenseInfo.reasonRejectText.length > 0 ? (
+        <div className="font-medium">
+          Lý do từ chối:{" "}
+          <span className="font-normal">
+            {currentUser?.businessLicenseInfo.reasonRejectText}
+          </span>
+        </div>
+      ) : (
+        ""
+      )}
       <div className="mt-4">
         {currentUser?.businessLicenseInfo.linkFile.length > 0 && (
           <div className="flex justify-between p-4 border border-dashed border-2 border-[#F37A20] mb-2 rounded-lg">
@@ -110,7 +144,6 @@ export default function BusinessRegistration({
             </Link>
           </div>
         )}
-        <div></div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <CustomUpload name="company_business" control={control} />
           <button

@@ -29,8 +29,6 @@ export const ModalChangeStatus = ({
   status,
   mutate,
 }: IModalChangeStatusProps) => {
-  console.log(id, status);
-
   const { setLoading } = useLoading();
   const schema = yup.object().shape({
     noteCode: yup.number().required("Trạng thái không được để trống"),

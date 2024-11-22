@@ -24,6 +24,7 @@ export const CvSearch = ({ candidateCv, mutate }: ISearchCvView) => {
   const [statusUpdate, setStatusUpdate] = useState(-1);
   const [statusApply, setStatusApply] = useState<Option[]>([]);
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenModalCv, setIsOpenModalCv] = useState(false);
   const { setLoading } = useLoading();
 
   const getStatusApply = async () => {
@@ -151,10 +152,10 @@ export const CvSearch = ({ candidateCv, mutate }: ISearchCvView) => {
                     </div>
                   </td>
                   <td className="p-4 ">
-                    {/* <div className="inline-block px-3 py-1 rounded-xl bg-[#DAFFD7] text-[#137F04]"></div> */}
+                    <div>{row.isOpenedCV ? "Đã mở" : "Chưa mở"}</div>
                   </td>
                   <td className="p-4 ">
-                    <div className="flex space-x-2">
+                    <div className="flex space-x-2 justify-center">
                       <div className="inline-block px-3 py-1 rounded-xl bg-[#DAFFD7] text-[#137F04]">
                         {row.statusText}
                       </div>

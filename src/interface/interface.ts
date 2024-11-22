@@ -42,6 +42,7 @@ export interface IUpdateInfomation {
 
 export interface ICompanyBusiness {
   company_business?: File;
+  DocumentType: string;
 }
 
 export interface IUpdateCompany {
@@ -141,6 +142,8 @@ export interface ICurrentUser {
     statusText: string;
     statusCode: number;
     note: string;
+    documnetType: string;
+    reasonRejectText: string;
   };
 }
 
@@ -453,6 +456,7 @@ export interface ICandidateSearch {
   statusText: string;
   viewMode: number;
   viewModeText: string;
+  isOpenedCV: boolean;
 }
 
 export interface IPartner {

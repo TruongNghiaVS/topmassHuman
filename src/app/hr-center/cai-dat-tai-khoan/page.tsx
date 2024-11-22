@@ -32,7 +32,7 @@ export default function SettingAccount() {
       tab: <UpdateInfomation currentUser={currentUser} mutate={mutate} />,
     },
     {
-      title: "Giấy đăng ký doanh nghiệp",
+      title: "Chứng từ doanh nghiệp",
       icon: <IdentificationIcon className="w-4 mr-2 text-default" />,
       tab: <BusinessRegistration currentUser={currentUser} mutate={mutate} />,
     },
