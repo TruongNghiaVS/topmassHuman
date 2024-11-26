@@ -28,7 +28,7 @@ export const LocationForm = ({
             />
             <TmInput
               classNameCustom="w-full"
-              placeholder="Nhập địa chỉ làm việc cụ thể"
+              placeholder="Nhập Số nhà, Tên đường, Phường/Xã"
               name={`${name}.${index}.detail_location`}
               control={control}
             />

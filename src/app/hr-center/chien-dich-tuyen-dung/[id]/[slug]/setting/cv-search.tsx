@@ -11,20 +11,30 @@ import { ModalChangeStatus } from "./modal-change-status";
 import { useEffect, useState } from "react";
 import { Option } from "@/component/hook-form/interface/interface";
 import { useLoading } from "@/app/context/loading";
-import { GET_STATUS_APPLY_CV } from "@/utils/api-url";
+import { GET_STATUS_APPLY_CV, OPEN_CV } from "@/utils/api-url";
 import axiosInstance from "@/utils/axios";
+import { toast } from "react-toastify";
+import Modal from "@/component/modal";
 
 const getCvName = (link: string) => {
   const names = link.split("/");
   return names[names.length - 1];
 };
 
-export const CvSearch = ({ candidateCv, mutate }: ISearchCvView) => {
+export const CvSearch = ({
+  candidateCv,
+  mutate,
+  idCampaign,
+}: ISearchCvView) => {
   const [idUpdate, setIdUpdate] = useState(-1);
   const [statusUpdate, setStatusUpdate] = useState(-1);
   const [statusApply, setStatusApply] = useState<Option[]>([]);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isOpenModalCv, setIsOpenModalCv] = useState(false);
+  const [infoOpenCv, setInfoOpenCv] = useState({
+    searchId: -1,
+    point: 2,
+  });
   const { setLoading } = useLoading();
 
   const getStatusApply = async () => {
@@ -62,6 +72,24 @@ export const CvSearch = ({ candidateCv, mutate }: ISearchCvView) => {
     "Trạng thái cv",
   ];
 
+  const handleOpenCv = async () => {
+    setLoading(true);
+    try {
+      const res = await axiosInstance.post(OPEN_CV, {
+        searchId: infoOpenCv.searchId,
+        linkFile: "",
+        campaign: idCampaign,
+      });
+      setIsOpenModalCv(false);
+      mutate();
+      toast.success("Mở cv thành công");
+    } catch (error) {
+      toast.error("Mở cv thất bại");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div>
       <div className="mt-4 flex sm:space-x-2 space-y-2 sm:space-y-0 px-2 flex-col sm:flex-row items-end">
@@ -81,8 +109,8 @@ export const CvSearch = ({ candidateCv, mutate }: ISearchCvView) => {
               classNameCustom="flex-1"
               placeholder="Tất cả"
               options={[
-                { label: "Đã xem", value: "Đã xem" },
-                { label: "Chưa xem", value: "Chưa xem" },
+                { label: "Đã mở", value: "Đã mở" },
+                { label: "Chưa mở", value: "Chưa mở" },
               ]}
             />
           </div>
@@ -96,7 +124,7 @@ export const CvSearch = ({ candidateCv, mutate }: ISearchCvView) => {
               options={[
                 { label: "Phù hợp", value: "Phù hợp" },
                 { label: "Chưa phù hợp", value: "Chưa phù hợp" },
-                { label: "Pending", value: "Pending" },
+                { label: "Cân nhắc", value: "Cân nhắc" },
                 { label: "Mời phỏng vấn", value: "Mời phỏng vấn" },
                 { label: "Nhận việc", value: "Nhận việc" },
               ]}
@@ -152,7 +180,24 @@ export const CvSearch = ({ candidateCv, mutate }: ISearchCvView) => {
                     </div>
                   </td>
                   <td className="p-4 ">
-                    <div>{row.isOpenedCV ? "Đã mở" : "Chưa mở"}</div>
+                    <div>
+                      {row.isOpenedCV ? (
+                        "Đã mở"
+                      ) : (
+                        <div
+                          className="cursor-pointer"
+                          onClick={() => {
+                            setInfoOpenCv({
+                              searchId: row.searchId,
+                              point: row.point,
+                            });
+                            setIsOpenModalCv(true);
+                          }}
+                        >
+                          Chưa mở
+                        </div>
+                      )}
+                    </div>
                   </td>
                   <td className="p-4 ">
                     <div className="flex space-x-2 justify-center">
@@ -184,6 +229,29 @@ export const CvSearch = ({ candidateCv, mutate }: ISearchCvView) => {
         status={statusUpdate}
         mutate={mutate}
       />
+
+      <Modal isOpen={isOpenModalCv} onClose={() => setIsOpenModalCv(false)}>
+        <div>
+          <div className=" flex space-x-2 justify-center">
+            Bạn có đồng ý sử dụng {infoOpenCv.point}{" "}
+            <img src="/imgs/arrow.svg" alt="" className="w-2 mr-1" /> để mở CV
+          </div>
+          <div className="flex justify-center space-x-2 mt-4 ">
+            <button
+              className="bg-gray-500 hover:bg-gray-700 text-white px-4 py-1 rounded"
+              onClick={() => setIsOpenModal(false)}
+            >
+              Huỷ bỏ
+            </button>
+            <button
+              className="border border-[#F37A20] text-mainstream px-4 py-1 hover:text-white hover:bg-mainstream rounded"
+              onClick={handleOpenCv}
+            >
+              Đồng ý
+            </button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

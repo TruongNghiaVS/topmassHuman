@@ -155,8 +155,8 @@ export const ApplicationCV = ({ idJob }: IDetailCvProps) => {
                 classNameCustom="flex-1"
                 options={[
                   { label: "Tất cả", value: -1 },
-                  { label: "Đã xem", value: 1 },
-                  { label: "Chưa xem", value: 0 },
+                  { label: "Đã mở", value: true },
+                  { label: "Chưa mở", value: false },
                 ]}
               />
             </div>
@@ -231,7 +231,7 @@ export const ApplicationCV = ({ idJob }: IDetailCvProps) => {
                     </div>
                   </td>
                   <td className="p-4 ">
-                    {row.viewMode === 0 ? "Chưa xem" : "Đã xem"}
+                    {row.isOpenedCV ? "Chưa mở" : "Đã mở"}
                   </td>
                   <td className="p-4 ">
                     <div className="flex space-x-2">

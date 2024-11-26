@@ -220,6 +220,7 @@ export default function ProfileDetailCv({
         searchId: +slug,
         linkFile: link,
         ...data,
+        lockInfo: dataInfomation?.isHideInfo ? 1 : 0,
       };
 
       const res = axiosInstance.post(SAVE_JOB_SEARCH, dataUpdate);

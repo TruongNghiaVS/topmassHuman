@@ -304,6 +304,7 @@ export interface ICvJob {
   viewMode: number;
   viewModeText: string;
   id: number;
+  isOpenedCV: boolean;
 }
 
 export interface IStatusApply {
@@ -437,6 +438,7 @@ export interface IHistoryProps {
 export interface ISearchCvView {
   candidateCv: ICandidateSearch[];
   mutate: KeyedMutator<any>;
+  idCampaign: number;
 }
 
 export interface ICandidateSearch {
@@ -457,6 +459,8 @@ export interface ICandidateSearch {
   viewMode: number;
   viewModeText: string;
   isOpenedCV: boolean;
+  searchId: number;
+  point: number;
 }
 
 export interface IPartner {
