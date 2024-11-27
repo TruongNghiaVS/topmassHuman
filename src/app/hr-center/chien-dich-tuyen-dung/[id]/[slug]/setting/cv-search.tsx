@@ -229,7 +229,7 @@ export const CvSearch = ({ candidateCv, mutate }: ISearchCvView) => {
                               searchId: row.searchId,
                               point: row.point,
                               id: row.id,
-                              sourceType: row.SourceType,
+                              sourceType: row.sourceType,
                             });
                             setIsOpenModalCv(true);
                           }}

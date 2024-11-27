@@ -460,7 +460,7 @@ export interface ICandidateSearch {
   isOpenedCV: boolean;
   searchId: number;
   point: number;
-  SourceType: number;
+  sourceType: number;
 }
 
 export interface IPartner {
