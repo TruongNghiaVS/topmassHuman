@@ -4,7 +4,11 @@ import { promises as fs } from "fs";
 import { starActive, starNotActive } from "../generate-html/star";
 const listLevel = [1, 2, 3, 4, 5];
 
-export const getContact = async (data: any) => {
+export const getContact = async (
+  data: any,
+  hideEmail: boolean,
+  hidePhone: boolean
+) => {
   const contactPath = path.join(
     process.cwd(),
     "public",
@@ -15,9 +19,9 @@ export const getContact = async (data: any) => {
   }
   let htmlContent = await fs.readFile(contactPath, "utf8");
   htmlContent = htmlContent
-    .replace("{email}", data.email)
+    .replace("{email}", hideEmail ? "********" : data.email)
     .replace("{addressInfo}", data.addressInfo)
-    .replace("{phoneNumber}", data.phoneNumber)
+    .replace("{phoneNumber}", hidePhone ? "**********" : data.phoneNumber)
     .replace("{dayOfBirth}", dayjs(data.dateOfBirth).format("DD/MM/YYYY"));
   return htmlContent;
 };

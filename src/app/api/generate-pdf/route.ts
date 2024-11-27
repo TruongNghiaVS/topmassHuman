@@ -56,7 +56,11 @@ export async function GET(request: Request) {
     const profileUser = res.data.data.profileCv;
 
     const certificate = await getCertificate(res.data.data.allCertify);
-    const contact = await getContact(profileUser);
+    const contact = await getContact(
+      profileUser,
+      res.data.data.hideEmail,
+      res.data.data.hidePhone
+    );
     const education = await getEducation(res.data.data.educations);
     const experience = await getExperience(res.data.data.experiences);
     const project = await getProject(res.data.data.allProjects);
