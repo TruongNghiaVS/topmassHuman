@@ -25,6 +25,7 @@ export async function GET(request: Request) {
 
     // Extract specific query parameters
     const searchId = searchParams.get("searchId");
+    const typeOpen = searchParams.get("typeOpen") === "true" ? true : false;
     const cookieStore = cookies();
     const token = cookieStore.get("token");
 
@@ -58,8 +59,8 @@ export async function GET(request: Request) {
     const certificate = await getCertificate(res.data.data.allCertify);
     const contact = await getContact(
       profileUser,
-      res.data.data.hideEmail,
-      res.data.data.hidePhone
+      res.data.data.hideEmail && typeOpen,
+      res.data.data.hidePhone && typeOpen
     );
     const education = await getEducation(res.data.data.educations);
     const experience = await getExperience(res.data.data.experiences);

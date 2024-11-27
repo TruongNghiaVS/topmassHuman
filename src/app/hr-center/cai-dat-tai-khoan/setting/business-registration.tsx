@@ -108,12 +108,12 @@ export default function BusinessRegistration({
       <div className="mt-2 flex space-x-1">
         <div className="font-medium">Trạng thái chứng từ: </div>
         <div
-          className={` ${
+          className={` font-semibold ${
             currentUser?.businessLicenseInfo.statusCode === 1
-              ? "text-[#FCC575]"
+              ? "text-[#137F04]"
               : currentUser?.businessLicenseInfo.statusCode === 2
-              ? "text-[#eb4034]"
-              : "text-rose-600"
+              ? "text-[#AF0000]"
+              : "text-[#FFB600]"
           }`}
         >
           {currentUser?.businessLicenseInfo?.statusText}

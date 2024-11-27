@@ -123,13 +123,16 @@ export default function ProfileDetailCv({
     }
   };
 
-  const readPDFBuffer = async () => {
-    const response = await fetch(`/api/generate-pdf?searchId=${slug}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+  const readPDFBuffer = async (type: boolean) => {
+    const response = await fetch(
+      `/api/generate-pdf?searchId=${slug}&typeOpen=${type}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     return response;
   };
@@ -139,7 +142,7 @@ export default function ProfileDetailCv({
     try {
       let blob: any = "";
       if (dataInfomation && dataInfomation.sourceType !== 2) {
-        const response = await readPDFBuffer();
+        const response = await readPDFBuffer(false);
         blob = await response.blob();
       } else {
         const response = await fetch(dataInfomation?.cvLink);
@@ -190,7 +193,7 @@ export default function ProfileDetailCv({
   });
 
   const convertToFile = async () => {
-    const res = await readPDFBuffer();
+    const res = await readPDFBuffer(true);
     const pdfBuffer = await res.arrayBuffer();
 
     // Create a File object from the buffer

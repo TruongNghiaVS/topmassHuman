@@ -11,8 +11,12 @@ import { ModalChangeStatus } from "./modal-change-status";
 import { useEffect, useState } from "react";
 import { Option } from "@/component/hook-form/interface/interface";
 import { useLoading } from "@/app/context/loading";
-import { GET_STATUS_APPLY_CV, OPEN_CV } from "@/utils/api-url";
-import axiosInstance from "@/utils/axios";
+import {
+  GET_STATUS_APPLY_CV,
+  OPEN_CV_NOT_FILE_UPLOAD,
+  UPLOAD_IMG,
+} from "@/utils/api-url";
+import axiosInstance, { axiosInstanceImg } from "@/utils/axios";
 import { toast } from "react-toastify";
 import Modal from "@/component/modal";
 
@@ -21,11 +25,7 @@ const getCvName = (link: string) => {
   return names[names.length - 1];
 };
 
-export const CvSearch = ({
-  candidateCv,
-  mutate,
-  idCampaign,
-}: ISearchCvView) => {
+export const CvSearch = ({ candidateCv, mutate }: ISearchCvView) => {
   const [idUpdate, setIdUpdate] = useState(-1);
   const [statusUpdate, setStatusUpdate] = useState(-1);
   const [statusApply, setStatusApply] = useState<Option[]>([]);
@@ -34,6 +34,8 @@ export const CvSearch = ({
   const [infoOpenCv, setInfoOpenCv] = useState({
     searchId: -1,
     point: 2,
+    id: -1,
+    sourceType: -1,
   });
   const { setLoading } = useLoading();
 
@@ -72,13 +74,49 @@ export const CvSearch = ({
     "Trạng thái cv",
   ];
 
+  const readPDFBuffer = async () => {
+    const response = await fetch(
+      `/api/generate-pdf?searchId=${infoOpenCv.searchId}&typeOpen=false`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response;
+  };
+
+  const convertToFile = async () => {
+    const res = await readPDFBuffer();
+    const pdfBuffer = await res.arrayBuffer();
+
+    // Create a File object from the buffer
+    const file = new File([pdfBuffer], `cv.pdf`, {
+      type: "application/pdf",
+    });
+
+    // Create FormData and append the file
+    return file;
+  };
+
   const handleOpenCv = async () => {
     setLoading(true);
     try {
-      const res = await axiosInstance.post(OPEN_CV, {
+      let link = "";
+      if (infoOpenCv.sourceType !== 2) {
+        const file = await convertToFile();
+        const response = await axiosInstanceImg.post(UPLOAD_IMG, {
+          file: file,
+        });
+        link = response.data.fullLink;
+      }
+
+      const res = await axiosInstance.post(OPEN_CV_NOT_FILE_UPLOAD, {
         searchId: infoOpenCv.searchId,
-        linkFile: "",
-        campaign: idCampaign,
+        linkFile: link,
+        identify: infoOpenCv.id,
       });
       setIsOpenModalCv(false);
       mutate();
@@ -190,6 +228,8 @@ export const CvSearch = ({
                             setInfoOpenCv({
                               searchId: row.searchId,
                               point: row.point,
+                              id: row.id,
+                              sourceType: row.SourceType,
                             });
                             setIsOpenModalCv(true);
                           }}

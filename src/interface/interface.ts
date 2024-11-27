@@ -438,7 +438,6 @@ export interface IHistoryProps {
 export interface ISearchCvView {
   candidateCv: ICandidateSearch[];
   mutate: KeyedMutator<any>;
-  idCampaign: number;
 }
 
 export interface ICandidateSearch {
@@ -461,6 +460,7 @@ export interface ICandidateSearch {
   isOpenedCV: boolean;
   searchId: number;
   point: number;
+  SourceType: number;
 }
 
 export interface IPartner {

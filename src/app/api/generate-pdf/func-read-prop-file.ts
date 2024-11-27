@@ -17,6 +17,7 @@ export const getContact = async (
   if (!data || data?.length === 0) {
     return "";
   }
+
   let htmlContent = await fs.readFile(contactPath, "utf8");
   htmlContent = htmlContent
     .replace("{email}", hideEmail ? "********" : data.email)
