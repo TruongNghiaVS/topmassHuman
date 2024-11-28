@@ -1,7 +1,11 @@
 import { useLoading } from "@/app/context/loading";
 import TmInput from "@/component/hook-form/input";
 import TmSelect from "@/component/hook-form/select";
-import { ICandidateViewJob, ISearchManagerCv } from "@/interface/interface";
+import {
+  ICandidateViewJob,
+  IDetailCvProps,
+  ISearchManagerCv,
+} from "@/interface/interface";
 import { GET_CANDIDATE_VIEW_JOB, GET_STATUS_APPLY_CV } from "@/utils/api-url";
 import axiosInstance, { fetcher } from "@/utils/axios";
 import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
@@ -14,12 +18,12 @@ import * as yup from "yup";
 import { Option } from "@/component/hook-form/interface/interface";
 import { toast } from "react-toastify";
 
-export const CandidateCv = () => {
+export const CandidateCv = ({ idJob }: IDetailCvProps) => {
   const [candidateCv, setCandidateCv] = useState<ICandidateViewJob[]>([]);
   const [statusApply, setStatusApply] = useState<Option[]>([]);
   const { setLoading } = useLoading();
   const { data: listCandidateCv, error } = useSWR(
-    GET_CANDIDATE_VIEW_JOB,
+    `${GET_CANDIDATE_VIEW_JOB}?JobId=${idJob}`,
     fetcher
   );
 
@@ -147,13 +151,10 @@ export const CandidateCv = () => {
                 <tr key={idx} className={`hover:bg-gray-100 text-center`}>
                   <td className="p-4 text-left">
                     <div className="mt-1">
-                      <div className="flex lg:justify-between items-center lg:flex-row flex-col">
+                      <div className="">
                         <div>
                           <div>{row.fullName}</div>
                           <div className="text-default">{row.extraText}</div>
-                        </div>
-                        <div className="bg-[#DAFFD7] text-[#137F04] px-3 py-1  mt-1 rounded-xl">
-                          Mức độ phù hợp: 87%
                         </div>
                       </div>
                     </div>

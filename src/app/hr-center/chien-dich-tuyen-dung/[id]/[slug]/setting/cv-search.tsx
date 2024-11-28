@@ -192,7 +192,7 @@ export const CvSearch = ({ candidateCv, mutate }: ISearchCvView) => {
                 <tr key={idx} className={`hover:bg-gray-100 text-center`}>
                   <td className="p-4 text-left">
                     <div className="mt-1">
-                      <div className="flex lg:justify-between items-center lg:flex-row flex-col ">
+                      <div className="">
                         <div>
                           <div>{row.fullName}</div>
                           <div className="text-default">
@@ -200,9 +200,6 @@ export const CvSearch = ({ candidateCv, mutate }: ISearchCvView) => {
                               {getCvName(row.linkFile)}
                             </Link>
                           </div>
-                        </div>
-                        <div className="bg-[#DAFFD7] text-[#137F04] px-3 py-1  mt-1 rounded-xl">
-                          Mức độ phù hợp: 87%
                         </div>
                       </div>
                     </div>

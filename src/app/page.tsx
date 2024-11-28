@@ -1,21 +1,33 @@
-"use client";
-import { Access } from "@/component/access";
-import { Description } from "@/component/description";
-import { HomeTop } from "@/component/home-top";
-import { Partner } from "@/component/partner";
-import { GET_ALL_PARTNER } from "@/utils/api-url";
-import { fetcher } from "@/utils/axios";
-import useSWR from "swr";
+import HomeOverview from "@/module/home/home-ovierview";
+import { Metadata } from "next";
+import { getMetadataToScreen } from "@/module/helper/api-generate-metadata";
+
+export async function generateMetadata(): Promise<Metadata> {
+  // Fetch dữ liệu từ server hoặc API (nếu cần thiết)
+
+  const data = await getMetadataToScreen("homePage");
+
+  return {
+    title: data?.metaTitle || "Default Title",
+    description: data?.metaDes || "Default Description",
+    keywords: [data?.metaKeyWord],
+    authors: [{ name: data?.metaAuthor }],
+    openGraph: {
+      title: data?.metaTitle,
+      description: data?.metaDes,
+      images: data?.metaImage ? [{ url: data?.metaImage }] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: data?.metaTitle,
+      description: data?.metaDes,
+      images: data?.coverFullLink
+        ? [{ url: data?.metaImage, alt: data?.metaTitle }]
+        : undefined,
+    },
+  };
+}
 
 export default function Home() {
-  const { data: partners, error } = useSWR(GET_ALL_PARTNER, fetcher);
-
-  return (
-    <>
-      <HomeTop />
-      <Description />
-      <Access />
-      <Partner partners={partners} />
-    </>
-  );
+  return <HomeOverview />;
 }

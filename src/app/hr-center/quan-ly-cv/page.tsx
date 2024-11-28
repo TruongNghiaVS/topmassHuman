@@ -218,10 +218,10 @@ export default function ManagerCV() {
                       <PhoneIcon className="w-5 px-1 rounded-full border mr-2" />
                       {row.phone}
                     </div>
-                    <div className="flex text-[#42B155] mt-1">
+                    {/* <div className="flex text-[#42B155] mt-1">
                       <WechatBootstrapIcon className="w-4 mr-2 text-[#42B155]" />
                       Chat với ứng viên
-                    </div>
+                    </div> */}
                   </td>
                   <td className="p-4 ">
                     <div className="flex mt-1">
@@ -237,7 +237,6 @@ export default function ManagerCV() {
                   <td className="min-w-[30px] ">
                     <button
                       onClick={() => {
-                        console.log(row.statusCode);
                         setStatusUpdate(row.statusCode);
                         setIdUpdate(row.id);
                         setIsOpenModal(true);

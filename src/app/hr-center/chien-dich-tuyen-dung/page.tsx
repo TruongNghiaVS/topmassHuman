@@ -19,6 +19,24 @@ import { ICampaign } from "@/interface/interface";
 import { useEffect, useState } from "react";
 import { PopupCampaign } from "@/component/popup-edit-campaign";
 
+const generateJob = (data: { id: number; name: string }) => {
+  return (
+    <div>
+      <Link
+        href={
+          data.id > 0
+            ? `/hr-center/chien-dich-tuyen-dung/cap-nhat?idUpdate=${data.id}`
+            : "/hr-center/chien-dich-tuyen-dung/tao-tin-dang"
+        }
+      >
+        <div className="line-clamp-1">
+          {data.id > 0 ? data.name : "Đăng tin tuyển dụng"}
+        </div>
+      </Link>
+    </div>
+  );
+};
+
 export default function RecruimentCampaign() {
   const { setLoading } = useLoading();
   const [campaigns, setCampaigns] = useState<ICampaign[]>([]);
@@ -169,7 +187,7 @@ export default function RecruimentCampaign() {
                       Sửa tên chiến dịch
                     </button>
                   </td>
-                  <td className="font-normal p-4">
+                  <td className="font-normal p-4 whitespace-nowrap">
                     <label className="inline-flex items-center cursor-pointer">
                       <input
                         type="checkbox"
@@ -188,7 +206,7 @@ export default function RecruimentCampaign() {
                       </span>
                     </label>
                   </td>
-                  <td className="p-4 ">
+                  <td className="p-4 whitespace-nowrap">
                     <div
                       className={`${
                         row.status &&
@@ -196,11 +214,11 @@ export default function RecruimentCampaign() {
                       }`}
                     >
                       {row.status
-                        ? "Đăng tin tuyển dụng"
+                        ? generateJob(row.childItems)
                         : "Bật chiến dịch để thực hiện đăng tin"}
                     </div>
                   </td>
-                  <td className={`p-4`}>
+                  <td className={`p-4 whitespace-nowrap`}>
                     <div
                       className={`${
                         row.status &&

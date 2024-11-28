@@ -74,7 +74,7 @@ export default function RecruimentPosition() {
       <div className="mt-4">
         {selected === 1 && <RecruimentNews idJob={idJob} />}
         {selected === 2 && <ApplicationCV idJob={idJob} />}
-        {selected === 3 && <CandidateCv />}
+        {selected === 3 && <CandidateCv idJob={idJob} />}
         {selected === 4 && (
           <CvSearch candidateCv={candidateCv?.data} mutate={mutate} />
         )}

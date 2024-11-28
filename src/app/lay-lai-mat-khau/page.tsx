@@ -33,8 +33,6 @@ export default function Login() {
 
   const onSubmit: SubmitHandler<IResetPassword> = (data) => {
     toast.success("Lấy lại mật khẩu thành công!");
-
-    console.log(data);
   };
 
   return (

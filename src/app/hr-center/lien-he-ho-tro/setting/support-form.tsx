@@ -87,7 +87,6 @@ export default function SupportForm() {
 
     // Handle form submission
     toast.success("Gửi thông tin thành công");
-    console.log(data.files);
   };
 
   return (

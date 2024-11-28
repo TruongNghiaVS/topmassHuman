@@ -78,9 +78,12 @@ export const OPEN_CV_NOT_FILE_UPLOAD = "/api/recruiter/Reward/OpenCVNoSearchCV";
 //------------ PARTNER -------------//
 export const GET_ALL_PARTNER = "/api/recruiter/Company/GetAllPartner";
 
-//---------- Change CV -----------//
+//---------- CHANGE CV -----------//
 export const GET_HISTORY_CHANGE_CV = "/api/recruiter/ExchangeCV/GetHistory";
 export const GET_DETAIL_HISTORY_CHANGE_CV =
   "/api/recruiter/ExchangeCV/GetDetail";
 export const ADD_EXCHANGE_CV = "/api/recruiter/ExchangeCV/ExchangeCV";
 export const CANCLE_EXCHANGE_CV = "/api/recruiter/ExchangeCV/CancleItem";
+
+//----------------- METADATA ---------------//
+export const GET_METADATA = "/api/recruiter/Web/GetInfoMetadata";

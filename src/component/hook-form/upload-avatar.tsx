@@ -27,7 +27,6 @@ const AvatarUpload: React.FC<IUpload> = ({
       const response = await axios.get(link, {
         responseType: "blob", // Important to get the response as a blob
       });
-      console.log(response);
       const blob = response.data;
 
       const file = new File([blob], "image.jpg", { type: blob.type });

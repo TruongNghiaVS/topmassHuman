@@ -153,18 +153,16 @@ export const RecruimentNews = ({ idJob }: IDetailCvProps) => {
                 </td>
                 <td className="p-4 ">
                   <div className="mt-2">
-                    <span className="px-2 py-1 rounded-xl bg-[#DAFFD7] text-[#137F04]">
-                      Đang chạy
-                    </span>
-                  </div>
-                  <div className="mt-2">
-                    <span className="px-2 py-1 rounded-xl bg-[#FFE9E9] text-[#AF0000]">
-                      Hết hạn
-                    </span>
-                  </div>
-                  <div className="mt-2">
-                    <span className="px-2 py-1 rounded-xl bg-[#FFF5D9] text-[#FFB600]">
-                      Chờ duyệt
+                    <span
+                      className={`px-2 py-1 rounded-xl ${
+                        row.statusCode === 2
+                          ? "bg-[#DAFFD7] text-[#137F04]"
+                          : row.statusCode === 3
+                          ? "bg-[#FFE9E9] text-[#AF0000]"
+                          : "bg-[#FFF5D9] text-[#FFB600]"
+                      }`}
+                    >
+                      {row.statusText}
                     </span>
                   </div>
                 </td>
