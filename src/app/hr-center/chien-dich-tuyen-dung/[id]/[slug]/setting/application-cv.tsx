@@ -1,17 +1,12 @@
 import { useLoading } from "@/app/context/loading";
 import TmInput from "@/component/hook-form/input";
-import { Option } from "@/component/hook-form/interface/interface";
 import TmSelect from "@/component/hook-form/select";
 import {
   ICvJob,
   IDetailCvProps,
   ISearchCvCandidate,
 } from "@/interface/interface";
-import {
-  GET_ALL_CV_JOB,
-  GET_STATUS_APPLY_CV,
-  UPDATE_VIEW_MODE,
-} from "@/utils/api-url";
+import { GET_ALL_CV_JOB, UPDATE_VIEW_MODE } from "@/utils/api-url";
 import axiosInstance, { fetcher } from "@/utils/axios";
 import {
   MagnifyingGlassIcon,
@@ -27,52 +22,37 @@ import { ModalChangeStatus } from "./modal-change-status";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-export const ApplicationCV = ({ idJob }: IDetailCvProps) => {
+export const ApplicationCV = ({ idJob, statusApply }: IDetailCvProps) => {
   const [cvJob, setCvJob] = useState<ICvJob[]>([]);
-  const [statusApply, setStatusApply] = useState<Option[]>([]);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [idUpdate, setIdUpdate] = useState(-1);
   const [statusUpdate, setStatusUpdate] = useState(-1);
-  const { setLoading } = useLoading();
+
   const { data: listCv, error, mutate } = useSWR(
     `${GET_ALL_CV_JOB}?jobId=${idJob}&TypeData=-1`,
     fetcher
   );
 
-  const getStatusApply = async () => {
-    setLoading(true);
-    try {
-      const response = await axiosInstance.get(GET_STATUS_APPLY_CV);
-      const data = response.data.map((item: any) => ({
-        label: item.text,
-        value: item.id,
-      }));
-      setStatusApply([{ label: "Tất cả", value: -1 }, ...data]);
-    } catch (error) {
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { setLoading } = useLoading();
 
   useEffect(() => {
     if (listCv) {
       setCvJob(listCv.data);
     }
-    getStatusApply();
   }, [listCv, setCvJob]);
 
   const schema = yup.object().shape({
-    name: yup.string(),
-    viewMode: yup.number(),
-    statusCode: yup.number(),
+    KeyWord: yup.string(),
+    ViewMode: yup.number(),
+    StatusCode: yup.number(),
   });
 
   const { control, handleSubmit } = useForm<ISearchCvCandidate>({
     resolver: yupResolver(schema),
     defaultValues: {
-      name: "",
-      viewMode: -1,
-      statusCode: -1,
+      KeyWord: "",
+      ViewMode: -1,
+      StatusCode: -1,
     },
   });
 
@@ -111,11 +91,6 @@ export const ApplicationCV = ({ idJob }: IDetailCvProps) => {
     }
   };
 
-  const getStatutsName = (status: number) => {
-    const res = statusApply.find((item) => item.value === status);
-    return res ? res.label : "";
-  };
-
   const onSubmit: SubmitHandler<ISearchCvCandidate> = async (data) => {
     setLoading(true);
     try {
@@ -140,7 +115,7 @@ export const ApplicationCV = ({ idJob }: IDetailCvProps) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mt-4 flex sm:space-x-2 space-y-2 sm:space-y-0 px-2 flex-col sm:flex-row items-end">
           <TmInput
-            name="name"
+            name="KeyWord"
             icon={<MagnifyingGlassIcon className="w-4" />}
             control={control}
             placeholder="Tìm kiếm ứng viên, tên, số điện thoại"
@@ -151,12 +126,12 @@ export const ApplicationCV = ({ idJob }: IDetailCvProps) => {
               <div className="text-xs">Hiển thị</div>
               <TmSelect
                 control={control}
-                name="viewMode"
+                name="ViewMode"
                 classNameCustom="flex-1"
                 options={[
                   { label: "Tất cả", value: -1 },
-                  { label: "Đã mở", value: true },
-                  { label: "Chưa mở", value: false },
+                  { label: "Chưa xem", value: 0 },
+                  { label: "Đã xem", value: 1 },
                 ]}
               />
             </div>
@@ -164,7 +139,7 @@ export const ApplicationCV = ({ idJob }: IDetailCvProps) => {
               <div className="text-xs">Trạng thái</div>
               <TmSelect
                 control={control}
-                name="statusCode"
+                name="StatusCode"
                 classNameCustom="flex-1"
                 options={statusApply}
               />
@@ -172,7 +147,7 @@ export const ApplicationCV = ({ idJob }: IDetailCvProps) => {
           </div>
           <button
             type="submit"
-            className="px-2 py-1.5 text-white bg-[#FF7D55] rounded-lg font-bold"
+            className="px-2 py-2.5 text-white bg-[#FF7D55] rounded-lg font-bold"
           >
             Tìm kiếm
           </button>
@@ -231,7 +206,7 @@ export const ApplicationCV = ({ idJob }: IDetailCvProps) => {
                     </div>
                   </td>
                   <td className="p-4 ">
-                    {row.isOpenedCV ? "Chưa mở" : "Đã mở"}
+                    {row.isOpenedCV ? "Chưa xem" : "Đã xem"}
                   </td>
                   <td className="p-4 ">
                     <div className="flex space-x-2">

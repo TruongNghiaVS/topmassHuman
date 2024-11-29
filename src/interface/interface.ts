@@ -286,6 +286,7 @@ export interface IKeySearchJob {
 
 export interface IDetailCvProps {
   idJob: number;
+  statusApply: Option[];
 }
 
 export interface ICvJob {
@@ -335,9 +336,9 @@ export interface IUpdateStatusCandidate {
 }
 
 export interface ISearchCvCandidate {
-  name?: string;
-  viewMode?: number;
-  statusCode?: number;
+  KeyWord?: string;
+  ViewMode?: number;
+  StatusCode?: number;
 }
 
 export interface IManagerCv {
@@ -438,6 +439,8 @@ export interface IHistoryProps {
 export interface ISearchCvView {
   candidateCv: ICandidateSearch[];
   mutate: KeyedMutator<any>;
+  idJob: number;
+  statusApply: Option[];
 }
 
 export interface ICandidateSearch {

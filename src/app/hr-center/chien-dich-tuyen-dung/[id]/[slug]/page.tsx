@@ -1,21 +1,28 @@
 "use client";
 import { ArrowUturnLeftIcon } from "@heroicons/react/16/solid";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RecruimentNews } from "./setting/recruiment-new";
 import { ApplicationCV } from "./setting/application-cv";
 import { CandidateCv } from "./setting/candidate-cv";
 import { CvSearch } from "./setting/cv-search";
 import { useParams } from "next/navigation";
-import { GET_ALL_CV_SAVE_SEARCH, GET_DETAIL_JOB } from "@/utils/api-url";
+import {
+  GET_ALL_CV_SAVE_SEARCH,
+  GET_DETAIL_JOB,
+  GET_STATUS_APPLY_CV,
+} from "@/utils/api-url";
 import useSWR from "swr";
-import { fetcher } from "@/utils/axios";
+import axiosInstance, { fetcher } from "@/utils/axios";
+import { useLoading } from "@/app/context/loading";
+import { Option } from "@/component/hook-form/interface/interface";
 
 export default function RecruimentPosition() {
   const params = useParams();
   const idCampaign = +(params.id as string);
   const idJob = +(params.slug as string);
   const [selected, setSelected] = useState<number>(1);
+
   const { data: jobInfo, error } = useSWR(
     `${GET_DETAIL_JOB}?JobId=${idJob}`,
     fetcher
@@ -25,6 +32,30 @@ export default function RecruimentPosition() {
     `${GET_ALL_CV_SAVE_SEARCH}?JobId=${idJob}`,
     fetcher
   );
+
+  const [statusApply, setStatusApply] = useState<Option[]>([]);
+
+  const { setLoading } = useLoading();
+
+  const getStatusApply = async () => {
+    setLoading(true);
+    try {
+      const response = await axiosInstance.get(GET_STATUS_APPLY_CV);
+      const data = response.data.map((item: any) => ({
+        label: item.text,
+        value: item.id,
+      }));
+      setStatusApply([{ label: "Tất cả", value: -1 }, ...data]);
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getStatusApply();
+  }, []);
+
   return (
     <div>
       <div className="bg-white flex whitespace-nowrap space-x-4 items-center p-4 border-b">
@@ -72,11 +103,22 @@ export default function RecruimentPosition() {
         </button>
       </div>
       <div className="mt-4">
-        {selected === 1 && <RecruimentNews idJob={idJob} />}
-        {selected === 2 && <ApplicationCV idJob={idJob} />}
-        {selected === 3 && <CandidateCv idJob={idJob} />}
+        {selected === 1 && (
+          <RecruimentNews idJob={idJob} statusApply={statusApply} />
+        )}
+        {selected === 2 && (
+          <ApplicationCV idJob={idJob} statusApply={statusApply} />
+        )}
+        {selected === 3 && (
+          <CandidateCv idJob={idJob} statusApply={statusApply} />
+        )}
         {selected === 4 && (
-          <CvSearch candidateCv={candidateCv?.data} mutate={mutate} />
+          <CvSearch
+            candidateCv={candidateCv?.data}
+            mutate={mutate}
+            idJob={idJob}
+            statusApply={statusApply}
+          />
         )}
       </div>
     </div>
