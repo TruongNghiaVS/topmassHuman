@@ -28,7 +28,8 @@
     "react-toastify": "^10.0.5",
     "swiper": "^11.1.7",
     "swr": "^2.2.5",
-    "yup": "^1.4.0"
+    "yup": "^1.4.0",
+    "zustand": "^5.0.1"
   },
   "devDependencies": {
     "@types/chart.js": "^2.9.41",

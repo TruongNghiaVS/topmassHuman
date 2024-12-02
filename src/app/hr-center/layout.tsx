@@ -1,3 +1,4 @@
+import { ModalStorm } from "@/component/popup-notification-storm";
 import { HeaderHrCenter } from "@/partial/hr-center/header";
 import MenuLeft from "@/partial/hr-center/menu-left";
 
@@ -15,6 +16,7 @@ export default function HrCenterLayout({
           {children}
         </div>
       </div>
+      <ModalStorm />
     </main>
   );
 }

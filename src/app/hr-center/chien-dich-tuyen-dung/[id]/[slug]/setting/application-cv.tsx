@@ -206,7 +206,7 @@ export const ApplicationCV = ({ idJob, statusApply }: IDetailCvProps) => {
                     </div>
                   </td>
                   <td className="p-4 ">
-                    {row.isOpenedCV ? "Chưa xem" : "Đã xem"}
+                    {row.viewMode ? "Chưa xem" : "Đã xem"}
                   </td>
                   <td className="p-4 ">
                     <div className="flex space-x-2">

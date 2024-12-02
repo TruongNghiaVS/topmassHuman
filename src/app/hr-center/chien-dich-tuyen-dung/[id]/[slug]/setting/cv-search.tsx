@@ -16,14 +16,17 @@ import { useEffect, useState } from "react";
 import { useLoading } from "@/app/context/loading";
 import {
   GET_ALL_CV_SAVE_SEARCH,
+  GET_CURRENT_USER,
   OPEN_CV_NOT_FILE_UPLOAD,
   UPLOAD_IMG,
 } from "@/utils/api-url";
-import axiosInstance, { axiosInstanceImg } from "@/utils/axios";
+import axiosInstance, { axiosInstanceImg, fetcher } from "@/utils/axios";
 import { toast } from "react-toastify";
 import Modal from "@/component/modal";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { ProfileUser } from "@/module/helper/master-data";
+import { useModalStore } from "@/store-zustand/useModalStore";
 
 const getCvName = (link: string) => {
   const names = link.split("/");
@@ -48,6 +51,8 @@ export const CvSearch = ({
     sourceType: -1,
   });
 
+  const { mutateUser, currentUser } = ProfileUser();
+  const { openModal } = useModalStore();
   const { setLoading } = useLoading();
 
   useEffect(() => {
@@ -107,6 +112,11 @@ export const CvSearch = ({
   const handleOpenCv = async () => {
     setLoading(true);
     try {
+      if (currentUser.numberLightning <= 0) {
+        openModal();
+        setIsOpenModalCv(false);
+        return;
+      }
       let link = "";
       if (infoOpenCv.sourceType !== 2) {
         const file = await convertToFile();
@@ -123,6 +133,7 @@ export const CvSearch = ({
       });
       setIsOpenModalCv(false);
       mutate();
+      mutateUser();
       toast.success("Mở cv thành công");
     } catch (error) {
       toast.error("Mở cv thất bại");
@@ -140,6 +151,8 @@ export const CvSearch = ({
           ...data,
         },
       });
+
+      setCandidates(response.data.data);
       toast.success("Tìm kiếm thông tin thành công");
     } catch (error) {
       toast.error("Tìm kiếm thông tin thất bại");

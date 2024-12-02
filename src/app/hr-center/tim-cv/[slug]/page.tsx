@@ -5,7 +5,8 @@ import { Option } from "@/component/hook-form/interface/interface";
 import TmSelect from "@/component/hook-form/select";
 import Modal from "@/component/modal";
 import { ISaveCvSearch } from "@/interface/cv";
-import { Campaign } from "@/module/helper/master-data";
+import { Campaign, ProfileUser } from "@/module/helper/master-data";
+import { useModalStore } from "@/store-zustand/useModalStore";
 import { CloudDownLoadFillBoostrapIcon } from "@/theme/icons/cloudDownloadFIllBootstrapIcon";
 import {
   GET_ALL_JOB,
@@ -49,10 +50,8 @@ export default function ProfileDetailCv({
     fetcher
   );
 
-  const { data: currentUser, error, mutate: mutateUser } = useSWR(
-    GET_CURRENT_USER,
-    fetcher
-  );
+  const { mutateUser, currentUser } = ProfileUser();
+  const { openModal } = useModalStore();
 
   const getJobs = async (id: number) => {
     const res = await axiosInstance.get(GET_ALL_JOB, {
@@ -104,6 +103,11 @@ export default function ProfileDetailCv({
   const handleOpenCv = async () => {
     setLoading(true);
     try {
+      if (currentUser.numberLightning <= 0) {
+        openModal();
+        setIsOpenModal(false);
+        return;
+      }
       const res = await axiosInstance.post(OPEN_CV, {
         searchId: slug,
         linkFile: "",

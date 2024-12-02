@@ -97,6 +97,7 @@ export const ProfileUser = () => {
 
   return {
     currentUser,
+    mutateUser: mutate,
   };
 };
 
