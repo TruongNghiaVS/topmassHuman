@@ -44,6 +44,7 @@ import { Option } from "@/component/hook-form/interface/interface";
 import { SkillsForm } from "./setting/skills-form";
 import CustomSelect from "@/component/hook-form/customSelectSearchForm";
 import { Provinces } from "@/module/helper/master-data";
+import { AxiosError } from "axios";
 
 const CustomCKEditor = dynamic(
   () => {
@@ -312,7 +313,11 @@ export default function CreateNew() {
       toast.success("Tạo tin thành công");
       reset();
     } catch (error) {
-      toast.error("Tạo tin lỗi");
+      if (error instanceof AxiosError) {
+        toast.error(error.response?.data.message);
+      } else {
+        toast.error("Tạo tin lỗi");
+      }
     } finally {
       setLoading(false);
     }

@@ -217,6 +217,8 @@ export interface IFormCreateNew {
   description: string;
   requirement: string;
   benefit: string;
+  status?: number;
+  ruleStatus?: number;
   skills?: { skill?: string }[];
   username: string;
   phone: string;
@@ -360,10 +362,10 @@ export interface IManagerCv {
 }
 
 export interface ISearchManagerCv {
-  Key?: string;
-  Campaign?: number;
-  Status?: number;
-  TypeData?: number;
+  KeyWord?: string;
+  CampaignId?: number;
+  StatusCode?: number;
+  Source?: number;
 }
 
 export interface ICandidateViewJob {

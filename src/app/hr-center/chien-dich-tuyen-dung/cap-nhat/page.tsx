@@ -131,6 +131,8 @@ const schema = yup.object().shape({
     })
   ),
   username: yup.string().required("Vui lòng nhập họ và tên ứng viên"),
+  status: yup.number(),
+  ruleStatus: yup.number(),
   phone: yup
     .string()
     .required("Bắt buộc nhập số điện thoại")
@@ -276,6 +278,8 @@ export default function UpdateJob() {
       benefit: "",
       skills: [{ skill: "" }],
       username: "",
+      status: 0,
+      ruleStatus: 0,
       phone: "",
       emails: [{ email: "" }],
     },
@@ -374,7 +378,12 @@ export default function UpdateJob() {
             <div className="font-medium">
               Tên tiêu đề <span className="text-[#dc2f2f]">*</span>
             </div>
-            <TmInput name="name" control={control} placeholder="Tên tiêu đề" />
+            <TmInput
+              name="name"
+              control={control}
+              placeholder="Tên tiêu đề"
+              disabled={getValues("ruleStatus") === 2}
+            />
           </div>
           <div className="mt-4">
             <div className="font-medium">Chiến dịch</div>
@@ -383,6 +392,7 @@ export default function UpdateJob() {
               control={control}
               options={campaigns}
               placeholder="Chiến dịch"
+              disabled={getValues("ruleStatus") === 2}
             />
           </div>
           <div className="flex mt-4 space-x-2">

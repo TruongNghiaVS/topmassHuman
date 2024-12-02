@@ -96,7 +96,7 @@ const TmInputNumber: React.FC<ITmInput> = ({
         <button
           type="button"
           onClick={increase}
-          className="px-3 py-2 bg-gray-200 text-gray-700 rounded-r-md border-l border-gray-300 focus:outline-none absolute right-0 top-0 bottom-0"
+          className="w-[39px] h-[39px] px-3 py-2 bg-gray-200 text-gray-700 rounded-r-md border-l border-gray-300 focus:outline-none absolute right-0 top-0 bottom-0"
         >
           +
         </button>

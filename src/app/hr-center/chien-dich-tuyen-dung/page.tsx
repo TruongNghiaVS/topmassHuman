@@ -213,9 +213,7 @@ export default function RecruimentCampaign() {
                         "inline-block px-2 py-1 rounded-xl text-[#C65000] bg-[#FFE39C]"
                       }`}
                     >
-                      {row.status
-                        ? generateJob(row.childItems)
-                        : "Bật chiến dịch để thực hiện đăng tin"}
+                      {generateJob(row.childItems)}
                     </div>
                   </td>
                   <td className={`p-4 whitespace-nowrap`}>

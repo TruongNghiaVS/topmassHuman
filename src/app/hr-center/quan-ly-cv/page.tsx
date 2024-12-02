@@ -22,6 +22,7 @@ import { Option } from "@/component/hook-form/interface/interface";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
+import { Campaign } from "@/module/helper/master-data";
 
 export default function ManagerCV() {
   const [managerCv, setManagerCv] = useState<IManagerCv[]>([]);
@@ -29,12 +30,13 @@ export default function ManagerCV() {
   const [idUpdate, setIdUpdate] = useState(-1);
   const [statusUpdate, setStatusUpdate] = useState(-1);
   const [statusApply, setStatusApply] = useState<Option[]>([]);
-  const [campaign, setCampaign] = useState<Option[]>([]);
   const { setLoading } = useLoading();
   const { data: listManagerCV, error, mutate } = useSWR(
     GET_MANAGER_CV_APPLY,
     fetcher
   );
+
+  const { listCampaign } = Campaign();
 
   const getStatusApply = async () => {
     setLoading(true);
@@ -44,19 +46,7 @@ export default function ManagerCV() {
         label: item.text,
         value: item.id,
       }));
-      setStatusApply(data);
-      const resCampaign = await axiosInstance.get(GET_ALL_CAMPAIGN, {
-        params: {
-          code: -1,
-        },
-      });
-      const listCampaigns = resCampaign.data.data.map((item: ICampaign) => {
-        return {
-          value: item.id,
-          label: item.name,
-        };
-      });
-      setCampaign(listCampaigns);
+      setStatusApply([{ value: -1, label: "Tất cả" }, ...data]);
     } catch (error) {
     } finally {
       setLoading(false);
@@ -65,25 +55,25 @@ export default function ManagerCV() {
 
   useEffect(() => {
     if (listManagerCV) {
-      setManagerCv(listManagerCV.data);
+      setManagerCv(listManagerCV);
     }
     getStatusApply();
   }, [listManagerCV, setManagerCv]);
 
   const schema = yup.object().shape({
-    keyWord: yup.string(),
-    Campaign: yup.number(),
-    status: yup.number(),
-    TypeData: yup.number(),
+    KeyWord: yup.string(),
+    CampaignId: yup.number(),
+    StatusCode: yup.number(),
+    Source: yup.number(),
   });
 
   const { control, handleSubmit } = useForm<ISearchManagerCv>({
     resolver: yupResolver(schema),
     defaultValues: {
-      Key: "",
-      Campaign: -1,
-      Status: -1,
-      TypeData: -1,
+      KeyWord: "",
+      CampaignId: -1,
+      StatusCode: -1,
+      Source: -1,
     },
   });
 
@@ -101,7 +91,7 @@ export default function ManagerCV() {
       const response = await axiosInstance.get(GET_MANAGER_CV_APPLY, {
         params: data,
       });
-      setManagerCv(response.data.data);
+      setManagerCv(response.data);
       toast.success("Tìm kiếm thông tin thành công");
     } catch (error) {
     } finally {
@@ -118,7 +108,7 @@ export default function ManagerCV() {
             <div className="flex-1">
               <TmInput
                 className="w-full"
-                name="key"
+                name="KeyWord"
                 control={control}
                 placeholder="Tìm kiếm tên, Email, Số điện thoại"
               />
@@ -126,32 +116,29 @@ export default function ManagerCV() {
             <div className="flex-1">
               <TmSelect
                 className="w-full"
-                name="Campaign"
+                name="CampaignId"
                 control={control}
-                options={campaign}
-                placeholder="Chọn chiến dịch tuyển dụng"
+                options={listCampaign}
               />
             </div>
             <div className="flex-1">
               <TmSelect
                 className="w-full"
-                name="Status"
+                name="StatusCode"
                 control={control}
                 options={statusApply}
-                placeholder="Tất cả"
               />
             </div>
             <div className="flex-1">
               <TmSelect
                 className="w-full"
-                name="TypeData"
+                name="Source"
                 control={control}
                 options={[
                   { value: -1, label: "Tất cả" },
-                  { label: "Ứng viên đã ứng tuyển", value: 1 },
-                  { label: "Tìm kiếm CV", value: 3 },
+                  { label: "Ứng viên đã ứng tuyển", value: 0 },
+                  { label: "Tìm kiếm CV", value: 1 },
                 ]}
-                placeholder="Nguồn CV"
               />
             </div>
             <button
@@ -188,8 +175,8 @@ export default function ManagerCV() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
-              {managerCv.map((row) => (
-                <tr key={row.id} className={` `}>
+              {managerCv.map((row, idx) => (
+                <tr key={idx} className={` `}>
                   <td className="p-4">
                     <div className="flex space-x-2 items-center">
                       <img
