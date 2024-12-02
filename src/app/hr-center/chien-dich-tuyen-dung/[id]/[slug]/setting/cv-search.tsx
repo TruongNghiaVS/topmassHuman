@@ -190,7 +190,7 @@ export const CvSearch = ({
               <div className="text-xs">Trạng thái</div>
               <TmSelect
                 control={control}
-                name="statusCode"
+                name="StatusCode"
                 classNameCustom="flex-1"
                 options={statusApply}
               />

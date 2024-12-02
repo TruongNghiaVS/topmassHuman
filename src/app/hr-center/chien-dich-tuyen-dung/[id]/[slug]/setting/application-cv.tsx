@@ -205,8 +205,9 @@ export const ApplicationCV = ({ idJob, statusApply }: IDetailCvProps) => {
                       {row.email}
                     </div>
                   </td>
+
                   <td className="p-4 ">
-                    {row.viewMode ? "Chưa xem" : "Đã xem"}
+                    {row.viewMode === 0 ? "Chưa xem" : "Đã xem"}
                   </td>
                   <td className="p-4 ">
                     <div className="flex space-x-2">
