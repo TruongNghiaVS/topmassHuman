@@ -50,17 +50,17 @@ export const CandidateCv = ({ idJob }: IDetailCvProps) => {
   }, [listCandidateCv, setCandidateCv]);
 
   const schema = yup.object().shape({
-    keyword: yup.string(),
-    TypeData: yup.number(),
-    status: yup.number(),
+    KeyWord: yup.string(),
+    StatusCode: yup.number(),
+    Source: yup.number(),
   });
 
   const { control, handleSubmit } = useForm<ISearchManagerCv>({
     resolver: yupResolver(schema),
     defaultValues: {
-      Key: "",
-      TypeData: -1,
-      Status: -1,
+      KeyWord: "",
+      StatusCode: -1,
+      Source: -1,
     },
   });
 
@@ -91,7 +91,7 @@ export const CandidateCv = ({ idJob }: IDetailCvProps) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mt-4 flex sm:space-x-2 space-y-2 sm:space-y-0 px-2 flex-col sm:flex-row items-end">
           <TmInput
-            name="Key"
+            name="KeyWord"
             icon={<MagnifyingGlassIcon className="w-4" />}
             control={control}
             placeholder="Tìm kiếm ứng viên, tên, số điện thoại"
@@ -102,7 +102,7 @@ export const CandidateCv = ({ idJob }: IDetailCvProps) => {
               <div className="text-xs">Hiển thị</div>
               <TmSelect
                 control={control}
-                name="TypeData"
+                name="StatusCode"
                 classNameCustom="flex-1"
                 options={[
                   { label: "Tất cả", value: -1 },
@@ -115,7 +115,7 @@ export const CandidateCv = ({ idJob }: IDetailCvProps) => {
               <div className="text-xs">Trạng thái</div>
               <TmSelect
                 control={control}
-                name="Status"
+                name="StatusCode"
                 classNameCustom="flex-1"
                 options={statusApply}
               />
