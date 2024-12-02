@@ -109,7 +109,7 @@ export default function BusinessRegistration({
         <div className="font-medium">Trạng thái chứng từ: </div>
         <div
           className={` font-semibold ${
-            currentUser?.businessLicenseInfo.statusCode === 1
+            currentUser?.businessLicenseInfo.statusCode === 3
               ? "text-[#137F04]"
               : currentUser?.businessLicenseInfo.statusCode === 2
               ? "text-[#AF0000]"
