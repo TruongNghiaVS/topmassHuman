@@ -191,9 +191,9 @@ export const ApplicationCV = ({ idJob, statusApply }: IDetailCvProps) => {
                         } `}
                       ></span>
                     </div>
-                    <div className="bg-[#DAFFD7] text-[#137F04] inline-flex px-3 py-1  mt-1 rounded-xl">
+                    {/* <div className="bg-[#DAFFD7] text-[#137F04] inline-flex px-3 py-1  mt-1 rounded-xl">
                       Mức độ phù hợp: 87%
-                    </div>
+                    </div> */}
                   </td>
                   <td className="font-normal p-4">
                     <div className="inline-block px-3 py-1 rounded-xl bg-[#F37A20] text-white">

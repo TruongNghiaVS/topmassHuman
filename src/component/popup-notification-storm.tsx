@@ -2,9 +2,11 @@
 
 import Modal from "@/component/modal";
 import { useModalStore } from "@/store-zustand/useModalStore";
+import { useRouter } from "next/navigation";
 
 export const ModalStorm = () => {
   const { isOpen, closeModal } = useModalStore();
+  const route = useRouter();
 
   return (
     <Modal
@@ -14,8 +16,17 @@ export const ModalStorm = () => {
     >
       <div>
         <div className="font-semibold text-center text">
-          Bạn đã sử dụng hết tia sét. Vui lòng mua thêm gói để tiếp tục sử dụng
-          dịch vụ
+          Bạn đã sử dụng hết tia sét. Vui lòng{" "}
+          <button
+            className="hover:text-colorBase"
+            onClick={() => {
+              closeModal();
+              route.push("/hr-center/tim-cv");
+            }}
+          >
+            Đổi CV
+          </button>{" "}
+          để nhận thêm tia set
         </div>
         <div className="mt-4 text-center">
           <button
