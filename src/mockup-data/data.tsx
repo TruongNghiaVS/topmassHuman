@@ -181,102 +181,54 @@ export const detailOder = [
 ];
 
 export const optionCampaigns = [
-  { value: "-1", label: "Tất cả chiến dịch" },
-  { value: "1", label: "Chiến dịch đang mở" },
-  { value: "0", label: "Chiến dịch đang tắt" },
-];
-export const campaigns = [
-  {
-    name: "Tuyển dụng marketing tháng 9",
-    status: true,
-    recruitment_news: "Đăng tin tuyển dụng",
-    search_cv: "Tìm CV",
-    date: "08/09/2024",
-  },
-  {
-    name: "Tuyển dụng marketing tháng 9",
-    status: false,
-    recruitment_news: "Bật chiến dịch để thực hiện đăng tin",
-    search_cv: "Bật chiến dịch để thực hiện tìm CV",
-    date: "08/09/2024",
-  },
+  { value: -1, label: "Tất cả chiến dịch" },
+  { value: 1, label: "Chiến dịch đang mở" },
+  { value: 0, label: "Chiến dịch đang tắt" },
 ];
 
 export const shows = [
   {
-    value: "-1",
+    value: -1,
     label: "Tất cả",
   },
   {
-    value: "0",
+    value: 0,
     label: "Không hiển thị",
   },
   {
-    value: "1",
+    value: 1,
     label: "Đang hiển thị",
   },
   {
-    value: "2",
+    value: 2,
     label: "Hết hạn hiển thị",
   },
 ];
 
 export const browsings = [
   {
-    value: "-1",
+    value: -1,
     label: "Tất cả",
   },
   {
-    value: "0",
+    value: 0,
     label: "Chưa duyệt yêu cầu",
   },
   {
-    value: "1",
+    value: 1,
     label: "Đang xét duyệt",
   },
   {
-    value: "2",
+    value: 2,
     label: "Đã duyệt",
   },
   {
-    value: "3",
+    value: 3,
     label: "Bị từ chối",
   },
   {
-    value: "4",
+    value: 4,
     label: "Tin bị khoá",
-  },
-];
-
-export const campaignDetails = [
-  {
-    name: "Tuyển dụng Nhân Viên MKT",
-    tag: "#562598",
-    status: true,
-    recruitment_news: "Đang hiển thị",
-    search_cv: "Tìm CV",
-    service: "Dịch Vụ 1",
-    date_start: "08/09/2024",
-  },
-  {
-    name: "Tuyển dụng Nhân Viên MKT ",
-    tag: "#562598",
-    recruitment_news: "Bị từ chối",
-    status: false,
-    search_cv: "Bật chiến dịch để thực hiện tìm CV",
-    service: "Dịch Vụ 2",
-    date_start: "08/09/2024",
-  },
-];
-
-export const recruimentNews = [
-  {
-    position: "Tuyển dụng Nhân viên MKT phòng 2",
-    service: "Mass Vip",
-    status: true,
-    total_view: "20",
-    total_cv: "30",
-    ratio_cv: "25%",
   },
 ];
 
@@ -286,30 +238,6 @@ export const campaignForm = [
   { value: "Chiến dịch 3", label: "Chiến dịch 1" },
   { value: "Chiến dịch 4", label: "Chiến dịch 1" },
   { value: "Chiến dịch 5", label: "Chiến dịch 1" },
-];
-
-export const locations = [
-  { value: 0, label: "TP.HCM" },
-  { value: 1, label: "Quận 1" },
-  { value: 2, label: "Quận 2" },
-  { value: 3, label: "Quận 3" },
-  { value: 4, label: "Quận 4" },
-  { value: 5, label: "Quận 5" },
-  { value: 6, label: "Quận 6" },
-  { value: 7, label: "Quận 7" },
-  { value: 8, label: "Quận 8" },
-  { value: 9, label: "Quận 9" },
-  { value: 10, label: "Quận 10" },
-  { value: 11, label: "TP.Thủ Đức" },
-  { value: 12, label: "TP.HCM" },
-  { value: 13, label: "TP.HCM" },
-  { value: 14, label: "TP.HCM" },
-  { value: 15, label: "TP.HCM" },
-  { value: 16, label: "TP.HCM" },
-  { value: 17, label: "TP.HCM" },
-  { value: 18, label: "TP.HCM" },
-  { value: 19, label: "TP.HCM" },
-  { value: 20, label: "TP.HCM" },
 ];
 
 export const salaryOptions = [

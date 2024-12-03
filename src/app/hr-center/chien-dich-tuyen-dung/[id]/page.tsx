@@ -4,7 +4,7 @@ import { useLoading } from "@/app/context/loading";
 import TmInput from "@/component/hook-form/input";
 import TmSelect from "@/component/hook-form/select";
 import { ICampaign, IJob, IKeySearchJob } from "@/interface/interface";
-import { browsings, campaignDetails, shows } from "@/mockup-data/data";
+import { browsings, shows } from "@/mockup-data/data";
 import {
   CHANGE_STATUS_JOB,
   GET_ALL_CAMPAIGN,
@@ -214,7 +214,6 @@ export default function DetailCampaign({ params }: { params: { id: number } }) {
             control={control}
             onChange={(e) => handleReasonCode(e.target.value)}
             options={shows}
-            placeholder="Tình trạng"
           />
           <TmSelect
             classNameCustom="flex-1"
@@ -222,7 +221,6 @@ export default function DetailCampaign({ params }: { params: { id: number } }) {
             control={control}
             onChange={(e) => handleResultCode(e.target.value)}
             options={browsings}
-            placeholder="Trạng thái duyệt"
           />
         </div>
       </div>

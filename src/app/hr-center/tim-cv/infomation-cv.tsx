@@ -1,5 +1,5 @@
 import { ISearchCvDetailProps } from "@/interface/cv";
-import { renderRangeSalary } from "@/utils/custom-hook";
+import { formatDateDifference, renderRangeSalary } from "@/utils/custom-hook";
 import {
   AcademicCapIcon,
   BookOpenIcon,
@@ -40,7 +40,7 @@ export default function InfomationCv({
                 </Link>
               </div>
               <div className="inline-block mt-2 text-white bg-[#CC0000] rounded-xl px-2 py-0.5 text-xs">
-                Đang tìm việc
+                {item.statusProfile}
               </div>
               <div className="flex items-start">
                 <BriefcaseIcon className="w-4 mr-1 " /> {item.position}
@@ -50,7 +50,8 @@ export default function InfomationCv({
               </div>
               <div className="mt-1 p-2 bg-[#F7F2EB]">
                 <div className="flex text-xs mt-0.5">
-                  <ClockIcon className="w-4 mr-1 " /> Cập nhật 2 giờ trước
+                  <ClockIcon className="w-4 mr-1 " />
+                  {formatDateDifference(item.lastUpdate)}
                 </div>
                 <div className="flex text-xs mt-0.5">
                   <CurrencyDollarIcon className="w-4 mr-1 " />{" "}

@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import numeral from "numeral";
 
 export const convertParams = (params: any) => {
@@ -42,4 +43,26 @@ export const renderRangeSalary = (
 export const getFileName = (file: string) => {
   const arrFile = file.split("/");
   return arrFile[arrFile.length - 1];
+};
+
+export const formatDateDifference = (date: string): string => {
+  const now = dayjs(); // Current date
+  const inputDate = dayjs(date); // Input date
+  const diffInDays = now.diff(inputDate, "day");
+
+  if (diffInDays === 0) {
+    return "Vừa cập nhật";
+  }
+
+  if (diffInDays < 30) {
+    return `Cập nhật ${diffInDays} ngày trước`;
+  }
+
+  if (diffInDays < 365) {
+    const diffInMonths = now.diff(inputDate, "month");
+    return `Cập nhật${diffInMonths} tháng trước`;
+  }
+
+  const diffInYears = now.diff(inputDate, "year");
+  return `Cập nhật ${diffInYears} năm trước`;
 };
