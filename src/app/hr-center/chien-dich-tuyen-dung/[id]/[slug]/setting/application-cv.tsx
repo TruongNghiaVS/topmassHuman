@@ -209,9 +209,11 @@ export const ApplicationCV = ({ idJob, statusApply }: IDetailCvProps) => {
                   <td className="p-4 ">
                     {row.viewMode === 0 ? "Chưa xem" : "Đã xem"}
                   </td>
-                  <td className="p-4 ">
-                    <div className="flex space-x-2">
-                      <div>{row.statusText}</div>
+                  <td className="p-4">
+                    <div className="flex space-x-2 justify-center">
+                      <div className="inline-block px-3 py-1 rounded-xl bg-[#DAFFD7] text-[#137F04]">
+                        {row.statusText}
+                      </div>
                       <button
                         onClick={() => (
                           setIsOpenModal(true),

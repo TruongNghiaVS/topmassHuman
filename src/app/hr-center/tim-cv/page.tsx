@@ -160,7 +160,7 @@ export default function SearchCV() {
     },
   ];
 
-  const { provinces } = Provinces();
+  const { listProvinces } = Provinces();
 
   return (
     <div className="px-6 py-3 ">
@@ -182,7 +182,7 @@ export default function SearchCV() {
                 <CustomMultipleSelectSearchForm
                   name="Locations"
                   control={control}
-                  options={provinces}
+                  options={listProvinces}
                   placeholder="Chọn tỉnh thành"
                 />
               </div>
