@@ -71,8 +71,13 @@ export const MenuItem = () => {
       icon: <EnvelopeIcon className="w-4" />,
     },
     {
-      title: "Chính sách bảo mật và quy định sử dụng",
-      link: "chinh-sach-va-quy-dinh",
+      title: "Chính sách bảo mật ",
+      link: "/chinh-sach-bao-mat",
+      icon: <ShieldExclamationIcon className="w-4" />,
+    },
+    {
+      title: "Quy định sử dụng",
+      link: "/quy-dinh-nha-tuyen-dung",
       icon: <ShieldExclamationIcon className="w-4" />,
     },
   ];
@@ -87,9 +92,14 @@ export const MenuItem = () => {
 
 const Item = ({ item }: IItemProps) => {
   const path = usePathname();
+  const link = !["/chinh-sach-bao-mat", "/quy-dinh-nha-tuyen-dung"].includes(
+    item.link
+  )
+    ? `/hr-center/${item.link}`
+    : item.link;
   return (
     <div className=" mt-4">
-      <Link href={`${`/hr-center/${item.link}`}`}>
+      <Link href={link}>
         <div
           className={`inline-flex items-center ${
             path.includes(item.link) && "text-default"

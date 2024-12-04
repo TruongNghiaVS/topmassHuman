@@ -20,7 +20,7 @@ export const getContact = async (
   let htmlContent = await fs.readFile(contactPath, "utf8");
   htmlContent = htmlContent
     .replace("{email}", hideEmail ? "********" : data.email)
-    .replace("{addressInfo}", data.addressInfo)
+    .replace("{addressInfo}", data.addressInfo + "," + data.provinceName)
     .replace("{phoneNumber}", hidePhone ? "**********" : data.phoneNumber)
     .replace("{dayOfBirth}", dayjs(data.dateOfBirth).format("DD/MM/YYYY"));
   return htmlContent;
