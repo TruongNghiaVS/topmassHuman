@@ -68,6 +68,7 @@ export const CandidateCv = ({ idJob }: IDetailCvProps) => {
     "Tên ứng viên",
     "Số điện thoại",
     "Email",
+    "Hiển thị",
     "Thời gian xem tin",
   ];
 
@@ -123,7 +124,7 @@ export const CandidateCv = ({ idJob }: IDetailCvProps) => {
           </div>
           <button
             type="submit"
-            className="px-2 py-1.5 text-white bg-[#FF7D55] rounded-lg font-bold"
+            className="px-2 py-2 text-white bg-[#FF7D55] rounded-lg font-bold"
           >
             Tìm kiếm
           </button>

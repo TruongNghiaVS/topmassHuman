@@ -39,9 +39,14 @@ export default function InfomationCv({
                   {item.fullName}
                 </Link>
               </div>
-              <div className="inline-block mt-2 text-white bg-[#CC0000] rounded-xl px-2 py-0.5 text-xs">
-                {item.statusProfile}
-              </div>
+              {item.statusProfile !== "Đang tắt tìm việc" ? (
+                <div className="inline-block mt-2 text-white bg-[#CC0000] rounded-xl px-2 py-0.5 text-xs">
+                  {item.statusProfile}
+                </div>
+              ) : (
+                ""
+              )}
+
               <div className="flex items-start">
                 <BriefcaseIcon className="w-4 mr-1 " /> {item.position}
               </div>

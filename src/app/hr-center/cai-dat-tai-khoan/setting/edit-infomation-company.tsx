@@ -77,12 +77,12 @@ export default function EditInfomationCompany({
     addressInfo: yup.string(),
     phone: yup.string(),
     shortDes: yup.string(),
+    iframeEmbeddedMap: yup.string(),
     email: yup.string().email("Sai format email"),
   });
 
   const { handleSubmit, control } = useForm<IUpdateCompany>({
     resolver: yupResolver(schema),
-
     defaultValues: {
       taxCode: currentUser.companyInfo.taxCode || "",
       fullName: currentUser.companyInfo.fullName || "",
@@ -93,6 +93,7 @@ export default function EditInfomationCompany({
       phone: currentUser.companyInfo.phone,
       shortDes: currentUser.companyInfo.shortDes || "",
       email: currentUser.companyInfo.email || "",
+      iframeEmbeddedMap: currentUser.companyInfo.iframeEmbeddedMap || "",
     },
   });
 
@@ -217,8 +218,11 @@ export default function EditInfomationCompany({
             <TmInput name="phone" control={control} />
           </div>
         </div>
+        <div className="mt-2">Link google map</div>
+        <div className="mt-2">
+          <TmInput name="iframeEmbeddedMap" control={control} />
+        </div>
         <div className="mt-2">Giới thiệu về công ty</div>
-
         <div className="mt-2">
           <CustomCKEditor name="shortDes" control={control} />
         </div>

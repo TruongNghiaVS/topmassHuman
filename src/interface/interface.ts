@@ -59,6 +59,7 @@ export interface IUpdateCompany {
   logoLink?: string;
   coverLink?: string;
   email?: string;
+  iframeEmbeddedMap?: string;
 }
 
 export interface ISupportSetting {
@@ -136,6 +137,7 @@ export interface ICurrentUser {
     logoLink: string;
     coverLink: string;
     email: string;
+    iframeEmbeddedMap: string;
   };
   businessLicenseInfo: {
     linkFile: string;
