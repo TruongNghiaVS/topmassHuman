@@ -9,6 +9,7 @@ import {
 import { GET_ALL_CV_JOB, UPDATE_VIEW_MODE } from "@/utils/api-url";
 import axiosInstance, { fetcher } from "@/utils/axios";
 import {
+  ClockIcon,
   MagnifyingGlassIcon,
   PencilSquareIcon,
 } from "@heroicons/react/16/solid";
@@ -21,6 +22,7 @@ import { toast } from "react-toastify";
 import { ModalChangeStatus } from "./modal-change-status";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import dayjs from "dayjs";
 
 export const ApplicationCV = ({ idJob, statusApply }: IDetailCvProps) => {
   const [cvJob, setCvJob] = useState<ICvJob[]>([]);
@@ -58,8 +60,8 @@ export const ApplicationCV = ({ idJob, statusApply }: IDetailCvProps) => {
 
   const header = [
     "Tên ứng viên",
-    "Số điện thoại",
-    "Email",
+    "Thông tin liên hệ",
+    "Thời gian",
     "Hiển thị",
     "Trạng thái",
   ];
@@ -196,16 +198,23 @@ export const ApplicationCV = ({ idJob, statusApply }: IDetailCvProps) => {
                     </div> */}
                   </td>
                   <td className="font-normal p-4">
-                    <div className="inline-block px-3 py-1 rounded-xl bg-[#F37A20] text-white">
-                      {row.phone}
+                    <div>
+                      <div className="inline-block px-3 py-1 rounded-xl bg-[#F37A20] text-white">
+                        {row.phone}
+                      </div>
+                    </div>
+                    <div className="mt-2">
+                      <div className="inline-block px-3 py-1 rounded-xl bg-[#E9F0FF] text-[#004ED8]">
+                        {row.email}
+                      </div>
                     </div>
                   </td>
                   <td className="p-4 ">
-                    <div className="inline-block px-3 py-1 rounded-xl bg-[#E9F0FF] text-[#004ED8]">
-                      {row.email}
+                    <div className="flex mt-1 justify-center">
+                      <ClockIcon className="w-4 mr-2" />
+                      {dayjs(row.createAt).format("DD-MM-YYYY HH:mm")}
                     </div>
                   </td>
-
                   <td className="p-4 ">
                     {row.viewMode === 0 ? "Chưa xem" : "Đã xem"}
                   </td>

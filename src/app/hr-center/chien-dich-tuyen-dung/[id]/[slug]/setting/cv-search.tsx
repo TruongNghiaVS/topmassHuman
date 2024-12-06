@@ -6,6 +6,7 @@ import {
   ISearchCvView,
 } from "@/interface/interface";
 import {
+  ClockIcon,
   MagnifyingGlassIcon,
   PencilSquareIcon,
 } from "@heroicons/react/16/solid";
@@ -27,6 +28,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { ProfileUser } from "@/module/helper/master-data";
 import { useModalStore } from "@/store-zustand/useModalStore";
+import dayjs from "dayjs";
 
 const getCvName = (link: string) => {
   const names = link.split("/");
@@ -76,8 +78,8 @@ export const CvSearch = ({
 
   const header = [
     "Tên ứng viên",
-    "Số điện thoại",
-    "Email",
+    "Thông tin liên hệ",
+    "Thời gian",
     "Hiển thị",
     "Trạng thái cv",
   ];
@@ -239,13 +241,21 @@ export const CvSearch = ({
                     </div>
                   </td>
                   <td className="font-normal p-4">
-                    <div className="inline-block px-3 py-1 rounded-xl bg-[#F37A20] text-white">
-                      {row.phone}
+                    <div>
+                      <div className="inline-block px-3 py-1 rounded-xl bg-[#F37A20] text-white">
+                        {row.phone}
+                      </div>
+                    </div>
+                    <div className="mt-2">
+                      <div className="inline-block px-3 py-1 rounded-xl bg-[#E9F0FF] text-[#004ED8]">
+                        {row.email}
+                      </div>
                     </div>
                   </td>
                   <td className="p-4 ">
-                    <div className="inline-block px-3 py-1 rounded-xl bg-[#E9F0FF] text-[#004ED8]">
-                      {row.email}
+                    <div className="flex mt-1 justify-center">
+                      <ClockIcon className="w-4 mr-2" />
+                      {dayjs(row.createAt).format("DD-MM-YYYY HH:mm")}
                     </div>
                   </td>
                   <td className="p-4 ">

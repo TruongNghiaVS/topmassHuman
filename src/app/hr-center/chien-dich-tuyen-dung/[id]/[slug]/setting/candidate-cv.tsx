@@ -107,8 +107,8 @@ export const CandidateCv = ({ idJob }: IDetailCvProps) => {
                 classNameCustom="flex-1"
                 options={[
                   { label: "Tất cả", value: -1 },
-                  { label: "Chưa xem", value: 0 },
-                  { label: "Đã xem", value: 1 },
+                  { label: "Chưa mở", value: 0 },
+                  { label: "Đã mở", value: 1 },
                 ]}
               />
             </div>
@@ -172,6 +172,7 @@ export const CandidateCv = ({ idJob }: IDetailCvProps) => {
                       {row.email}
                     </div>
                   </td>
+                  <td className="p-4 "></td>
                   <td className="p-4 ">
                     <div>{dayjs(row.createAt).format("HH:mm")}</div>
                     <div>{dayjs(row.createAt).format("DD-MM-YYYY")}</div>

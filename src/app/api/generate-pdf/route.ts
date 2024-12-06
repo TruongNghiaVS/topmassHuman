@@ -4,7 +4,7 @@ import puppeteer from "puppeteer";
 import { promises as fs } from "fs";
 import { cookies } from "next/headers";
 import axios from "axios";
-import { HOST_API } from "@/config-global";
+import { HOST_API_IP } from "@/config-global";
 import {
   getCertificate,
   getContact,
@@ -29,7 +29,7 @@ export async function GET(request: Request) {
     const cookieStore = cookies();
     const token = cookieStore.get("token");
 
-    const url = HOST_API + GET_PROFILE_SEARCH_CV;
+    const url = HOST_API_IP + GET_PROFILE_SEARCH_CV;
     const res = await axios.get(url, {
       headers: {
         Authorization: `Bearer ${token?.value}`,
