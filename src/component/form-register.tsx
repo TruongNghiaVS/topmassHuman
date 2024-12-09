@@ -79,22 +79,7 @@ export const FormRegister = () => {
       }
     } catch (error) {
       if (error instanceof AxiosError) {
-        toast.error(
-          (props: any) => {
-            return props.data.dataError.map((itemError: any) => {
-              return (
-                <div key={itemError.errorCode}>
-                  {itemError.errorCode} : {itemError.errorMesage}
-                </div>
-              );
-            });
-          },
-          {
-            data: {
-              dataError: error.response?.data.dataEror,
-            },
-          }
-        );
+        toast.error("Đăng ký không thành công");
       }
     } finally {
       setLoading(false);

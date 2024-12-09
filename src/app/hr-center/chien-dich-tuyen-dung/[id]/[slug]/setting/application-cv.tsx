@@ -83,11 +83,11 @@ export const ApplicationCV = ({ idJob, statusApply }: IDetailCvProps) => {
         identi: id,
         viewMode: 1,
       });
-      toast.success("Cập nhật trạng thái thành công");
+      toast.success("Mở CV thành công");
       mutate();
       window.open(link, "_blank", "noopener,noreferrer");
     } catch (error) {
-      toast.error("Cập nhật trạng thái thất bại");
+      toast.error("Mở CV thất bại");
     } finally {
       setLoading(false);
     }

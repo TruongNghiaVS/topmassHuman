@@ -188,9 +188,9 @@ export default function ManagerCV() {
                         <div className="font-normal line-clamp-3">
                           {row.fullName}
                         </div>
-                        <div className="text-xs inline-block p-1 rounded bg-[#F5F8FA]">
+                        {/* <div className="text-xs inline-block p-1 rounded bg-[#F5F8FA]">
                           {row.viewModeText}
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   </td>
