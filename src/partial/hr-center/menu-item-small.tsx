@@ -1,3 +1,5 @@
+import VerifiedLink from "@/hook/verify-link";
+import { ProfileUser } from "@/module/helper/master-data";
 import {
   BellIcon,
   ClockIcon,
@@ -16,6 +18,7 @@ import { usePathname } from "next/navigation";
 interface IItem {
   link: string;
   icon: any;
+  verify_level: number;
 }
 
 interface IItemProps {
@@ -25,50 +28,61 @@ interface IItemProps {
 export const MenuItemSmall = () => {
   const data = [
     {
+      title: "Bảng tin",
       link: "bang-tin",
-      icon: <RocketLaunchIcon className="w-6" />,
+      icon: <RocketLaunchIcon className="w-5" />,
+      verify_level: 1,
     },
     // {
+    //   title: "Dịch vụ",
     //   link: "dich-vu",
-    //   icon: <SparklesIcon className="w-6" />,
+    //   icon: <SparklesIcon className="w-5" />,
+    // verify_level: 1,
     // },
     {
       link: "chien-dich-tuyen-dung",
-      icon: <NewspaperIcon className="w-6" />,
+      icon: <NewspaperIcon className="w-5" />,
+      verify_level: 2,
     },
     {
       link: "quan-ly-cv",
-      icon: <DocumentTextIcon className="w-6" />,
+      icon: <DocumentTextIcon className="w-5" />,
+      verify_level: 2,
     },
     {
       link: "tim-cv",
-      icon: <IdentificationIcon className="w-6" />,
+      icon: <IdentificationIcon className="w-5" />,
+      verify_level: 2,
     },
     {
       link: "lich-su-hoat-dong",
-      icon: <ClockIcon className="w-6" />,
+      icon: <ClockIcon className="w-5" />,
+      verify_level: 1,
     },
     {
       link: "thong-bao",
-      icon: <BellIcon className="w-6" />,
+      icon: <BellIcon className="w-5" />,
+      verify_level: 1,
     },
     {
       link: "cai-dat-tai-khoan",
-      icon: <Cog6ToothIcon className="w-6" />,
+      icon: <Cog6ToothIcon className="w-5" />,
+      verify_level: 1,
     },
     {
       link: "lien-he-ho-tro",
-      icon: <EnvelopeIcon className="w-6" />,
+      icon: <EnvelopeIcon className="w-5" />,
+      verify_level: 1,
     },
     {
-      title: "Chính sách bảo mật ",
       link: "/chinh-sach-bao-mat",
-      icon: <ShieldExclamationIcon className="w-4" />,
+      icon: <ShieldExclamationIcon className="w-5" />,
+      verify_level: 1,
     },
     {
-      title: "Quy định sử dụng",
       link: "/quy-dinh-nha-tuyen-dung",
-      icon: <ShieldExclamationIcon className="w-4" />,
+      icon: <ShieldExclamationIcon className="w-5" />,
+      verify_level: 1,
     },
   ];
   return (
@@ -81,6 +95,8 @@ export const MenuItemSmall = () => {
 };
 
 const Item = ({ item }: IItemProps) => {
+  const { currentUser } = ProfileUser();
+
   const path = usePathname();
   const link = !["/chinh-sach-bao-mat", "/quy-dinh-nha-tuyen-dung"].includes(
     item.link
@@ -89,15 +105,19 @@ const Item = ({ item }: IItemProps) => {
     : item.link;
   return (
     <div className=" mt-4">
-      <Link href={link}>
+      <VerifiedLink
+        href={link}
+        currentUser={currentUser}
+        verify_level={item.verify_level}
+      >
         <div
           className={`${
             path.includes(item.link) && "text-default"
           } hover:text-default `}
         >
-          <div className="grid justify-center">{item.icon}</div>
+          <div className="grid justify-center ">{item.icon}</div>
         </div>
-      </Link>
+      </VerifiedLink>
     </div>
   );
 };

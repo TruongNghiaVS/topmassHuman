@@ -1,19 +1,19 @@
 "use client";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import TmInput from "./hook-form/input";
 import Link from "next/link";
-import { axiosInstanceNotToken } from "@/utils/axios";
+import { axiosInstanceNotToken, fetcher } from "@/utils/axios";
 import { useLoading } from "@/app/context/loading";
 import Cookies from "js-cookie";
 import { ILogin, ILoginForm } from "@/interface/interface";
 import { LOGIN } from "@/utils/api-url";
 import { EnvelopeIcon, EyeIcon, KeyIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
+import { ProfileUser } from "@/module/helper/master-data";
 
 export const LoginForm = ({ onClose }: ILoginForm) => {
   const { setLoading } = useLoading();
@@ -39,6 +39,7 @@ export const LoginForm = ({ onClose }: ILoginForm) => {
     },
   });
   const router = useRouter();
+  const { mutateUser } = ProfileUser();
 
   const onSubmit: SubmitHandler<ILogin> = async (data) => {
     setLoading(true);
@@ -52,6 +53,7 @@ export const LoginForm = ({ onClose }: ILoginForm) => {
       if (onClose) {
         onClose();
       }
+      mutateUser();
     } catch (error) {
       console.log(error);
       toast.error("Đăng nhập thất bại");

@@ -158,7 +158,7 @@ export default function ProfileDetailCv({
       // Create a temporary link element for downloading the file
       const a = document.createElement("a");
       a.href = url;
-      a.download = `CV-${dataInfomation?.fullName}-${dataInfomation?.posipositionText}-Topmass`;
+      a.download = `CV-${dataInfomation?.fullName}-${dataInfomation?.positionText}-Topmass`;
       document.body.appendChild(a);
       a.click();
 

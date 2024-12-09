@@ -125,7 +125,7 @@ export default function DashBoard() {
               <div className="text-xs font-normal inline-block px-2 py-1 rounded bg-[#E2E1E0]">
                 Mã NTD: {currentUser?.recruiterCode}
               </div>
-              <div className="flex-1 text-xs font-normal sm:flex mt-4  ">
+              <div className="flex-1 text-xs font-normal sm:flex mt-2">
                 <div className="flex items-center sm:mr-10 ">
                   <EnvelopeIcon className="w-4 mr-2" /> {currentUser?.email}
                 </div>

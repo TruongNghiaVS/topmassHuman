@@ -489,6 +489,11 @@ export interface IModalChangeCv {
   mutate: KeyedMutator<any>;
 }
 
+export interface IModalVerifyLevel {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
 export interface IModalCancleChangeCv extends IModalChangeCv {
   id: number;
 }

@@ -1,14 +1,9 @@
 "use client";
 
 import Modal from "@/component/modal";
-import {
-  ICancleChangeCv,
-  IModalCancleChangeCv,
-  IModalChangeCv,
-} from "@/interface/interface";
-import { ADD_EXCHANGE_CV, CANCLE_EXCHANGE_CV } from "@/utils/api-url";
+import { IModalCancleChangeCv } from "@/interface/interface";
+import { CANCLE_EXCHANGE_CV } from "@/utils/api-url";
 import axiosInstance from "@/utils/axios";
-import * as yup from "yup";
 import { toast } from "react-toastify";
 import { useLoading } from "@/app/context/loading";
 import dynamic from "next/dynamic";

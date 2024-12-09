@@ -13,6 +13,8 @@ import { fetcher } from "@/utils/axios";
 import { INotification } from "@/interface/interface";
 import { MenuMobile } from "./menu-mobile";
 import { ProfileUser } from "@/module/helper/master-data";
+import { PopupVerifyLevel } from "@/app/doi-cv/popup-verify-level";
+import { usePopupLevelStore } from "@/store-zustand/useModalStore";
 
 export const HeaderHrCenter = () => {
   const headerRef = useRef<HTMLDivElement | null>(null);
@@ -28,6 +30,7 @@ export const HeaderHrCenter = () => {
   );
 
   const { currentUser } = ProfileUser();
+  const { isOpen, closeModal } = usePopupLevelStore();
 
   useEffect(() => {
     if (token) {
@@ -171,6 +174,7 @@ export const HeaderHrCenter = () => {
           </div>
         </div>
       </section>
+      <PopupVerifyLevel isOpen={isOpen} onClose={closeModal} />
     </>
   );
 };
