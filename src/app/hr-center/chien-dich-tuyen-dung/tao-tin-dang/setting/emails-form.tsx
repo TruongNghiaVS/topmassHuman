@@ -30,7 +30,7 @@ export const EmailsForm = ({ control, name }: ILocationForm) => {
       <button
         type="button"
         onClick={() => append({ email: "" })}
-        className="flex text-default mt-4"
+        className="flex text-default mt-4 items-center"
       >
         <PlusIcon className="w-4 mr-2" />
         Thêm email

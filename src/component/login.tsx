@@ -14,6 +14,7 @@ import { LOGIN } from "@/utils/api-url";
 import { EnvelopeIcon, EyeIcon, KeyIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
 import { ProfileUser } from "@/module/helper/master-data";
+import { AxiosError } from "axios";
 
 export const LoginForm = ({ onClose }: ILoginForm) => {
   const { setLoading } = useLoading();
@@ -56,7 +57,9 @@ export const LoginForm = ({ onClose }: ILoginForm) => {
       mutateUser();
     } catch (error) {
       console.log(error);
-      toast.error("Đăng nhập thất bại");
+      if (error instanceof AxiosError) {
+        toast.error(error.response?.data.message);
+      }
     } finally {
       setLoading(false);
     }

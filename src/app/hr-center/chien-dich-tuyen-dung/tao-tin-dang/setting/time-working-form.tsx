@@ -63,7 +63,7 @@ export const TimeWorkingForm = ({ control, name }: ILocationForm) => {
         onClick={() =>
           append({ day_from: "", day_to: "", time_from: "", time_to: "" })
         }
-        className="flex text-default mt-4"
+        className="flex text-default mt-4 items-center"
       >
         <PlusIcon className="w-4 mr-2" />
         Thêm thời gian

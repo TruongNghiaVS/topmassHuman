@@ -210,9 +210,9 @@ export const ApplicationCV = ({ idJob, statusApply }: IDetailCvProps) => {
                     </div>
                   </td>
                   <td className="p-4 ">
-                    <div className="flex mt-1 justify-center">
-                      <ClockIcon className="w-4 mr-2" />
-                      {dayjs(row.createAt).format("DD-MM-YYYY HH:mm")}
+                    <div className="">
+                      <div>{dayjs(row.createAt).format("HH:mm")}</div>
+                      <div>{dayjs(row.createAt).format("DD-MM-YYYY")}</div>
                     </div>
                   </td>
                   <td className="p-4 ">

@@ -7,7 +7,7 @@ import axios from "axios";
 const AvatarUpload: React.FC<IUpload> = ({
   name,
   control,
-  classNameImg,
+  className,
   link = "",
 }) => {
   const {
@@ -86,7 +86,7 @@ const AvatarUpload: React.FC<IUpload> = ({
         <img
           src={preview ? (preview as string) : link}
           alt="Avatar Preview"
-          className={`rounded-full w-28 h-28 ${classNameImg}`}
+          className={`rounded-full w-28 h-28 ${className}`}
         />
       ) : (
         <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center">

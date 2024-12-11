@@ -47,7 +47,7 @@ export const LocationForm = ({
       <button
         type="button"
         onClick={() => append({ district: "", detail_location: "" })}
-        className="flex text-default"
+        className="flex text-default items-center"
       >
         <PlusIcon className="w-4 mr-2" />
         Thêm địa chỉ

@@ -496,7 +496,7 @@ export default function UpdateJob() {
                   ],
                 })
               }
-              className="flex text-white px-2 py-1 bg-[#F37A20] mt-4"
+              className="flex text-white items-center px-2 py-1 bg-[#F37A20] mt-4"
             >
               <PlusIcon className="w-4 mr-2" />
               Thêm khu vực

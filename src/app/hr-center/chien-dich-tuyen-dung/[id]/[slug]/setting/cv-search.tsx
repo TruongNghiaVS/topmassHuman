@@ -254,8 +254,8 @@ export const CvSearch = ({
                   </td>
                   <td className="p-4 ">
                     <div className="flex mt-1 justify-center">
-                      <ClockIcon className="w-4 mr-2" />
-                      {dayjs(row.createAt).format("DD-MM-YYYY HH:mm")}
+                      <div>{dayjs(row.createAt).format("HH:mm")}</div>
+                      <div>{dayjs(row.createAt).format("DD-MM-YYYY")}</div>
                     </div>
                   </td>
                   <td className="p-4 ">
@@ -264,7 +264,7 @@ export const CvSearch = ({
                         "Đã mở"
                       ) : (
                         <div
-                          className="cursor-pointer"
+                          className="cursor-pointer hover:text-colorBase"
                           onClick={() => {
                             setInfoOpenCv({
                               searchId: row.searchId,

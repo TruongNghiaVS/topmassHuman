@@ -41,10 +41,10 @@ const CustomSelectSearchForm: React.FC<SearchSelectProps> = ({
           error ? "border-red-500" : "border-gray-300"
         }`}
       >
-        {value !== "" && value > -1 ? (
-          <span>{options.find((opt) => opt.value === value)?.label}</span>
-        ) : (
+        {value === "" || value === -1 ? (
           <span className="">{placeholder}</span>
+        ) : (
+          <span>{options.find((opt) => opt.value === value)?.label}</span>
         )}
       </div>
       {isOpen && (

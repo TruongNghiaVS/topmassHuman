@@ -160,6 +160,7 @@ export default function EditInfomationCompany({
             <div className="">Ảnh bìa công ty (kích thước 1200x250)</div>
             <AvatarUpload
               name="banner"
+              className="w-full rounded-none"
               control={control}
               link={currentUser?.companyInfo.coverLink}
             />

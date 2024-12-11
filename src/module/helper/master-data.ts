@@ -1,7 +1,10 @@
+import { ICareer } from "@/interface/interface";
 import {
   GET_ALL_CAMPAIGN,
+  GET_CAREER,
   GET_CURRENT_USER,
   GET_EXPERIENCE,
+  GET_JOB_TYPE,
   GET_PROVINCE,
   GET_RANK_CANDIDATE,
 } from "@/utils/api-url";
@@ -21,7 +24,7 @@ export const Provinces = () => {
   const listProvinces = [
     {
       label: "Tất cả",
-      value: "0",
+      value: "-1",
     },
     ...provinces,
   ];
@@ -154,6 +157,46 @@ export const Rank = () => {
     isLoading,
     ranks,
     listRanks,
+    mutate,
+  };
+};
+
+export const Career = () => {
+  const { data, error, mutate, isLoading } = useSWR(GET_CAREER, fetcher);
+  const careers = data
+    ? data?.map((item: ICareer) => {
+        return {
+          value: item.id,
+          label: item.text,
+        };
+      })
+    : [];
+  const listCareers = [{ label: "Tất cả", value: -1 }, ...careers];
+  return {
+    error,
+    isLoading,
+    careers,
+    listCareers,
+    mutate,
+  };
+};
+
+export const JobType = () => {
+  const { data, error, mutate, isLoading } = useSWR(GET_JOB_TYPE, fetcher);
+  const jobTypes = data
+    ? data?.map((item: ICareer) => {
+        return {
+          value: item.id,
+          label: item.text,
+        };
+      })
+    : [];
+  const listJobTypes = [{ label: "Tất cả", value: -1 }, ...jobTypes];
+  return {
+    error,
+    isLoading,
+    jobTypes,
+    listJobTypes,
     mutate,
   };
 };
