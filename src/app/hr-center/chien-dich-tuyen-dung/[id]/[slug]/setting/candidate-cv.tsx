@@ -66,8 +66,8 @@ export const CandidateCv = ({ idJob }: IDetailCvProps) => {
 
   const header = [
     "Tên ứng viên",
-    "Số điện thoại",
-    "Email",
+    "Thông tin liên hệ",
+    "Trạng thái",
     "Hiển thị",
     "Thời gian xem tin",
   ];
@@ -161,22 +161,23 @@ export const CandidateCv = ({ idJob }: IDetailCvProps) => {
                     </div>
                   </td>
                   <td className="font-normal p-4">
-                    {row.phoneNumber && (
+                    <div>
                       <div className="inline-block px-3 py-1 rounded-xl bg-[#F37A20] text-white">
                         {row.phoneNumber}
                       </div>
-                    )}
-                  </td>
-                  <td className="p-4 ">
-                    <div className="inline-block px-3 py-1 rounded-xl bg-[#E9F0FF] text-[#004ED8]">
-                      {row.email}
+                    </div>
+                    <div className="mt-2">
+                      <div className="inline-block px-3 py-1 rounded-xl bg-[#E9F0FF] text-[#004ED8]">
+                        {row.email}
+                      </div>
                     </div>
                   </td>
-                  <td className="p-4 "></td>
                   <td className="p-4 ">
                     <div>{dayjs(row.createAt).format("HH:mm")}</div>
                     <div>{dayjs(row.createAt).format("DD-MM-YYYY")}</div>
                   </td>
+                  <td className="p-4 "></td>
+                  <td className="p-4 "></td>
                 </tr>
               ))}
             </tbody>

@@ -187,11 +187,11 @@ export const ApplicationCV = ({ idJob, statusApply }: IDetailCvProps) => {
                           {getCvName(row.linkFile)}
                         </a>
                       </Link>
-                      <span
+                      {/* <span
                         className={`ml-2 px-1 rounded-xl text-black ${
                           row.viewMode === 1 && "bg-[#DAFFD7] text-[#137F04]"
                         } `}
-                      ></span>
+                      ></span> */}
                     </div>
                     {/* <div className="bg-[#DAFFD7] text-[#137F04] inline-flex px-3 py-1  mt-1 rounded-xl">
                       Mức độ phù hợp: 87%
