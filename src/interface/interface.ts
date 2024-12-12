@@ -201,8 +201,8 @@ export interface IFormCreateNew {
   locations: {
     location: string;
     districts: {
-      district: string;
-      detail_location: string;
+      district?: string;
+      detail_location?: string;
     }[];
   }[];
   time_working: {
@@ -235,6 +235,7 @@ export interface IProvinces {
 export interface ILocationForm {
   control: Control<any>;
   name: string;
+  locationId?: string;
   options?: Option[];
 }
 

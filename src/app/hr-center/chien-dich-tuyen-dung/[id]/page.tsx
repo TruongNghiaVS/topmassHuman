@@ -73,7 +73,7 @@ export default function DetailCampaign({ params }: { params: { id: number } }) {
   const header = [
     "Tin tuyển dụng",
     "Hoạt động",
-    "Tình trạng",
+    "Hiển thị",
     "Trạng thái duyệt",
     "Tìm CV",
     "Tên chiến dịch",
@@ -286,7 +286,7 @@ export default function DetailCampaign({ params }: { params: { id: number } }) {
                     >
                       {row.displaySTatusText}
                     </div>
-                    {row.status === 2 && <div className="mt-1">Xem lý do</div>}
+                    {/* {row.status === 2 && <div className="mt-1">Xem lý do</div>} */}
                   </td>
                   <td className="p-4 ">
                     <div className={`inline-block px-2 py-1 rounded-xl`}>

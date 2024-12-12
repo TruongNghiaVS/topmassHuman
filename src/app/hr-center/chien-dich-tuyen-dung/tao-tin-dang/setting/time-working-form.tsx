@@ -17,7 +17,7 @@ export const TimeWorkingForm = ({ control, name }: ILocationForm) => {
         <div key={field.id} className="flex space-x-4 items-start mt-4 ">
           <ClockIcon className="w-7 text-default" />
           <div className="w-full flex sm:space-x-4 sm:flex-row flex-col space-y-2 sm:space-y-0">
-            <div className="w-full flex space-x-4 ">
+            <div className="w-full flex items-center space-x-4 ">
               <TmSelect
                 classNameCustom="w-full"
                 placeholder="Chọn ngày"

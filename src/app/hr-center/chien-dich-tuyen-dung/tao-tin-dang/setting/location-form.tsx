@@ -7,6 +7,7 @@ import { useFieldArray } from "react-hook-form";
 export const LocationForm = ({
   control,
   name,
+  locationId,
   options = [],
 }: ILocationForm) => {
   const { fields, append, remove } = useFieldArray({
@@ -23,12 +24,14 @@ export const LocationForm = ({
               placeholder="Chọn quận huyện"
               classNameCustom="w-full"
               name={`${name}.${index}.district`}
+              disabled={(locationId && locationId === "-1") || false}
               control={control}
               options={options}
             />
             <TmInput
               classNameCustom="w-full"
               placeholder="Nhập Số nhà, Tên đường, Phường/Xã"
+              disabled={(locationId && locationId === "-1") || false}
               name={`${name}.${index}.detail_location`}
               control={control}
             />

@@ -21,23 +21,8 @@ import dynamic from "next/dynamic";
 import { toast } from "react-toastify";
 import { useLoading } from "@/app/context/loading";
 import axiosInstance, { fetcher } from "@/utils/axios";
-import {
-  GET_ALL_CAMPAIGN,
-  GET_CAREER,
-  GET_DISTRICT,
-  GET_EXPERIENCE,
-  GET_INFO_TO_EDIT,
-  GET_JOB_TYPE,
-  GET_PROVINCE,
-  GET_RANK_CANDIDATE,
-  UPDATE_JOB,
-} from "@/utils/api-url";
-import {
-  ICampaign,
-  ICareer,
-  IFormCreateNew,
-  IProvinces,
-} from "@/interface/interface";
+import { GET_DISTRICT, GET_INFO_TO_EDIT, UPDATE_JOB } from "@/utils/api-url";
+import { IFormCreateNew, IProvinces } from "@/interface/interface";
 import { useEffect, useState } from "react";
 import { Option } from "@/component/hook-form/interface/interface";
 import { TimeWorkingForm } from "../tao-tin-dang/setting/time-working-form";
@@ -45,6 +30,14 @@ import { SkillsForm } from "../tao-tin-dang/setting/skills-form";
 import { EmailsForm } from "../tao-tin-dang/setting/emails-form";
 import { useRouter, useSearchParams } from "next/navigation";
 import useSWR from "swr";
+import {
+  Campaign,
+  Career,
+  Experiences,
+  JobType,
+  Provinces,
+  Rank,
+} from "@/module/helper/master-data";
 
 const CustomCKEditor = dynamic(
   () => {
@@ -67,7 +60,10 @@ const schema = yup.object().shape({
     .number()
     .required("Vui lòng nhập số lượng tuyển")
     .min(1, "Vui lòng nhập số lượng tuyển"),
-  type_of_work: yup.number().required("Vui lòng chọn loại công việc"),
+  type_of_work: yup
+    .number()
+    .required("Vui lòng chọn loại công việc")
+    .min(0, "Vui lòng chọn loại công việc"),
   rank: yup
     .number()
     .required("Vui lòng chọn cấp bậc")
@@ -85,10 +81,32 @@ const schema = yup.object().shape({
           .array()
           .of(
             yup.object().shape({
-              district: yup.string().required("Vui lòng chọn quận huyện"),
+              district: yup
+                .string()
+                .test(
+                  "validate-district",
+                  "Vui lòng nhập quận huyện",
+                  function (value) {
+                    const location = this.from?.[1].value.location;
+                    if (location === "-1") {
+                      return true;
+                    }
+                    return !!value;
+                  }
+                ),
               detail_location: yup
                 .string()
-                .required("Vui lòng nhập địa chỉ cụ thể"),
+                .test(
+                  "validate-detail-location",
+                  "Vui lòng nhập địa chỉ cụ thể",
+                  function (value) {
+                    const location = this.from?.[1].value.location;
+                    if (location === "-1") {
+                      return true;
+                    }
+                    return !!value;
+                  }
+                ),
             })
           )
           .required("Bắt buộc nhập thông tin")
@@ -154,13 +172,7 @@ const schema = yup.object().shape({
 
 export default function UpdateJob() {
   const { setLoading } = useLoading();
-  const [provinces, setProvinces] = useState<Option[]>([]);
   const [district, setDistrict] = useState<Option[][]>([[]]);
-  const [campaigns, setCampaigns] = useState<Option[]>([]);
-  const [careers, setCareers] = useState<Option[]>([]);
-  const [jobTypes, setJobTypes] = useState<Option[]>([]);
-  const [ranks, setRanks] = useState<Option[]>([]);
-  const [experiences, setExperiences] = useState<Option[]>([]);
 
   const searchParams = useSearchParams();
   const idUpdate = searchParams.get("idUpdate");
@@ -170,71 +182,18 @@ export default function UpdateJob() {
     fetcher
   );
 
-  const getAllData = async () => {
-    setLoading(true);
-    try {
-      const response = await axiosInstance.get(GET_PROVINCE);
-      const listData = response.data.data.map((item: IProvinces) => {
-        return {
-          value: item.code,
-          label: item.name,
-        };
-      });
-      setProvinces(listData);
-      const resCampaign = await axiosInstance.get(GET_ALL_CAMPAIGN, {
-        params: {
-          code: -1,
-        },
-      });
-      const listCampaigns = resCampaign.data.data.map((item: ICampaign) => {
-        return {
-          value: item.id,
-          label: item.name,
-        };
-      });
-      setCampaigns(listCampaigns);
-      const resCareers = await axiosInstance.get(GET_CAREER);
-      const listCareers = resCareers.data.map((item: ICareer) => {
-        return {
-          value: item.id,
-          label: item.text,
-        };
-      });
-      setCareers(listCareers);
-      const resJobTypes = await axiosInstance.get(GET_JOB_TYPE);
-      const listJobTypes = resJobTypes.data.map((item: ICareer) => {
-        return {
-          value: item.id,
-          label: item.text,
-        };
-      });
-      setJobTypes(listJobTypes);
-      const resRanks = await axiosInstance.get(GET_RANK_CANDIDATE);
-      const listRanks = resRanks.data.map((item: ICareer) => {
-        return {
-          value: item.id,
-          label: item.text,
-        };
-      });
-      setRanks(listRanks);
-      const resExperiences = await axiosInstance.get(GET_EXPERIENCE);
-      const listExperiences = resExperiences.data.map((item: ICareer) => {
-        return {
-          value: item.id,
-          label: item.text,
-        };
-      });
-      setExperiences(listExperiences);
-    } catch (error) {
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { listProvinces } = Provinces();
+  const { campaign } = Campaign();
+  const { careers } = Career();
+  const { jobTypes } = JobType();
+  const { ranks } = Rank();
+  const { experiences } = Experiences();
 
   const {
     control,
     handleSubmit,
     getValues,
+    setValue,
     reset,
     formState: { errors },
   } = useForm<IFormCreateNew>({
@@ -286,7 +245,6 @@ export default function UpdateJob() {
   });
 
   useEffect(() => {
-    getAllData();
     if (jobInfo) {
       jobInfo.expired_date = jobInfo.expired_date
         ? jobInfo.expired_date.split("T")[0]
@@ -309,22 +267,33 @@ export default function UpdateJob() {
   const handleFilterDistrict = async (value: string, index: number) => {
     setLoading(true);
     try {
-      const response = await axiosInstance.get(GET_DISTRICT, {
-        params: {
-          code: value,
-        },
-      });
-      const listDistrict = response.data.data.map((item: IProvinces) => {
-        return {
-          value: item.code,
-          label: item.name,
-        };
-      });
-
-      setDistrict((prevItem) => {
-        prevItem[index] = listDistrict;
-        return prevItem;
-      });
+      if (value !== "-1") {
+        const response = await axiosInstance.get(GET_DISTRICT, {
+          params: {
+            code: value,
+          },
+        });
+        const listDistrict = response.data.data.map((item: IProvinces) => {
+          return {
+            value: item.code,
+            label: item.name,
+          };
+        });
+        setDistrict((prevItem) => {
+          prevItem[index] = [{ label: "Tất cả", value: -1 }, ...listDistrict];
+          return prevItem;
+        });
+      } else {
+        setValue(`locations.${index}.districts`, [
+          {
+            district: "",
+            detail_location: "",
+          },
+        ]);
+        setDistrict((prevItem) => {
+          return prevItem.filter((item, idx) => idx !== index);
+        });
+      }
     } catch (error) {
     } finally {
       setLoading(false);
@@ -372,7 +341,9 @@ export default function UpdateJob() {
         </Link>
       </div>
       <div className="mt-4 lg:px-40 px-2">
-        <div className="font-medium">Thông tin chung</div>
+        <div className="font-medium text-base text-colorBase">
+          Thông tin chung
+        </div>
         <form className="mt-2 pb-10" onSubmit={handleSubmit(onSubmit)}>
           <div className="mt-2">
             <div className="font-medium">
@@ -386,11 +357,13 @@ export default function UpdateJob() {
             />
           </div>
           <div className="mt-4">
-            <div className="font-medium">Chiến dịch</div>
+            <div className="font-medium">
+              Chiến dịch <span className="text-[#dc2f2f]">*</span>
+            </div>
             <TmSelect
               name="campagnId"
               control={control}
-              options={campaigns}
+              options={campaign}
               placeholder="Chiến dịch"
               disabled={getValues("ruleStatus") === 2}
             />
@@ -435,6 +408,9 @@ export default function UpdateJob() {
             </div>
           </div>
           <div className="mt-4">
+            <div className="font-medium text-base">
+              Khu vực <span className="text-[#dc2f2f]">*</span>
+            </div>
             {fields.map((field, index) => (
               <div
                 key={field.id}
@@ -461,11 +437,10 @@ export default function UpdateJob() {
                       classNameCustom="flex-1"
                       name={`locations.${index}.location`}
                       control={control}
-                      value={getValues(`locations.${index}.location`)}
                       onChange={(e) =>
                         handleFilterDistrict(e.target.value, index)
                       }
-                      options={provinces}
+                      options={listProvinces}
                       placeholder="Chọn thành phố"
                     />
                   </div>
@@ -473,6 +448,7 @@ export default function UpdateJob() {
                 <div className="mt-4">
                   <LocationForm
                     control={control}
+                    locationId={getValues(`locations.${index}.location`)}
                     options={district[index]}
                     name={`locations.${index}.districts`}
                   />
@@ -503,7 +479,9 @@ export default function UpdateJob() {
             </button>
           </div>
           <div className="mt-6">
-            <div className="font-medium">Yêu cầu chung</div>
+            <div className="font-medium text-base text-colorBase">
+              Yêu cầu chung
+            </div>
             <div className="flex space-x-2 mt-4">
               <div className="flex-1">
                 <div className="font-medium">
@@ -611,7 +589,9 @@ export default function UpdateJob() {
             </div>
           </div>
           <div className="mt-6">
-            <div className="font-medium">Thông tin chi tiết</div>
+            <div className="font-medium text-base text-colorBase">
+              Thông tin chi tiết
+            </div>
             <div className="mt-4">
               <div className="font-medium ">
                 Mô tả công việc <span className="text-[#dc2f2f]">*</span>
@@ -638,7 +618,9 @@ export default function UpdateJob() {
             </div>
           </div>
           <div className="mt-6">
-            <div className="font-medium">Thông tin chi tiết</div>
+            <div className="font-medium text-base text-colorBase">
+              Thông tin liên hệ
+            </div>
             <div className="mt-4">
               <div className="flex space-x-2">
                 <div className="flex-1">

@@ -24,26 +24,20 @@ import { toast } from "react-toastify";
 import { EmailsForm } from "./setting/emails-form";
 import { useLoading } from "@/app/context/loading";
 import axiosInstance from "@/utils/axios";
-import {
-  ADD_JOB,
-  GET_ALL_CAMPAIGN,
-  GET_CAREER,
-  GET_DISTRICT,
-  GET_EXPERIENCE,
-  GET_JOB_TYPE,
-  GET_RANK_CANDIDATE,
-} from "@/utils/api-url";
-import {
-  ICampaign,
-  ICareer,
-  IFormCreateNew,
-  IProvinces,
-} from "@/interface/interface";
+import { ADD_JOB, GET_DISTRICT } from "@/utils/api-url";
+import { IFormCreateNew, IProvinces } from "@/interface/interface";
 import { useEffect, useState } from "react";
 import { Option } from "@/component/hook-form/interface/interface";
 import { SkillsForm } from "./setting/skills-form";
 import CustomSelect from "@/component/hook-form/customSelectSearchForm";
-import { Provinces } from "@/module/helper/master-data";
+import {
+  Campaign,
+  Career,
+  Experiences,
+  JobType,
+  Provinces,
+  Rank,
+} from "@/module/helper/master-data";
 import { AxiosError } from "axios";
 
 const CustomCKEditor = dynamic(
@@ -53,175 +47,152 @@ const CustomCKEditor = dynamic(
   { ssr: false }
 );
 
-const schema = yup.object().shape({
-  name: yup.string().required("Vui lòng nhập tên"),
-  campagnId: yup.number(),
-  position: yup.string().required("Vui lòng nhập vị trí tuyển dụng"),
-  profession: yup
-    .number()
-    .required("Vui lòng chọn ngành nghề")
-    .min(0, "Vui lòng chọn ngành nghề"),
-
-  expired_date: yup.string().required("Vui lòng nhập hạn nhận hồ sơ"),
-  quantity: yup
-    .number()
-    .required("Vui lòng nhập số lượng tuyển")
-    .min(1, "Vui lòng nhập số lượng tuyển"),
-  type_of_work: yup.number().required("Vui lòng chọn loại công việc"),
-  rank: yup
-    .number()
-    .required("Vui lòng chọn cấp bậc")
-    .min(0, "Vui lòng chọn cấp bậc"),
-  experience: yup
-    .number()
-    .required("Vui lòng chọn kinh nghiệm làm việc")
-    .min(0, "Vui lòng chọn kinh nghiệm làm việc"),
-  locations: yup
-    .array()
-    .of(
-      yup.object().shape({
-        location: yup.string().required("Vui lòng chọn khu vực"),
-        districts: yup
-          .array()
-          .of(
-            yup.object().shape({
-              district: yup.string().required("Vui lòng chọn quận huyện"),
-              detail_location: yup
-                .string()
-                .required("Vui lòng nhập địa chỉ cụ thể"),
-            })
-          )
-          .required("Bắt buộc nhập thông tin")
-          .min(1, "Phải có ít nhất 1 thông tin quận huyện"),
-      })
-    )
-    .min(1, "Phải có ít nhất 1 khu vực")
-    .required("Vui lòng chọn khu vực"),
-  time_working: yup
-    .array()
-    .of(
-      yup.object().shape({
-        day_from: yup.string().required("Vui lòng chọn ngày bắt đầu"),
-        day_to: yup.string().required("Vui lòng chọn ngày kết thúc"),
-        time_from: yup.string().required("Vui lòng chọn thời gian bắt đầu"),
-        time_to: yup.string().required("Vui lòng chọn thời gian kết thúc"),
-      })
-    )
-    .min(1, "Phải có ít nhất 1 đoạn thời gian")
-    .required("Vui lòng chọn thời gian làm việc"),
-  aggrement: yup.boolean(),
-  salary_from: yup.number().when("aggrement", ([aggrement], schema) => {
-    return aggrement === false
-      ? schema.required("Vui lòng nhập số tiền").min(1, "Vui lòng nhập số tiền")
-      : schema;
-  }),
-  salary_to: yup.number().when("aggrement", ([aggrement], schema) => {
-    return aggrement === false
-      ? schema.required("Vui lòng nhập số tiền").min(1, "Vui lòng nhập số tiền")
-      : schema;
-  }),
-  type_money: yup.string(),
-  gender: yup.number(),
-  description: yup.string().required("Vui lòng nhập mô tả công việc"),
-  requirement: yup.string().required("Vui lòng nhập yêu cầu ứng viên"),
-  benefit: yup.string().required("Vui lòng nhập quyền lợi của ứng viên"),
-  skills: yup.array().of(
-    yup.object().shape({
-      skill: yup.string(),
-    })
-  ),
-  username: yup.string().required("Vui lòng nhập họ và tên ứng viên"),
-  phone: yup
-    .string()
-    .required("Bắt buộc nhập số điện thoại")
-    .matches(/^[0-9]{10}$/, "Số điện thoại phải là 10 ký tự"),
-  emails: yup
-    .array()
-    .of(
-      yup.object().shape({
-        email: yup
-          .string()
-          .required("Bắt buộc nhập email")
-          .email("Sai format email "),
-      })
-    )
-    .min(1, "Tối thiểu 1 email")
-    .max(5, "Tối đa 3 email")
-    .required("Vui nhập email"),
-});
-
 export default function CreateNew() {
   const { setLoading } = useLoading();
-  const [district, setDistrict] = useState<Option[]>([]);
-  const [campaigns, setCampaigns] = useState<Option[]>([]);
-  const [careers, setCareers] = useState<Option[]>([]);
-  const [jobTypes, setJobTypes] = useState<Option[]>([]);
-  const [ranks, setRanks] = useState<Option[]>([]);
-  const [experiences, setExperiences] = useState<Option[]>([]);
+  const [district, setDistrict] = useState<Option[][]>([[]]);
   const [isSkipValidate, setIsSkipValidate] = useState(true);
-  const { provinces } = Provinces();
-  const getAllProvinces = async () => {
-    setLoading(true);
-    try {
-      const resCampaign = await axiosInstance.get(GET_ALL_CAMPAIGN, {
-        params: {
-          code: -1,
-        },
-      });
-      const listCampaigns = resCampaign.data.data.map((item: ICampaign) => {
-        return {
-          value: item.id,
-          label: item.name,
-        };
-      });
-      setCampaigns(listCampaigns);
-      const resCareers = await axiosInstance.get(GET_CAREER);
-      const listCareers = resCareers.data.map((item: ICareer) => {
-        return {
-          value: item.id,
-          label: item.text,
-        };
-      });
-      setCareers(listCareers);
-      const resJobTypes = await axiosInstance.get(GET_JOB_TYPE);
-      const listJobTypes = resJobTypes.data.map((item: ICareer) => {
-        return {
-          value: item.id,
-          label: item.text,
-        };
-      });
-      setJobTypes(listJobTypes);
-      const resRanks = await axiosInstance.get(GET_RANK_CANDIDATE);
-      const listRanks = resRanks.data.map((item: ICareer) => {
-        return {
-          value: item.id,
-          label: item.text,
-        };
-      });
-      setRanks(listRanks);
-      const resExperiences = await axiosInstance.get(GET_EXPERIENCE);
-      const listExperiences = resExperiences.data.map((item: ICareer) => {
-        return {
-          value: item.id,
-          label: item.text,
-        };
-      });
-      setExperiences(listExperiences);
-    } catch (error) {
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { listProvinces } = Provinces();
+  const { campaign } = Campaign();
+  const { careers } = Career();
+  const { jobTypes } = JobType();
+  const { ranks } = Rank();
+  const { experiences } = Experiences();
 
-  useEffect(() => {
-    getAllProvinces();
-  }, [setIsSkipValidate]);
+  useEffect(() => {}, [setIsSkipValidate]);
+
+  const schema = yup.object().shape({
+    name: yup.string().required("Vui lòng nhập tên"),
+    campagnId: yup.number(),
+    position: yup.string().required("Vui lòng nhập vị trí tuyển dụng"),
+    profession: yup
+      .number()
+      .required("Vui lòng chọn ngành nghề")
+      .min(0, "Vui lòng chọn ngành nghề"),
+
+    expired_date: yup.string().required("Vui lòng nhập hạn nhận hồ sơ"),
+    quantity: yup
+      .number()
+      .required("Vui lòng nhập số lượng tuyển")
+      .min(1, "Vui lòng nhập số lượng tuyển"),
+    type_of_work: yup
+      .number()
+      .required("Vui lòng chọn loại công việc")
+      .min(0, "Vui lòng chọn loại công việc"),
+    rank: yup
+      .number()
+      .required("Vui lòng chọn cấp bậc")
+      .min(0, "Vui lòng chọn cấp bậc"),
+    experience: yup
+      .number()
+      .required("Vui lòng chọn kinh nghiệm làm việc")
+      .min(0, "Vui lòng chọn kinh nghiệm làm việc"),
+    locations: yup
+      .array()
+      .of(
+        yup.object().shape({
+          location: yup.string().required("Vui lòng chọn khu vực"),
+          districts: yup
+            .array()
+            .of(
+              yup.object().shape({
+                district: yup
+                  .string()
+                  .test(
+                    "validate-district",
+                    "Vui lòng nhập quận huyện",
+                    function (value) {
+                      console.log(value);
+                      const location = this.from?.[1].value.location;
+                      if (location === "-1") {
+                        return true;
+                      }
+                      return !!value;
+                    }
+                  ),
+                detail_location: yup
+                  .string()
+                  .test(
+                    "validate-detail-location",
+                    "Vui lòng nhập địa chỉ cụ thể",
+                    function (value) {
+                      const location = this.from?.[1].value.location;
+                      if (location === "-1") {
+                        return true;
+                      }
+                      return !!value;
+                    }
+                  ),
+              })
+            )
+            .required("Bắt buộc nhập thông tin")
+            .min(1, "Phải có ít nhất 1 thông tin quận huyện"),
+        })
+      )
+      .min(1, "Phải có ít nhất 1 khu vực")
+      .required("Vui lòng chọn khu vực"),
+    time_working: yup
+      .array()
+      .of(
+        yup.object().shape({
+          day_from: yup.string().required("Vui lòng chọn ngày bắt đầu"),
+          day_to: yup.string().required("Vui lòng chọn ngày kết thúc"),
+          time_from: yup.string().required("Vui lòng chọn thời gian bắt đầu"),
+          time_to: yup.string().required("Vui lòng chọn thời gian kết thúc"),
+        })
+      )
+      .min(1, "Phải có ít nhất 1 đoạn thời gian")
+      .required("Vui lòng chọn thời gian làm việc"),
+    aggrement: yup.boolean(),
+    salary_from: yup.number().when("aggrement", ([aggrement], schema) => {
+      return aggrement === false
+        ? schema
+            .required("Vui lòng nhập số tiền")
+            .min(1, "Vui lòng nhập số tiền")
+        : schema;
+    }),
+    salary_to: yup.number().when("aggrement", ([aggrement], schema) => {
+      return aggrement === false
+        ? schema
+            .required("Vui lòng nhập số tiền")
+            .min(1, "Vui lòng nhập số tiền")
+        : schema;
+    }),
+    type_money: yup.string(),
+    gender: yup.number(),
+    description: yup.string().required("Vui lòng nhập mô tả công việc"),
+    requirement: yup.string().required("Vui lòng nhập yêu cầu ứng viên"),
+    benefit: yup.string().required("Vui lòng nhập quyền lợi của ứng viên"),
+    skills: yup.array().of(
+      yup.object().shape({
+        skill: yup.string(),
+      })
+    ),
+    username: yup.string().required("Vui lòng nhập họ và tên ứng viên"),
+    phone: yup
+      .string()
+      .required("Bắt buộc nhập số điện thoại")
+      .matches(/^[0-9]{10}$/, "Số điện thoại phải là 10 ký tự"),
+    emails: yup
+      .array()
+      .of(
+        yup.object().shape({
+          email: yup
+            .string()
+            .required("Bắt buộc nhập email")
+            .email("Sai format email "),
+        })
+      )
+      .min(1, "Tối thiểu 1 email")
+      .max(5, "Tối đa 3 email")
+      .required("Vui nhập email"),
+  });
 
   const {
     control,
     handleSubmit,
     getValues,
     watch,
+    setValue,
     reset,
     formState: { errors },
   } = useForm<IFormCreateNew>({
@@ -275,19 +246,34 @@ export default function CreateNew() {
   const handleFilterDistrict = async (value: string, index: number) => {
     setLoading(true);
     try {
-      const response = await axiosInstance.get(GET_DISTRICT, {
-        params: {
-          code: value,
-        },
-      });
-      const listDistrict = response.data.data.map((item: IProvinces) => {
-        return {
-          value: item.code,
-          label: item.name,
-        };
-      });
+      if (value !== "-1") {
+        const response = await axiosInstance.get(GET_DISTRICT, {
+          params: {
+            code: value,
+          },
+        });
+        const listDistrict = response.data.data.map((item: IProvinces) => {
+          return {
+            value: item.code,
+            label: item.name,
+          };
+        });
 
-      setDistrict([{ label: "Tất cả", value: "0" }, ...listDistrict]);
+        setDistrict((prevItem) => {
+          prevItem[index] = [{ label: "Tất cả", value: -1 }, ...listDistrict];
+          return prevItem;
+        });
+      } else {
+        setValue(`locations.${index}.districts`, [
+          {
+            district: "",
+            detail_location: "",
+          },
+        ]);
+        setDistrict((prevItem) => {
+          return prevItem.filter((item, idx) => idx !== index);
+        });
+      }
     } catch (error) {
     } finally {
       setLoading(false);
@@ -351,7 +337,9 @@ export default function CreateNew() {
         </Link>
       </div>
       <div className="mt-4 lg:px-40 px-2">
-        <div className="font-medium">Thông tin chung</div>
+        <div className="font-medium text-base text-colorBase">
+          Thông tin chung
+        </div>
         <form className="mt-2 pb-10">
           <div className="mt-2">
             <div className="font-medium">
@@ -364,11 +352,13 @@ export default function CreateNew() {
             />
           </div>
           <div className="mt-4">
-            <div className="font-medium">Chiến dịch</div>
+            <div className="font-medium">
+              Chiến dịch <span className="text-[#dc2f2f]">*</span>
+            </div>
             <TmSelect
               name="campagnId"
               control={control}
-              options={campaigns}
+              options={campaign}
               placeholder="Chọn chiến dịch"
             />
           </div>
@@ -412,7 +402,9 @@ export default function CreateNew() {
             </div>
           </div>
           <div className="mt-4">
-            <div className="font-medium text-base">Khu vực</div>
+            <div className="font-medium text-base">
+              Khu vực <span className="text-[#dc2f2f]">*</span>
+            </div>
 
             {fields.map((field, index) => (
               <div
@@ -443,7 +435,7 @@ export default function CreateNew() {
                           index
                         )
                       }
-                      options={provinces}
+                      options={listProvinces}
                       placeholder="Chọn thành phố"
                     />
                   </div>
@@ -451,7 +443,8 @@ export default function CreateNew() {
                 <div className="mt-4">
                   <LocationForm
                     control={control}
-                    options={district}
+                    options={district[index]}
+                    locationId={getValues(`locations.${index}.location`)}
                     name={`locations.${index}.districts`}
                   />
                 </div>
@@ -474,14 +467,16 @@ export default function CreateNew() {
                   ],
                 })
               }
-              className="flex text-white px-2 py-1 bg-[#F37A20] mt-4"
+              className="flex text-white px-2 items-center py-1 bg-[#F37A20] mt-4"
             >
               <PlusIcon className="w-4 mr-2" />
               Thêm khu vực
             </button>
           </div>
           <div className="mt-6">
-            <div className="font-medium">Yêu cầu chung</div>
+            <div className="font-medium text-base text-colorBase">
+              Yêu cầu chung
+            </div>
             <div className="flex space-x-2 mt-4">
               <div className="flex-1">
                 <div className="font-medium">
@@ -591,7 +586,9 @@ export default function CreateNew() {
             </div>
           </div>
           <div className="mt-6">
-            <div className="font-medium">Thông tin chi tiết</div>
+            <div className="font-medium text-base text-colorBase">
+              Thông tin chi tiết
+            </div>
             <div className="mt-4">
               <div className="font-medium ">
                 Mô tả công việc <span className="text-[#dc2f2f]">*</span>
@@ -618,7 +615,9 @@ export default function CreateNew() {
             </div>
           </div> */}
           <div className="mt-6">
-            <div className="font-medium">Thông tin chi tiết</div>
+            <div className="font-medium text-base text-colorBase">
+              Thông tin liên hệ
+            </div>
             <div className="mt-4">
               <div className="flex space-x-2">
                 <div className="flex-1">
