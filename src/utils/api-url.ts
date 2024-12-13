@@ -13,6 +13,10 @@ export const UPDATE_INFOMATION = "/api/recruiter/Profile/UpdateBasicInfo";
 export const ADD_BUSINESSLICENSE = "/api/recruiter/Profile/AddBusinesslicense";
 export const REALS = "/api/recruiter/MasterData/InfoRealms";
 export const UPDATE_COMPANY = "/api/recruiter/Profile/UpdateCompanyInfo";
+export const REVALIDATE_ACCOUNT =
+  "/api/recruiter/Email/RequestMailValidAccount";
+export const REQUEST_RESENDMAIL_CHANGPASSWORD =
+  "/api/recruiter/Email/RequestSendMailChangePassword";
 
 //------- Campaign ---------//
 export const GET_ALL_CAMPAIGN = "/api/recruiter/Campagn/GetAll";

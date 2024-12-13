@@ -139,6 +139,7 @@ export default function EditInfomationCompany({
         }, 300);
       }
     } catch (error) {
+      toast.success("Cập nhật thông tin công ty thất bại");
     } finally {
       setLoading(false);
     }

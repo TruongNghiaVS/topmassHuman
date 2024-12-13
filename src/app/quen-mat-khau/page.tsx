@@ -9,14 +9,21 @@ import * as yup from "yup";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { HOST_API } from "@/config-global";
-import { FORGOT_PASSWORD } from "@/utils/api-url";
+import {
+  FORGOT_PASSWORD,
+  REQUEST_RESENDMAIL_CHANGPASSWORD,
+} from "@/utils/api-url";
 import { useLoading } from "../context/loading";
 import { IResetpassword } from "@/interface/interface";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { axiosInstanceNotToken } from "@/utils/axios";
 
 export default function Login() {
   const { setLoading } = useLoading();
   const [type, setType] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
+  const [timer, setTimer] = useState(30);
+  const [email, setEmail] = useState("");
 
   const schema = yup.object().shape({
     email: yup
@@ -24,6 +31,41 @@ export default function Login() {
       .required("Bắt buộc nhập email")
       .email("Sai format email "),
   });
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout | null = null;
+
+    if (isDisabled && type) {
+      interval = setInterval(() => {
+        setTimer((prev) => {
+          if (prev <= 1) {
+            setIsDisabled(false);
+            return 30; // Reset timer for next cycle
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isDisabled, type]);
+
+  const handleClick = async () => {
+    try {
+      setLoading(true);
+      await axiosInstanceNotToken.post(REQUEST_RESENDMAIL_CHANGPASSWORD, {
+        email,
+      });
+      toast.success("Yêu cầu gửi email thành công");
+    } catch (error) {
+      toast.error("Yêu cầu gửi email thất bại");
+    } finally {
+      setLoading(false);
+      setIsDisabled(true);
+    }
+  };
 
   const { handleSubmit, control } = useForm<IResetpassword>({
     resolver: yupResolver(schema),
@@ -35,12 +77,8 @@ export default function Login() {
   const onSubmit: SubmitHandler<IResetpassword> = async (data) => {
     try {
       setLoading(true);
-      const axiosInstance = axios.create({
-        baseURL: HOST_API,
-        headers: { "Content-Type": "application/json" },
-      });
-      axiosInstance.interceptors.response.use((response) => response.data);
-      await axiosInstance.post(FORGOT_PASSWORD, data);
+      setEmail(data.email);
+      await axiosInstanceNotToken.post(FORGOT_PASSWORD, data);
       setType(true);
       toast.success("Gửi thông tin thành công");
     } catch (error) {
@@ -90,9 +128,24 @@ export default function Login() {
               </div>
             </div>
           ) : (
-            <div className="text-base font-medium">
-              Gửi thông tin thành công. Vui lòng kiểm tra email để thay đổi mật
-              khẩu
+            <div>
+              <div className="text-base font-medium">
+                Gửi thông tin thành công. Vui lòng kiểm tra email để thay đổi
+                mật khẩu
+              </div>
+              {isDisabled ? (
+                <div className="font-medium text-colorBase">
+                  (Vui lòng đợi {timer}s để yêu cầu gửi lại email)
+                </div>
+              ) : (
+                <div className="font-medium">
+                  Nếu chưa nhận được email. Vui lòng bấm vào{" "}
+                  <button onClick={handleClick} className="text-colorBase">
+                    đây
+                  </button>{" "}
+                  sau để nhận lại email
+                </div>
+              )}
             </div>
           )}
         </div>

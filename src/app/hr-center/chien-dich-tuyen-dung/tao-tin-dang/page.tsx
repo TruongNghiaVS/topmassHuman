@@ -608,12 +608,12 @@ export default function CreateNew() {
             </div>
             <CustomCKEditor name="benefit" control={control} />
           </div>
-          {/* <div className="mt-4">
+          <div className="mt-4">
             <div className="font-medium ">Kỹ năng cần có</div>
             <div>
               <SkillsForm control={control} name="skills" />
             </div>
-          </div> */}
+          </div>
           <div className="mt-6">
             <div className="font-medium text-base text-colorBase">
               Thông tin liên hệ
