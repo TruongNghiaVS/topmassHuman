@@ -10,6 +10,7 @@ import {
   PencilSquareIcon,
 } from "@heroicons/react/16/solid";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { AxiosError } from "axios";
 import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -37,7 +38,11 @@ export default function CreateCampaign() {
         reset();
       }
     } catch (error) {
-      toast.error("Thêm mới chiến dịch thất bạis");
+      if (error instanceof AxiosError) {
+        toast.error(error.response?.data.message);
+      } else {
+        toast.error("Thêm mới chiến dịch thất bại");
+      }
     } finally {
       setLoading(false);
     }

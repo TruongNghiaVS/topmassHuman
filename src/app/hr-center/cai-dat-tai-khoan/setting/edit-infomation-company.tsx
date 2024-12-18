@@ -148,7 +148,7 @@ export default function EditInfomationCompany({
     <div>
       <div className="font-medium">Cập nhật thông tin công ty</div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex space-x-2 items-center">
+        <div className="sm:flex sm:space-x-2 items-center">
           <div className="flex-1">
             <div className="">Logo công ty</div>
             <AvatarUpload
@@ -167,7 +167,7 @@ export default function EditInfomationCompany({
             />
           </div>
         </div>
-        <div className="flex space-x-2 items-center mt-2">
+        <div className="flex sm:space-x-2 space-y-2 sm:space-y-0 flex-col sm:flex-row sm:items-center mt-2">
           <div className="flex-1">
             <div className="">Mã số thuế</div>
             <TmInput control={control} name="taxCode" />
@@ -177,7 +177,7 @@ export default function EditInfomationCompany({
             <TmInput name="fullName" control={control} />
           </div>
         </div>
-        <div className="flex space-x-2 items-center mt-2">
+        <div className="flex sm:space-x-2 space-y-2 sm:space-y-0 flex-col sm:flex-row sm:items-center mt-2">
           <div className="flex-1">
             <div className="">Website</div>
             <TmInput control={control} name="website" />
@@ -198,7 +198,7 @@ export default function EditInfomationCompany({
             />
           </div>
         </div>
-        <div className="flex space-x-2 items-center mt-2">
+        <div className="flex sm:space-x-2 space-y-2 sm:space-y-0 flex-col sm:flex-row sm:items-center mt-2">
           <div className="flex-1">
             <div className="">Quy mô</div>
             <TmInput control={control} name="capacity" />
@@ -209,7 +209,7 @@ export default function EditInfomationCompany({
             <TmInput name="addressInfo" control={control} />
           </div>
         </div>
-        <div className="flex space-x-2 items-center mt-2">
+        <div className="flex sm:space-x-2 space-y-2 sm:space-y-0 flex-col sm:flex-row sm:items-center mt-2">
           <div className="flex-1">
             <div className="">Email</div>
             <TmInput name="email" control={control} type="email" />

@@ -24,11 +24,6 @@ const VerifiedLink: React.FC<VerifiedLinkProps> = ({
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
     event.preventDefault();
-    console.log(
-      currentUser?.level < verify_level,
-      currentUser?.level,
-      verify_level
-    );
     if (currentUser?.level < verify_level) {
       openModal();
     } else {

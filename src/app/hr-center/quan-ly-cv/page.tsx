@@ -104,7 +104,7 @@ export default function ManagerCV() {
       <div className="text-base font-normal">Quản lý CV ứng viên</div>
       <div className="mt-4 p-2 bg-white border rounded">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex space-x-2">
+          <div className="flex sm:space-x-2 sm:flex-row flex-col sm:space-y-0 space-y-2">
             <div className="flex-1">
               <TmInput
                 className="w-full"

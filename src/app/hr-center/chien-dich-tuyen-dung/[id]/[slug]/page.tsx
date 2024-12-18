@@ -68,9 +68,9 @@ export default function RecruimentPosition() {
         </Link>
         <div>{jobInfo?.name}</div>
       </div>
-      <div className="flex space-x-6 p-2">
+      <div className="flex sm:space-x-6 p-2 sm:flex-row flex-col space-y-1 sm:space-y-0">
         <button
-          className={`flex-1 bg-[#E2E1E0] rounded py-2 ${
+          className={`flex-1 bg-[#E2E1E0] rounded py-2 whitespace-nowrap ${
             selected === 1 && "bg-[#F37A20] text-white"
           }`}
           onClick={() => setSelected(1)}
@@ -78,7 +78,7 @@ export default function RecruimentPosition() {
           Tin tuyển dụng
         </button>
         <button
-          className={`flex-1 bg-[#E2E1E0] rounded py-2 ${
+          className={`flex-1 bg-[#E2E1E0] rounded py-2 whitespace-nowrap ${
             selected === 2 && "bg-[#F37A20] text-white"
           }`}
           onClick={() => setSelected(2)}
@@ -86,7 +86,7 @@ export default function RecruimentPosition() {
           CV ứng tuyển
         </button>
         <button
-          className={`flex-1 bg-[#E2E1E0] rounded py-2 ${
+          className={`flex-1 bg-[#E2E1E0] rounded py-2 whitespace-nowrap ${
             selected === 3 && "bg-[#F37A20] text-white"
           }`}
           onClick={() => setSelected(3)}
@@ -94,7 +94,7 @@ export default function RecruimentPosition() {
           Ứng viên xem tin
         </button>
         <button
-          className={`flex-1 bg-[#E2E1E0] rounded py-2 ${
+          className={`flex-1 bg-[#E2E1E0] rounded py-2 whitespace-nowrap ${
             selected === 4 && "bg-[#F37A20] text-white"
           }`}
           onClick={() => setSelected(4)}

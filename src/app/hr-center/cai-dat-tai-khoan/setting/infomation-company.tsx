@@ -47,7 +47,7 @@ export default function InfomationCompany({
               <div>{currentUser?.companyInfo.addressInfo}</div>
             </div>
           </div>
-          <div className="flex space-x-2 mt-2">
+          <div className="flex sm:flex-row flex-col sm:space-x-2 mt-2">
             <div className="flex-1">
               <span className="font-medium">Mã số thuế</span>:{" "}
               {currentUser?.companyInfo.taxCode}
@@ -57,7 +57,7 @@ export default function InfomationCompany({
               {currentUser?.companyInfo.website}
             </div>
           </div>
-          <div className="flex space-x-2 mt-2">
+          <div className="flex sm:flex-row flex-col sm:space-x-2 mt-2">
             <div className="flex-1">
               <span className="font-medium">Lĩnh vực hoạt động</span>:{" "}
               {getRelName(currentUser?.companyInfo.relId)}
@@ -67,7 +67,7 @@ export default function InfomationCompany({
               {currentUser?.companyInfo.capacity}
             </div>
           </div>
-          <div className="flex space-x-2 mt-2">
+          <div className="flex sm:flex-row flex-col sm:space-x-2 mt-2">
             <div className="flex-1">
               <span className="font-medium">Email</span>:{" "}
               {currentUser?.companyInfo.email}
@@ -83,7 +83,7 @@ export default function InfomationCompany({
             {currentUser?.companyInfo.fullName}
           </div>
           <div
-            className="mt-2 px-4"
+            className="mt-2 sm:px-4"
             dangerouslySetInnerHTML={{
               __html: currentUser?.companyInfo.shortDes,
             }}

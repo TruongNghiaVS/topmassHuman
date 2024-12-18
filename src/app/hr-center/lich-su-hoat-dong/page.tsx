@@ -33,7 +33,7 @@ export default function ActivityHistory() {
 
   return (
     <div className="px-6 py-3 bg-white min-h-screen">
-      <div className="grid sm:grid-cols-12 gap-4">
+      <div className="grid sm:grid-cols-12 sm:gap-4">
         <div className="col-span-4 p-2 bg-[#F9F6F2]">
           <button
             onClick={() => setActive(0)}

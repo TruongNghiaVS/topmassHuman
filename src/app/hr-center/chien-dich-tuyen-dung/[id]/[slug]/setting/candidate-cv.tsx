@@ -90,7 +90,7 @@ export const CandidateCv = ({ idJob }: IDetailCvProps) => {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="mt-4 flex sm:space-x-2 space-y-2 sm:space-y-0 px-2 flex-col sm:flex-row items-end">
+        <div className="mt-4 flex sm:space-x-2 space-y-2 sm:space-y-0 px-2 flex-col sm:flex-row sm:items-end">
           <TmInput
             name="KeyWord"
             icon={<MagnifyingGlassIcon className="w-4" />}

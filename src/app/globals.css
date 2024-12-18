@@ -53,8 +53,7 @@ p {
   @apply mb-4
 }
 
-.ckeditor-wrapper ol,
-ul {
+.ckeditor-wrapper ol, .ckeditor-wrapper ul {
   @apply pl-5;
 }
 

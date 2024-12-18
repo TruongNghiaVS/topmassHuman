@@ -35,7 +35,7 @@ const CustomCKEditor: React.FC<CustomCKEditorProps> = ({ name, control }) => {
   // };
 
   return (
-    <div className="my-4 ckeditor-wrapper">
+    <div className="my-4 ckeditor-wrapper w-[99%]">
       <CKEditor
         editor={ClassicEditor}
         data={value || ""}

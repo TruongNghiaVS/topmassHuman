@@ -81,7 +81,7 @@ const AvatarUpload: React.FC<IUpload> = ({
   };
 
   return (
-    <div className="sm:block grid justify-center">
+    <div className="">
       {preview || link ? (
         <img
           src={preview ? (preview as string) : link}

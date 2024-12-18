@@ -71,7 +71,7 @@ export default function Notification() {
                       item.status === 0 && "font-medium"
                     }`}
                   >
-                    <div className="px-3 py-1 rounded-lg bg-[#FFF5D9] text-[#FFB600]">
+                    <div className="px-3 py-1 rounded-lg bg-[#FFF5D9] text-[#FFB600] whitespace-nowrap">
                       Thông báo
                     </div>
                     <div>{dayjs(item.createAt).format("DD-MM-YYYY")}</div>
