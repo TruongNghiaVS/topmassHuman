@@ -22,7 +22,8 @@ import { Option } from "@/component/hook-form/interface/interface";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
-import { Campaign } from "@/module/helper/master-data";
+import { Campaign, ProfileUser } from "@/module/helper/master-data";
+import { usePopupLevelStore } from "@/store-zustand/useModalStore";
 
 export default function ManagerCV() {
   const [managerCv, setManagerCv] = useState<IManagerCv[]>([]);
@@ -37,6 +38,8 @@ export default function ManagerCV() {
   );
 
   const { listCampaign } = Campaign();
+  const { openModal } = usePopupLevelStore();
+  const { currentUser } = ProfileUser();
 
   const getStatusApply = async () => {
     setLoading(true);
@@ -57,8 +60,11 @@ export default function ManagerCV() {
     if (listManagerCV) {
       setManagerCv(listManagerCV);
     }
+    if (currentUser?.level < 2) {
+      openModal();
+    }
     getStatusApply();
-  }, [listManagerCV, setManagerCv]);
+  }, [listManagerCV, setManagerCv, currentUser]);
 
   const schema = yup.object().shape({
     KeyWord: yup.string(),

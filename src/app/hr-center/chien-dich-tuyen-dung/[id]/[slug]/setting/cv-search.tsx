@@ -253,7 +253,7 @@ export const CvSearch = ({
                     </div>
                   </td>
                   <td className="p-4 ">
-                    <div className="flex mt-1 justify-center">
+                    <div className="flex mt-1 justify-center flex-col">
                       <div>{dayjs(row.createAt).format("HH:mm")}</div>
                       <div>{dayjs(row.createAt).format("DD-MM-YYYY")}</div>
                     </div>

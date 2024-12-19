@@ -1,69 +1,32 @@
-"use client";
-import {
-  BoltIcon,
-  ClockIcon,
-  IdentificationIcon,
-  UserCircleIcon,
-} from "@heroicons/react/24/outline";
-import { useState } from "react";
-import ChangePassword from "./setting/change-password";
-import UpdateInfomation from "./setting/update-infomation";
-import BusinessRegistration from "./setting/business-registration";
-import InfomationCompany from "./setting/infomation-company";
-import useSWR from "swr";
-import { GET_CURRENT_USER } from "@/utils/api-url";
-import { fetcher } from "@/utils/axios";
+import { getMetadataToScreen } from "@/module/helper/api-generate-metadata";
+import SettingAccountOverview from "@/module/setting-account/setting-account";
+import { Metadata } from "next";
+
+export async function generateMetadata(): Promise<Metadata> {
+  // Fetch dữ liệu từ server hoặc API (nếu cần thiết)
+  const data = await getMetadataToScreen("loginPage");
+
+  return {
+    title: data?.metaTitle || "Default Title",
+    description: data?.metaDes || "Default Description",
+    keywords: [data?.metaKeyWord],
+    authors: [{ name: data?.metaAuthor }],
+    openGraph: {
+      title: data?.metaTitle,
+      description: data?.metaDes,
+      images: data?.metaImage ? [{ url: data?.metaImage }] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: data?.metaTitle,
+      description: data?.metaDes,
+      images: data?.coverFullLink
+        ? [{ url: data?.metaImage, alt: data?.metaTitle }]
+        : undefined,
+    },
+  };
+}
 
 export default function SettingAccount() {
-  const { data: currentUser, error, mutate } = useSWR(
-    GET_CURRENT_USER,
-    fetcher
-  );
-
-  const left = [
-    {
-      title: "Đổi mật khẩu",
-      icon: <ClockIcon className="w-4 mr-2 text-default" />,
-      tab: <ChangePassword />,
-    },
-    {
-      title: "Thông tin cá nhân",
-      icon: <BoltIcon className="w-4 mr-2 text-default" />,
-      tab: <UpdateInfomation currentUser={currentUser} mutate={mutate} />,
-    },
-    {
-      title: "Chứng từ doanh nghiệp",
-      icon: <IdentificationIcon className="w-4 mr-2 text-default" />,
-      tab: <BusinessRegistration currentUser={currentUser} mutate={mutate} />,
-    },
-    {
-      title: "Thông tin công ty",
-      icon: <UserCircleIcon className="w-4 mr-2 text-default" />,
-      tab: <InfomationCompany currentUser={currentUser} mutate={mutate} />,
-    },
-  ];
-  const [active, setActive] = useState<number>(0);
-
-  return (
-    <div className="px-6 py-3 bg-white min-h-screen">
-      <div className="grid sm:grid-cols-12 gap-4">
-        <div className="sm:col-span-4 p-2 bg-[#F9F6F2]">
-          {left.map((item, index) => {
-            return (
-              <button
-                key={item.title}
-                onClick={() => setActive(index)}
-                className={`flex p-2 rounded items-center w-full ${
-                  active === index && "bg-white"
-                }`}
-              >
-                {item.icon} {item.title}
-              </button>
-            );
-          })}
-        </div>
-        <div className="sm:col-span-8">{left[active] && left[active].tab}</div>
-      </div>
-    </div>
-  );
+  return <SettingAccountOverview />;
 }

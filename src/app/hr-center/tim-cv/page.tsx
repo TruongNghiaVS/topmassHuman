@@ -7,11 +7,11 @@ import TmSelect from "@/component/hook-form/select";
 import { SubmitHandler, useForm } from "react-hook-form";
 import InfomationCv from "./infomation-cv";
 import { useSearchParams } from "next/navigation";
-import { Provinces } from "@/module/helper/master-data";
+import { ProfileUser, Provinces } from "@/module/helper/master-data";
 import { useLoading } from "@/app/context/loading";
 import { fetcher } from "@/utils/axios";
 import { SEARCH_CV } from "@/utils/api-url";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ICvSearch } from "@/interface/cv";
 import useSWR from "swr";
 import { convertParams } from "@/utils/custom-hook";
@@ -19,6 +19,7 @@ import * as yup from "yup";
 import { ISearchCv, ISearchCvState } from "@/interface/interface";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Paging } from "@/component/paging";
+import { usePopupLevelStore } from "@/store-zustand/useModalStore";
 
 const years = Array.from({ length: 52 }, (_, i) => {
   const item = {
@@ -44,6 +45,15 @@ export default function SearchCV() {
     EducationalLevelArray: "",
     Limit: 10,
   });
+
+  const { openModal } = usePopupLevelStore();
+  const { currentUser } = ProfileUser();
+
+  useEffect(() => {
+    if (currentUser?.level < 2) {
+      openModal();
+    }
+  }, [currentUser]);
 
   const schema = yup.object().shape({
     KeyWord: yup.string(),
@@ -293,22 +303,34 @@ export default function SearchCV() {
           </form>
         </div>
         <div className="sm:col-span-2">
-          {cvSearch?.data.map((item: ICvSearch, idx: number) => {
-            return (
-              <div className="" key={idx}>
-                <InfomationCv item={item} idCampaign={idCampaign} />
+          <div>
+            {cvSearch?.total > 0 ? (
+              <div>
+                {cvSearch?.data.map((item: ICvSearch, idx: number) => {
+                  return (
+                    <div className="" key={idx}>
+                      <InfomationCv item={item} idCampaign={idCampaign} />
+                    </div>
+                  );
+                })}
+                {cvSearch?.total > 0 ? (
+                  <Paging
+                    setCurrentPage={setCurrentPage}
+                    currentPage={currentPage}
+                    lengthData={cvSearch?.total}
+                  />
+                ) : (
+                  ""
+                )}
               </div>
-            );
-          })}
-          {cvSearch?.total > 0 ? (
-            <Paging
-              setCurrentPage={setCurrentPage}
-              currentPage={currentPage}
-              lengthData={cvSearch?.total}
-            />
-          ) : (
-            ""
-          )}
+            ) : (
+              <div className="min-h-screen bg-white">
+                <div className="font-medium pt-2 pl-4">
+                  Không tìm thấy kết quả phù hợp
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

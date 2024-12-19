@@ -320,6 +320,11 @@ export default function UpdateJob() {
     }
   };
 
+  const date = new Date().toISOString().split("T")[0];
+  const toDate = new Date(new Date().setDate(new Date().getDate() + 30))
+    .toISOString()
+    .split("T")[0];
+
   return (
     <div className="bg-white min-h-screen">
       <div className="p-4 border-b flex justify-between sm:flex-row flex-col space-y-2 sm:space-y-0">
@@ -398,7 +403,15 @@ export default function UpdateJob() {
               <div className="font-medium">
                 Hạn nhận hồ sơ <span className="text-[#dc2f2f]">*</span>
               </div>
-              <TmInput name="expired_date" type="date" control={control} />
+
+              <TmInput
+                name="expired_date"
+                type="date"
+                control={control}
+                disabled={getValues("ruleStatus") === 2}
+                min={date}
+                max={toDate}
+              />
             </div>
             <div className="flex-1">
               <div className="font-medium">

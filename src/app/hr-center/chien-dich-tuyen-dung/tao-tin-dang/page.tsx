@@ -39,6 +39,8 @@ import {
   Rank,
 } from "@/module/helper/master-data";
 import { AxiosError } from "axios";
+import dayjs from "dayjs";
+import Modal from "@/component/modal";
 
 const CustomCKEditor = dynamic(
   () => {
@@ -57,6 +59,9 @@ export default function CreateNew() {
   const { jobTypes } = JobType();
   const { ranks } = Rank();
   const { experiences } = Experiences();
+  const [isOpenModal, setIsOpenModal] = useState(
+    campaign.length > 0 ? false : true
+  );
 
   useEffect(() => {}, [setIsSkipValidate]);
 
@@ -316,6 +321,11 @@ export default function CreateNew() {
     }, 200);
   };
 
+  const date = new Date().toISOString().split("T")[0];
+  const toDate = new Date(new Date().setDate(new Date().getDate() + 30))
+    .toISOString()
+    .split("T")[0];
+
   return (
     <div className="bg-white min-h-screen">
       <div className="p-4 border-b flex justify-between sm:flex-row flex-col space-y-2 sm:space-y-0">
@@ -392,7 +402,13 @@ export default function CreateNew() {
               <div className="font-medium">
                 Hạn nhận hồ sơ <span className="text-[#dc2f2f]">*</span>
               </div>
-              <TmInput name="expired_date" type="date" control={control} />
+              <TmInput
+                name="expired_date"
+                type="date"
+                control={control}
+                min={date}
+                max={toDate}
+              />
             </div>
             <div className="flex-1">
               <div className="font-medium">
@@ -669,6 +685,24 @@ export default function CreateNew() {
           </div>
         </form>
       </div>
+
+      <Modal isOpen={isOpenModal} onClose={() => setIsOpenModal(false)}>
+        <div>
+          <div className="font-medium text-center">
+            Bạn chưa có chiến dịch nào đang chạy
+          </div>
+          <div className="mt-2 text-center">
+            Vui lòng bấm vào{" "}
+            <Link
+              className="text-colorBase font-medium"
+              href="/hr-center/chien-dich-tuyen-dung/them-moi-chien-dich"
+            >
+              đây
+            </Link>{" "}
+            để tạo chiến dịch{" "}
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }

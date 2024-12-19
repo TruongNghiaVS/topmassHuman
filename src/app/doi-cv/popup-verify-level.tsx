@@ -16,6 +16,7 @@ export const PopupVerifyLevel = ({ isOpen, onClose }: IModalVerifyLevel) => {
       <Modal
         isOpen={isOpen}
         onClose={onClose}
+        activeCloseButton={false}
         className="md:min-w-[700px] max-h-[60vh] overflow-auto relative"
       >
         <div className="text-center font-medium my-2 mb-4">

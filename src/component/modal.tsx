@@ -9,9 +9,17 @@ interface ModalProps {
   children: React.ReactNode;
   className?: string;
   title?: string;
+  activeCloseButton?: boolean;
 }
 
-const Modal = ({ isOpen, onClose, children, className, title }: ModalProps) => {
+const Modal = ({
+  isOpen,
+  onClose,
+  children,
+  className,
+  title,
+  activeCloseButton = true,
+}: ModalProps) => {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -32,9 +40,13 @@ const Modal = ({ isOpen, onClose, children, className, title }: ModalProps) => {
         <div className="bg-white rounded mb-4  md:min-w-[600px] min-w-[400px]">
           <div className="modal-header p-4 relative">
             {title && <div className="text-base font-bold">{title}</div>}
-            <button className="modal-close" onClick={onClose}>
-              <XMarkIcon className="w-4" />
-            </button>
+            {activeCloseButton ? (
+              <button className="modal-close" onClick={onClose}>
+                <XMarkIcon className="w-4" />
+              </button>
+            ) : (
+              ""
+            )}
           </div>
           <div className={`modal-content ${className && className}`}>
             {children}

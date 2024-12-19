@@ -18,6 +18,8 @@ import dayjs from "dayjs";
 import { ICampaign } from "@/interface/interface";
 import { useEffect, useState } from "react";
 import { PopupCampaign } from "@/component/popup-edit-campaign";
+import { usePopupLevelStore } from "@/store-zustand/useModalStore";
+import { ProfileUser } from "@/module/helper/master-data";
 
 const generateJob = (data: { id: number; name: string }) => {
   return (
@@ -49,6 +51,8 @@ export default function RecruimentCampaign() {
     `${GET_ALL_CAMPAIGN}?status=${status}`,
     fetcher
   );
+  const { openModal } = usePopupLevelStore();
+  const { currentUser } = ProfileUser();
 
   const onOpen = () => {
     setIsOpen(true);
@@ -61,7 +65,10 @@ export default function RecruimentCampaign() {
   useEffect(() => {
     setCampaigns(listCampaign ? listCampaign.data : []);
     setListDataSearch(listCampaign ? listCampaign.data : []);
-  }, [listCampaign, setCampaigns, setListDataSearch]);
+    if (currentUser?.level < 2) {
+      openModal();
+    }
+  }, [listCampaign, setCampaigns, setListDataSearch, currentUser]);
 
   const { control } = useForm({
     defaultValues: {
@@ -223,15 +230,11 @@ export default function RecruimentCampaign() {
                         "inline-block px-4 py-1 rounded-xl text-default border border-[#F37A20]"
                       }`}
                     >
-                      {row.status ? (
-                        <div>
-                          <Link href={`/hr-center/tim-cv?idCampaign=${row.id}`}>
-                            Tìm CV
-                          </Link>
-                        </div>
-                      ) : (
-                        "Bật chiến dịch để thực hiện tìm CV"
-                      )}
+                      <div>
+                        <Link href={`/hr-center/tim-cv?idCampaign=${row.id}`}>
+                          Tìm CV
+                        </Link>
+                      </div>
                     </div>
                   </td>
                   <td className="p-4 ">

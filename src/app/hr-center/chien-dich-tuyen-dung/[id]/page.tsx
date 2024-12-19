@@ -315,9 +315,9 @@ export default function DetailCampaign({ params }: { params: { id: number } }) {
                     </div>
                   </td>
                   <td className="p-4 ">
-                    <div className="text default inline-block px-3 py-1 rounded border border-[#F37A20]">
-                      {row.campaignName}
-                    </div>
+                    {/* <div className="text default inline-block px-3 py-1 rounded border border-[#F37A20]"> */}
+                    {row.campaignName}
+                    {/* </div> */}
                   </td>
                   <td className="p-4 ">
                     {dayjs(row.createAt).format("DD-MM-YYYY HH:mm")}

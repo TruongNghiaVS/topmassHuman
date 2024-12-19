@@ -18,7 +18,7 @@ import * as yup from "yup";
 
 const CustomCKEditor = dynamic(
   () => {
-    return import("../../../../component/hook-form/ck-editor");
+    return import("../../component/hook-form/ck-editor");
   },
   { ssr: false }
 );
@@ -157,7 +157,7 @@ export default function EditInfomationCompany({
               link={currentUser?.companyInfo.logoLink}
             />
           </div>
-          <div className="flex-1">
+          {/* <div className="flex-1">
             <div className="">Ảnh bìa công ty (kích thước 1200x250)</div>
             <AvatarUpload
               name="banner"
@@ -165,7 +165,7 @@ export default function EditInfomationCompany({
               control={control}
               link={currentUser?.companyInfo.coverLink}
             />
-          </div>
+          </div> */}
         </div>
         <div className="flex sm:space-x-2 space-y-2 sm:space-y-0 flex-col sm:flex-row sm:items-center mt-2">
           <div className="flex-1">
@@ -201,7 +201,11 @@ export default function EditInfomationCompany({
         <div className="flex sm:space-x-2 space-y-2 sm:space-y-0 flex-col sm:flex-row sm:items-center mt-2">
           <div className="flex-1">
             <div className="">Quy mô</div>
-            <TmInput control={control} name="capacity" />
+            <TmInput
+              control={control}
+              name="capacity"
+              afterIcon={<div>Nhân viên</div>}
+            />
           </div>
           <div className="flex-1">
             <div className="">Địa chỉ</div>

@@ -63,8 +63,8 @@ export default function InfomationCompany({
               {getRelName(currentUser?.companyInfo.relId)}
             </div>
             <div className="flex-1">
-              <span className="font-medium">Qui mô</span>:{" "}
-              {currentUser?.companyInfo.capacity}
+              <span className="font-medium">Quy mô</span>:{" "}
+              {currentUser?.companyInfo.capacity} nhân viên
             </div>
           </div>
           <div className="flex sm:flex-row flex-col sm:space-x-2 mt-2">
