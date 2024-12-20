@@ -143,6 +143,7 @@ const schema = yup.object().shape({
   description: yup.string().required("Vui lòng nhập mô tả công việc"),
   requirement: yup.string().required("Vui lòng nhập yêu cầu ứng viên"),
   benefit: yup.string().required("Vui lòng nhập quyền lợi của ứng viên"),
+  time_WorkingText: yup.string().required("Vui lòng nhập thời gian làm việc"),
   skills: yup.array().of(
     yup.object().shape({
       skill: yup.string(),
@@ -241,6 +242,7 @@ export default function UpdateJob() {
       ruleStatus: 0,
       phone: "",
       emails: [{ email: "" }],
+      time_WorkingText: "",
     },
   });
 
@@ -580,9 +582,12 @@ export default function UpdateJob() {
             </div>
           </div>
           <div className="mt-4">
-            <div className="font-medium">Thời giam làm việc</div>
+            <div className="font-medium">
+              Thời giam làm việc <span className="text-[#dc2f2f]">*</span>
+            </div>
             <div>
-              <TimeWorkingForm control={control} name={`time_working`} />
+              {/* <TimeWorkingForm control={control} name={`time_working`} /> */}
+              <CustomCKEditor name="time_WorkingText" control={control} />
             </div>
             {errors && errors.time_working && (
               <p className="text-red-500 text-sm mt-1">
