@@ -205,12 +205,12 @@ export interface IFormCreateNew {
       detail_location?: string;
     }[];
   }[];
-  time_working: {
-    day_from: string;
-    day_to: string;
-    time_from: string;
-    time_to: string;
-  }[];
+  // time_working: {
+  //   day_from: string;
+  //   day_to: string;
+  //   time_from: string;
+  //   time_to: string;
+  // }[];
   aggrement?: boolean;
   salary_from?: number;
   salary_to?: number;

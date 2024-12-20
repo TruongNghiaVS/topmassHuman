@@ -24,6 +24,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import { Campaign, ProfileUser } from "@/module/helper/master-data";
 import { usePopupLevelStore } from "@/store-zustand/useModalStore";
+import Link from "next/link";
 
 export default function ManagerCV() {
   const [managerCv, setManagerCv] = useState<IManagerCv[]>([]);
@@ -103,6 +104,11 @@ export default function ManagerCV() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const getCvName = (link: string) => {
+    const names = link.split("/");
+    return names[names.length - 1];
   };
 
   return (
@@ -194,9 +200,11 @@ export default function ManagerCV() {
                         <div className="font-normal line-clamp-3">
                           {row.fullName}
                         </div>
-                        {/* <div className="text-xs inline-block p-1 rounded bg-[#F5F8FA]">
-                          {row.viewModeText}
-                        </div> */}
+                        <div className="text-colorBase">
+                          <Link href={row.linkFile} target="_blank">
+                            {getCvName(row.linkFile)}
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   </td>

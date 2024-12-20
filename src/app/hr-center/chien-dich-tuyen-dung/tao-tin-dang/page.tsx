@@ -143,18 +143,18 @@ export default function CreateNew() {
       )
       .min(1, "Phải có ít nhất 1 khu vực")
       .required("Vui lòng chọn khu vực"),
-    time_working: yup
-      .array()
-      .of(
-        yup.object().shape({
-          day_from: yup.string().required("Vui lòng chọn ngày bắt đầu"),
-          day_to: yup.string().required("Vui lòng chọn ngày kết thúc"),
-          time_from: yup.string().required("Vui lòng chọn thời gian bắt đầu"),
-          time_to: yup.string().required("Vui lòng chọn thời gian kết thúc"),
-        })
-      )
-      .min(1, "Phải có ít nhất 1 đoạn thời gian")
-      .required("Vui lòng chọn thời gian làm việc"),
+    // time_working: yup
+    //   .array()
+    //   .of(
+    //     yup.object().shape({
+    //       day_from: yup.string().required("Vui lòng chọn ngày bắt đầu"),
+    //       day_to: yup.string().required("Vui lòng chọn ngày kết thúc"),
+    //       time_from: yup.string().required("Vui lòng chọn thời gian bắt đầu"),
+    //       time_to: yup.string().required("Vui lòng chọn thời gian kết thúc"),
+    //     })
+    //   )
+    //   .min(1, "Phải có ít nhất 1 đoạn thời gian")
+    //   .required("Vui lòng chọn thời gian làm việc"),
     aggrement: yup.boolean(),
     salary_from: yup.number().when("aggrement", ([aggrement], schema) => {
       return aggrement === false
@@ -232,14 +232,14 @@ export default function CreateNew() {
           ],
         },
       ],
-      time_working: [
-        {
-          day_from: "",
-          day_to: "",
-          time_from: "",
-          time_to: "",
-        },
-      ],
+      // time_working: [
+      //   {
+      //     day_from: "",
+      //     day_to: "",
+      //     time_from: "",
+      //     time_to: "",
+      //   },
+      // ],
       aggrement: false,
       salary_from: 0,
       salary_to: 0,
@@ -597,11 +597,11 @@ export default function CreateNew() {
               {/* <TimeWorkingForm control={control} name={`time_working`} /> */}
               <CustomCKEditor name="time_WorkingText" control={control} />
             </div>
-            {errors && errors.time_working && (
+            {/* {errors && errors.time_working && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.time_working.root?.message}
               </p>
-            )}
+            )} */}
           </div>
           <div className="mt-4">
             <div className="font-medium">Giới tính</div>
