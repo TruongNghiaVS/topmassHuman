@@ -18,7 +18,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
 import { useFieldArray, useForm } from "react-hook-form";
 import * as yup from "yup";
-import { TimeWorkingForm } from "./setting/time-working-form";
 import dynamic from "next/dynamic";
 import { toast } from "react-toastify";
 import { EmailsForm } from "./setting/emails-form";
@@ -35,12 +34,14 @@ import {
   Career,
   Experiences,
   JobType,
+  ProfileUser,
   Provinces,
   Rank,
 } from "@/module/helper/master-data";
 import { AxiosError } from "axios";
 import dayjs from "dayjs";
 import Modal from "@/component/modal";
+import { usePopupLevelStore } from "@/store-zustand/useModalStore";
 
 const CustomCKEditor = dynamic(
   () => {
@@ -59,11 +60,18 @@ export default function CreateNew() {
   const { jobTypes } = JobType();
   const { ranks } = Rank();
   const { experiences } = Experiences();
-  const [isOpenModal, setIsOpenModal] = useState(
-    campaign.length > 0 ? false : true
-  );
+  const { openModal } = usePopupLevelStore();
+  const { currentUser } = ProfileUser();
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
-  useEffect(() => {}, [setIsSkipValidate]);
+  useEffect(() => {
+    if (currentUser?.level < 2) {
+      openModal();
+    }
+    if (campaign.length <= 0 && currentUser?.level > 1) {
+      setIsOpenModal(true);
+    }
+  }, [setIsSkipValidate, currentUser]);
 
   const schema = yup.object().shape({
     name: yup.string().required("Vui lòng nhập tên"),
@@ -167,6 +175,7 @@ export default function CreateNew() {
     description: yup.string().required("Vui lòng nhập mô tả công việc"),
     requirement: yup.string().required("Vui lòng nhập yêu cầu ứng viên"),
     benefit: yup.string().required("Vui lòng nhập quyền lợi của ứng viên"),
+    time_WorkingText: yup.string().required("Vui lòng nhập thời gian làm việc"),
     skills: yup.array().of(
       yup.object().shape({
         skill: yup.string(),
@@ -243,6 +252,7 @@ export default function CreateNew() {
       username: "",
       phone: "",
       emails: [{ email: "" }],
+      time_WorkingText: "",
     },
   });
 
@@ -580,9 +590,12 @@ export default function CreateNew() {
             </div>
           </div>
           <div className="mt-4">
-            <div className="font-medium">Thời giam làm việc</div>
+            <div className="font-medium">
+              Thời giam làm việc <span className="text-[#dc2f2f]">*</span>
+            </div>
             <div>
-              <TimeWorkingForm control={control} name={`time_working`} />
+              {/* <TimeWorkingForm control={control} name={`time_working`} /> */}
+              <CustomCKEditor name="time_WorkingText" control={control} />
             </div>
             {errors && errors.time_working && (
               <p className="text-red-500 text-sm mt-1">

@@ -225,6 +225,7 @@ export interface IFormCreateNew {
   username: string;
   phone: string;
   emails: { email: string }[];
+  time_WorkingText: string;
 }
 
 export interface IProvinces {

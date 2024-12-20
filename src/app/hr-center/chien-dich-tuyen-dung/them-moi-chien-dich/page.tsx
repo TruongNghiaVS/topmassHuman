@@ -3,6 +3,8 @@
 import { useLoading } from "@/app/context/loading";
 import TmInput from "@/component/hook-form/input";
 import { ICampaignUpdate } from "@/interface/interface";
+import { ProfileUser } from "@/module/helper/master-data";
+import { usePopupLevelStore } from "@/store-zustand/useModalStore";
 import { ADD_CAMPAIGN } from "@/utils/api-url";
 import axiosInstance from "@/utils/axios";
 import {
@@ -12,6 +14,7 @@ import {
 import { yupResolver } from "@hookform/resolvers/yup";
 import { AxiosError } from "axios";
 import Link from "next/link";
+import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import * as yup from "yup";
@@ -28,6 +31,14 @@ export default function CreateCampaign() {
       name: "",
     },
   });
+  const { openModal } = usePopupLevelStore();
+  const { currentUser } = ProfileUser();
+
+  useEffect(() => {
+    if (currentUser?.level < 2) {
+      openModal();
+    }
+  }, [currentUser]);
 
   const onSubmit: SubmitHandler<ICampaignUpdate> = async (data) => {
     try {

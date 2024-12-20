@@ -63,6 +63,10 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="icon" href="/imgs/favicon.png" type="image/png" />
+        <meta
+          name="google-site-verification"
+          content="FfUAN2J0OdNel1OUtwxakoT5ylsBMqkatd1dVc1azh8"
+        />
       </head>
       <body className={`${roboto.variable} font-roboto  min-h-screen `}>
         <LoadingProvider>
