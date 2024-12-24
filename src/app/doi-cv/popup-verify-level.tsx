@@ -20,8 +20,8 @@ export const PopupVerifyLevel = ({ isOpen, onClose }: IModalVerifyLevel) => {
         className="md:min-w-[700px] max-h-[60vh] overflow-auto relative"
       >
         <div className="text-center font-medium my-2 mb-4">
-          Vui lòng xác thực thông tin công ty & Giấy đăng kí kinh doanh để tiếp
-          tục sử dụng tính năng của Topmass
+          Vui lòng xác thực Thông tin công ty & Chứng từ doanh nghiệp để sử dụng
+          tính năng này!
         </div>
 
         <div className="flex justify-center space-x-3">
