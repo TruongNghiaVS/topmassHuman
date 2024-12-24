@@ -16,7 +16,7 @@ import * as yup from "yup";
 
 const CustomCKEditor = dynamic(
   () => {
-    return import("../../../../../../component/hook-form/ck-editor");
+    return import("../../../../component/hook-form/ck-editor");
   },
   { ssr: false }
 );

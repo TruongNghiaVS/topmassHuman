@@ -116,6 +116,8 @@ export const FormRegister = () => {
       }
     } catch (error) {
       if (error instanceof AxiosError) {
+        toast.error(error.response?.data.message);
+      } else {
         toast.error("Đăng ký không thành công");
       }
     } finally {

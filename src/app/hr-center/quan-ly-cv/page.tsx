@@ -16,7 +16,6 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import useSWR from "swr";
-import { ModalChangeStatus } from "../chien-dich-tuyen-dung/[id]/[slug]/setting/modal-change-status";
 import { useLoading } from "@/app/context/loading";
 import { Option } from "@/component/hook-form/interface/interface";
 import * as yup from "yup";
@@ -25,6 +24,7 @@ import { toast } from "react-toastify";
 import { Campaign, ProfileUser } from "@/module/helper/master-data";
 import { usePopupLevelStore } from "@/store-zustand/useModalStore";
 import Link from "next/link";
+import { ModalChangeStatus } from "@/module/hr-center/campaign/setting/modal-change-status";
 
 export default function ManagerCV() {
   const [managerCv, setManagerCv] = useState<IManagerCv[]>([]);

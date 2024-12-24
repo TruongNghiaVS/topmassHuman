@@ -532,3 +532,7 @@ export interface IPaging {
   lengthData: number;
   currentPage: number;
 }
+
+export interface IDetailCampaign {
+  id: number;
+}
