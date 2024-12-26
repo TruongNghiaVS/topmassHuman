@@ -1,38 +1,37 @@
-"use client";
+import { Metadata } from "next";
+import { getMetadataToScreen } from "@/module/helper/api-generate-metadata";
+import DetailNotificationOverview from "@/module/hr-center/detail-notification-overview";
 
-import { GET_DETAIL_NOTIFICATION } from "@/utils/api-url";
-import { fetcher } from "@/utils/axios";
-import { ArrowUturnLeftIcon } from "@heroicons/react/16/solid";
-import Link from "next/link";
-import useSWR from "swr";
+export async function generateMetadata(): Promise<Metadata> {
+  // Fetch dữ liệu từ server hoặc API (nếu cần thiết)
+
+  const data = await getMetadataToScreen("homePage");
+
+  return {
+    title: data?.metaTitle || "Default Title",
+    description: data?.metaDes || "Default Description",
+    keywords: [data?.metaKeyWord],
+    authors: [{ name: data?.metaAuthor }],
+    openGraph: {
+      title: data?.metaTitle,
+      description: data?.metaDes,
+      images: data?.metaImage ? [{ url: data?.metaImage }] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: data?.metaTitle,
+      description: data?.metaDes,
+      images: data?.coverFullLink
+        ? [{ url: data?.metaImage, alt: data?.metaTitle }]
+        : undefined,
+    },
+  };
+}
 
 export default function DetailNotification({
   params,
 }: {
   params: { id: number };
 }) {
-  const { id } = params;
-  const { data: detailNoti, error } = useSWR(
-    `${GET_DETAIL_NOTIFICATION}?Id=${id}`,
-    fetcher
-  );
-
-  return (
-    <div className="min-h-screen">
-      <div className="p-4 bg-white flex whitespace-nowrap space-x-4 items-center">
-        <Link
-          href="/hr-center/thong-bao"
-          className="flex rounded-2xl py-1 px-2 bg-[#BFBFBF]"
-        >
-          <ArrowUturnLeftIcon className="w-4 mr-1" />
-          Trở về
-        </Link>
-        <div>Chi tiết thông báo</div>
-      </div>
-      <div className="m-6 bg-white p-4">
-        <div className="font-medium">{detailNoti?.title} </div>
-        <div className="mt-4">{detailNoti?.content}</div>
-      </div>
-    </div>
-  );
+  return <DetailNotificationOverview id={params.id} />;
 }
