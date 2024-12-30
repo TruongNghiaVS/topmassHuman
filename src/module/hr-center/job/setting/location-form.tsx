@@ -9,11 +9,29 @@ export const LocationForm = ({
   name,
   locationId,
   options = [],
+  getValues,
+  setValue,
+  watch,
 }: ILocationForm) => {
   const { fields, append, remove } = useFieldArray({
     control,
     name,
   });
+
+  const handleChangeDistrict = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+    index: number
+  ) => {
+    if (event.target.value && event.target.value === "-1") {
+      setValue(`locations.${index}.districts`, [
+        {
+          district: event.target.value,
+          detail_location: "",
+        },
+      ]);
+    }
+    const watchedName = watch(`locations.${index}.districts`);
+  };
 
   return (
     <div className="mt-4">
@@ -25,13 +43,20 @@ export const LocationForm = ({
               classNameCustom="w-full"
               name={`${name}.${index}.district`}
               disabled={(locationId && locationId === "-1") || false}
+              onChange={(e) => handleChangeDistrict(e, index)}
               control={control}
               options={options}
             />
             <TmInput
               classNameCustom="w-full"
               placeholder="Nhập Số nhà, Tên đường, Phường/Xã"
-              disabled={(locationId && locationId === "-1") || false}
+              disabled={
+                (locationId && locationId === "-1") ||
+                getValues(`locations.${index}.districts.${index}.district`) ===
+                  "-1"
+                  ? true
+                  : false
+              }
               name={`${name}.${index}.detail_location`}
               control={control}
             />

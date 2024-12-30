@@ -113,7 +113,7 @@ export default function CreateJobOverview() {
                     "validate-district",
                     "Vui lòng nhập quận huyện",
                     function (value) {
-                      console.log(value);
+                      console.log(this.from);
                       const location = this.from?.[1].value.location;
                       if (location === "-1") {
                         return true;
@@ -128,7 +128,8 @@ export default function CreateJobOverview() {
                     "Vui lòng nhập địa chỉ cụ thể",
                     function (value) {
                       const location = this.from?.[1].value.location;
-                      if (location === "-1") {
+                      const district = this.from?.[0].value.district;
+                      if (location === "-1" || district === "-1") {
                         return true;
                       }
                       return !!value;
@@ -274,7 +275,7 @@ export default function CreateJobOverview() {
         });
 
         setDistrict((prevItem) => {
-          prevItem[index] = [{ label: "Tất cả", value: -1 }, ...listDistrict];
+          prevItem[index] = [{ label: "Tất cả", value: "-1" }, ...listDistrict];
           return prevItem;
         });
       } else {
@@ -471,6 +472,9 @@ export default function CreateJobOverview() {
                     options={district[index]}
                     locationId={getValues(`locations.${index}.location`)}
                     name={`locations.${index}.districts`}
+                    getValues={getValues}
+                    setValue={setValue}
+                    watch={watch}
                   />
                 </div>
               </div>
@@ -578,7 +582,6 @@ export default function CreateJobOverview() {
                   <div className="flex-1">
                     <TmSelect
                       name="type_money"
-                      type="checkbox"
                       control={control}
                       options={salaryOptions}
                       placeholder="Chọn loại tiền"

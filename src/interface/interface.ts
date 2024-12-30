@@ -1,6 +1,11 @@
 import { Option } from "@/component/hook-form/interface/interface";
 import { Dispatch, SetStateAction } from "react";
-import { Control } from "react-hook-form";
+import {
+  Control,
+  UseFormGetValues,
+  UseFormSetValue,
+  UseFormWatch,
+} from "react-hook-form";
 import { KeyedMutator } from "swr";
 
 export interface ILogin {
@@ -233,11 +238,21 @@ export interface IProvinces {
   name: string;
 }
 
+export interface IMultipleFieldForm {
+  control: Control<any>;
+  name: string;
+  locationId?: string;
+  options?: Option[];
+}
+
 export interface ILocationForm {
   control: Control<any>;
   name: string;
   locationId?: string;
   options?: Option[];
+  getValues: UseFormGetValues<IFormCreateNew>;
+  setValue: UseFormSetValue<IFormCreateNew>;
+  watch: UseFormWatch<IFormCreateNew>;
 }
 
 export interface ICareer {

@@ -1,9 +1,9 @@
 import { useFieldArray } from "react-hook-form";
 import TmInput from "@/component/hook-form/input";
 import { PlusIcon, TrashIcon } from "@heroicons/react/16/solid";
-import { ILocationForm } from "@/interface/interface";
+import { IMultipleFieldForm } from "@/interface/interface";
 
-export const EmailsForm = ({ control, name }: ILocationForm) => {
+export const EmailsForm = ({ control, name }: IMultipleFieldForm) => {
   const { fields, append, remove } = useFieldArray({
     control,
     name,

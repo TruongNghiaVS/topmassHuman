@@ -3,9 +3,9 @@ import TmInput from "@/component/hook-form/input";
 import { ClockIcon, PlusIcon, TrashIcon } from "@heroicons/react/16/solid";
 import { dayOfWeek } from "@/mockup-data/data";
 import TmSelect from "@/component/hook-form/select";
-import { ILocationForm } from "@/interface/interface";
+import { IMultipleFieldForm } from "@/interface/interface";
 
-export const TimeWorkingForm = ({ control, name }: ILocationForm) => {
+export const TimeWorkingForm = ({ control, name }: IMultipleFieldForm) => {
   const { fields, append, remove } = useFieldArray({
     control,
     name,

@@ -100,7 +100,8 @@ const schema = yup.object().shape({
                   "Vui lòng nhập địa chỉ cụ thể",
                   function (value) {
                     const location = this.from?.[1].value.location;
-                    if (location === "-1") {
+                    const district = this.from?.[0].value.district;
+                    if (location === "-1" || district === "-1") {
                       return true;
                     }
                     return !!value;
@@ -195,6 +196,7 @@ export default function UpdateJobOvervivew() {
     getValues,
     setValue,
     reset,
+    watch,
     formState: { errors },
   } = useForm<IFormCreateNew>({
     resolver: yupResolver(schema),
@@ -465,6 +467,9 @@ export default function UpdateJobOvervivew() {
                     locationId={getValues(`locations.${index}.location`)}
                     options={district[index]}
                     name={`locations.${index}.districts`}
+                    getValues={getValues}
+                    setValue={setValue}
+                    watch={watch}
                   />
                 </div>
               </div>
