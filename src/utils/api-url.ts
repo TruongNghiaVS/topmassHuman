@@ -50,6 +50,8 @@ export const GET_STATUS_APPLY_CV =
 export const GET_ALL_CV_JOB = "/api/recruiter/CV/GetAllCVOfJob";
 export const UPDATE_VIEW_MODE = "/api/recruiter/CV/UpdateViewModel";
 export const UPDATE_STATUS_CV_CANDIDATE = "/api/recruiter/CV/AddLogStatus";
+export const UPDATE_STATUS_CANDIATE_SEE_JOB =
+  "/api/recruiter/CandidateViewer/AddLogStatus";
 export const GET_MANAGER_CV_APPLY = "/api/recruiter/CV/ManagenmentGetAllCV";
 export const GET_CANDIDATE_VIEW_JOB = "/api/recruiter/Job/GetAllViewerOfJob";
 export const SEARCH_CV = "/api/recruiter/SearchCV/Search";
@@ -58,6 +60,7 @@ export const GET_PROFILE_SEARCH_CV =
 export const GET_INFOMATIONDETAIL_SEARCH_CV =
   "/api/recruiter/SearchCV/GetDetailInfo";
 export const GET_ALL_CV_SAVE_SEARCH = "/api/recruiter/CV/GetAllSearchCVOfJob";
+export const OPEN_INFOMATION_USER_SEE_JOB = "/api/recruiter/Reward/OpenViewer";
 
 //------------ Notification -----------//
 export const GET_ALL_NOTIFICATION = "/api/recruiter/Notification/GetAll";
