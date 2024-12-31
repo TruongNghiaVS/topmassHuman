@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { getMetadataToScreen } from "@/module/helper/api-generate-metadata";
-import SettingAccountOverview from "@/module/setting-account/setting-account";
+import SettingAndSupportOverview from "@/module/hr-center/setting-and-support/setting-and-support-overview";
 
 export async function generateMetadata(): Promise<Metadata> {
   // Fetch dữ liệu từ server hoặc API (nếu cần thiết)
@@ -29,5 +29,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function SettingAccount() {
-  return <SettingAccountOverview />;
+  return <SettingAndSupportOverview />;
 }

@@ -9,7 +9,7 @@ import { Recruitment } from "./setting/recruitment";
 import { SupportContact } from "./setting/support";
 import SupportForm from "./setting/support-form";
 
-export default function SettingAccountOverview() {
+export default function SettingAndSupportOverview() {
   const left = [
     {
       title: "Yêu cầu hỗ trợ và báo cáo vi phạm",
