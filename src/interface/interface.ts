@@ -385,6 +385,7 @@ export interface ISearchManagerCv {
   CampaignId?: number;
   StatusCode?: number;
   Source?: number;
+  ViewMode?: number;
 }
 
 export interface ICandidateViewJob {
@@ -394,6 +395,11 @@ export interface ICandidateViewJob {
   createAt: string;
   dob: string;
   extraText: string;
+  viewModeText: string;
+  isOpenedCV: boolean;
+  id: number;
+  statusText: string;
+  status: number;
 }
 
 export interface INotification {

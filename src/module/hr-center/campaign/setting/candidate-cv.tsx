@@ -6,9 +6,16 @@ import {
   IDetailCvProps,
   ISearchManagerCv,
 } from "@/interface/interface";
-import { GET_CANDIDATE_VIEW_JOB, GET_STATUS_APPLY_CV } from "@/utils/api-url";
+import {
+  GET_CANDIDATE_VIEW_JOB,
+  GET_STATUS_APPLY_CV,
+  OPEN_INFOMATION_USER_SEE_JOB,
+} from "@/utils/api-url";
 import axiosInstance, { fetcher } from "@/utils/axios";
-import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
+import {
+  MagnifyingGlassIcon,
+  PencilSquareIcon,
+} from "@heroicons/react/16/solid";
 import { yupResolver } from "@hookform/resolvers/yup";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
@@ -17,12 +24,21 @@ import useSWR from "swr";
 import * as yup from "yup";
 import { Option } from "@/component/hook-form/interface/interface";
 import { toast } from "react-toastify";
+import Modal from "@/component/modal";
+import { AxiosError } from "axios";
+import { ModalChangeStatusCandidate } from "./modal-chang-status-candidate";
 
 export const CandidateCv = ({ idJob }: IDetailCvProps) => {
+  const [idUpdate, setIdUpdate] = useState(-1);
+  const [statusUpdate, setStatusUpdate] = useState(-1);
   const [candidateCv, setCandidateCv] = useState<ICandidateViewJob[]>([]);
   const [statusApply, setStatusApply] = useState<Option[]>([]);
+  const [isOpenModalCv, setIsOpenModalCv] = useState(false);
+  const [idOpenCv, setIdOpenCv] = useState(-1);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
   const { setLoading } = useLoading();
-  const { data: listCandidateCv, error } = useSWR(
+  const { data: listCandidateCv, error, mutate } = useSWR(
     `${GET_CANDIDATE_VIEW_JOB}?JobId=${idJob}`,
     fetcher
   );
@@ -52,7 +68,7 @@ export const CandidateCv = ({ idJob }: IDetailCvProps) => {
   const schema = yup.object().shape({
     KeyWord: yup.string(),
     StatusCode: yup.number(),
-    Source: yup.number(),
+    ViewMode: yup.number(),
   });
 
   const { control, handleSubmit } = useForm<ISearchManagerCv>({
@@ -60,7 +76,7 @@ export const CandidateCv = ({ idJob }: IDetailCvProps) => {
     defaultValues: {
       KeyWord: "",
       StatusCode: -1,
-      Source: -1,
+      ViewMode: -1,
     },
   });
 
@@ -76,12 +92,32 @@ export const CandidateCv = ({ idJob }: IDetailCvProps) => {
     setLoading(true);
     try {
       const response = await axiosInstance.get(GET_CANDIDATE_VIEW_JOB, {
-        params: data,
+        params: { ...data, JobId: idJob },
       });
       setCandidateCv(response.data.data);
       toast.success("Tìm kiếm thông tin thành công");
     } catch (error) {
       toast.error("Tìm kiếm thông tin thất bại");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleOpenCv = async () => {
+    setLoading(true);
+    try {
+      const res = axiosInstance.post(OPEN_INFOMATION_USER_SEE_JOB, {
+        viewerId: idOpenCv,
+      });
+      setIsOpenModalCv(false);
+      mutate();
+      toast.success("Mở khoá thông tin thành công");
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        toast.error(error.response?.data.messager);
+      } else {
+        toast.error("Mở khoá thông tin thất bại thất bại");
+      }
     } finally {
       setLoading(false);
     }
@@ -103,7 +139,7 @@ export const CandidateCv = ({ idJob }: IDetailCvProps) => {
               <div className="text-xs">Hiển thị</div>
               <TmSelect
                 control={control}
-                name="StatusCode"
+                name="ViewMode"
                 classNameCustom="flex-1"
                 options={[
                   { label: "Tất cả", value: -1 },
@@ -176,8 +212,39 @@ export const CandidateCv = ({ idJob }: IDetailCvProps) => {
                     <div>{dayjs(row.createAt).format("HH:mm")}</div>
                     <div>{dayjs(row.createAt).format("DD-MM-YYYY")}</div>
                   </td>
-                  <td className="p-4 "></td>
-                  <td className="p-4 "></td>
+                  <td className="p-4 ">
+                    <div>
+                      {row.isOpenedCV ? (
+                        "Đã mở"
+                      ) : (
+                        <div
+                          className="cursor-pointer hover:text-colorBase"
+                          onClick={() => {
+                            setIdOpenCv(row.id);
+                            setIsOpenModalCv(true);
+                          }}
+                        >
+                          Chưa mở
+                        </div>
+                      )}
+                    </div>
+                  </td>
+                  <td className="p-4 ">
+                    <div className="flex space-x-2 justify-center">
+                      <div className="inline-block px-3 py-1 rounded-xl bg-[#DAFFD7] text-[#137F04]">
+                        {row.statusText}
+                      </div>
+                      <button
+                        onClick={() => (
+                          setIsOpenModal(true),
+                          setIdUpdate(row.id),
+                          setStatusUpdate(row.status)
+                        )}
+                      >
+                        <PencilSquareIcon className="w-4 hover:text-[#F37A20]" />
+                      </button>
+                    </div>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -187,6 +254,37 @@ export const CandidateCv = ({ idJob }: IDetailCvProps) => {
       <div className="mt-4">
         <img src="/imgs/img-register-cv.png" className="p-4 w-full" alt="" />
       </div>
+
+      <ModalChangeStatusCandidate
+        id={idUpdate}
+        isOpenModal={isOpenModal}
+        onClose={() => setIsOpenModal(false)}
+        listStatus={statusApply}
+        status={statusUpdate}
+        mutate={mutate}
+      />
+
+      <Modal isOpen={isOpenModalCv} onClose={() => setIsOpenModalCv(false)}>
+        <div>
+          <div className=" flex space-x-2 justify-center">
+            Bạn có đồng ý mở khoá thông tin
+          </div>
+          <div className="flex justify-center space-x-2 mt-4 ">
+            <button
+              className="bg-gray-500 hover:bg-gray-700 text-white px-4 py-1 rounded"
+              onClick={() => setIsOpenModalCv(false)}
+            >
+              Huỷ bỏ
+            </button>
+            <button
+              className="border border-[#F37A20] text-mainstream px-4 py-1 hover:text-white hover:bg-mainstream rounded"
+              onClick={handleOpenCv}
+            >
+              Đồng ý
+            </button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };
