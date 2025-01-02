@@ -106,7 +106,7 @@ export const CandidateCv = ({ idJob }: IDetailCvProps) => {
   const handleOpenCv = async () => {
     setLoading(true);
     try {
-      const res = axiosInstance.post(OPEN_INFOMATION_USER_SEE_JOB, {
+      const res = await axiosInstance.post(OPEN_INFOMATION_USER_SEE_JOB, {
         viewerId: idOpenCv,
       });
       setIsOpenModalCv(false);
