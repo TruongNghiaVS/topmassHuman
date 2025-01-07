@@ -67,10 +67,11 @@ export default function CreateJobOverview() {
     if (currentUser?.level < 2) {
       openModal();
     }
+
     if (campaign.length <= 0 && currentUser?.level > 1) {
       setIsOpenModal(true);
     }
-  }, [setIsSkipValidate, currentUser]);
+  }, [setIsSkipValidate, currentUser, campaign]);
 
   const schema = yup.object().shape({
     name: yup.string().required("Vui lòng nhập tên"),
@@ -701,7 +702,11 @@ export default function CreateJobOverview() {
         </form>
       </div>
 
-      <Modal isOpen={isOpenModal} onClose={() => setIsOpenModal(false)}>
+      <Modal
+        isOpen={isOpenModal}
+        onClose={() => setIsOpenModal(false)}
+        activeCloseButton={false}
+      >
         <div>
           <div className="font-medium text-center">
             Bạn chưa có chiến dịch nào đang chạy
