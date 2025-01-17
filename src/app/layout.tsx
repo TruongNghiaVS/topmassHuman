@@ -56,6 +56,7 @@ export default function RootLayout({
     "/hr-center",
     "/khoi-tao-mat-khau",
     "/xac-thuc-tai-khoan",
+    "/xac-thuc-email",
   ];
   useAuth();
 
