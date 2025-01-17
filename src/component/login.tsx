@@ -53,7 +53,7 @@ export const LoginForm = ({ onClose }: ILoginForm) => {
           "Bạn chưa xác thực email. Vui lòng xác thực email và đăng nhập lại"
         );
         redirectUrl = "/xac-thuc-email";
-      } else if (response && response.authenLevel === 1) {
+      } else {
         if (response.token) {
           Cookies.set("token", response.token, { expires: 7 });
           toast.success("Đăng nhập thành công");
