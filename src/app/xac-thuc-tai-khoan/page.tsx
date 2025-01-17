@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { axiosInstanceNotToken } from "@/utils/axios";
-import { setToken } from "@/utils/token";
 import { useLoading } from "../context/loading";
 import { CONFIRMACCOUNT } from "@/utils/api-url";
 
