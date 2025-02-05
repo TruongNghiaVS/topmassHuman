@@ -53,25 +53,18 @@ export default function BusinessRegistration({
         file: data.company_business,
       });
       if (response.data) {
-        toast.success("Cập nhật hình ảnh thành công");
-        try {
-          setLoading(true);
-          const dataUpdate = await axiosInstance.post(ADD_BUSINESSLICENSE, {
-            documentLink: response.data.shortLink,
-            documentType: data.DocumentType,
-          });
-          if (dataUpdate) {
-            toast.success("Cập nhật thông tin thành công");
-            mutate();
-          }
-        } catch (error) {
-          toast.error("Cập nhật thông tin thất bại");
-        } finally {
-          setLoading(false);
+        setLoading(true);
+        const dataUpdate = await axiosInstance.post(ADD_BUSINESSLICENSE, {
+          documentLink: response.data.shortLink,
+          documentType: data.DocumentType,
+        });
+        if (dataUpdate) {
+          toast.success("Cập nhật thông tin thành công");
+          mutate();
         }
       }
     } catch (error) {
-      toast.success("Cập nhật hình ảnh thất bại");
+      toast.error("Cập nhật thông tin thất bại");
     } finally {
       setLoading(false);
     }
@@ -145,7 +138,11 @@ export default function BusinessRegistration({
           </div>
         )}
         <form onSubmit={handleSubmit(onSubmit)}>
-          <CustomUpload name="company_business" control={control} />
+          <CustomUpload
+            name="company_business"
+            control={control}
+            link={currentUser?.businessLicenseInfo.linkFile}
+          />
           <button
             type="submit"
             className="w-full mt-4 py-3 text-white bg-[#FF7D55] rounded-lg text-base font-bold"

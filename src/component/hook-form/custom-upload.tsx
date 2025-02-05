@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IUpload } from "./interface/interface";
 import { useController } from "react-hook-form";
 import {
@@ -8,7 +8,7 @@ import {
   TrashIcon,
 } from "@heroicons/react/16/solid";
 
-const CustomUpload: React.FC<IUpload> = ({ name, control }) => {
+const CustomUpload: React.FC<IUpload> = ({ name, control, link = "" }) => {
   const {
     field: { value, onChange, onBlur },
     fieldState: { error },
@@ -28,6 +28,35 @@ const CustomUpload: React.FC<IUpload> = ({ name, control }) => {
     setFile(null);
     onChange(null);
   };
+
+  const handleLoadFiles = async (link: string) => {
+    const dataTransfer = new DataTransfer();
+    try {
+      // Fetch the file from the URL
+      const response = await fetch(link);
+      const blob = await response.blob();
+      const fileName = link.split("/").pop() || "file";
+      const file = new File([blob], fileName, { type: blob.type });
+      // Add the file to the DataTransfer object
+      dataTransfer.items.add(file);
+      if (fileInputRef.current) {
+        fileInputRef.current.files = dataTransfer.files;
+        const event = new Event("change", { bubbles: true });
+        fileInputRef.current.dispatchEvent(event);
+      }
+      setFile(file);
+    } catch (error) {
+      console.error(`Error fetching file from ${link}:`, error);
+    }
+
+    // Assign files to the file input
+  };
+
+  useEffect(() => {
+    if (link && link.length > 0) {
+      handleLoadFiles(link);
+    }
+  }, [link]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files ? event.target.files[0] : null;
