@@ -147,7 +147,7 @@ export default function DashBoardOverview() {
               </div>
               <div className="rounded-lg h-full p-4 bg-[#DAFFD7] ">
                 <div className="text-xs">Hạn dùng: </div>
-                <div className="text-[#0F7A00] ">13/08/2024</div>
+                <div className="text-[#0F7A00] ">31/03/2025</div>
               </div>
             </div>
           </div>
@@ -163,7 +163,7 @@ export default function DashBoardOverview() {
               </div>
               <div className="rounded-lg h-full p-4 bg-[#FFE39C] ">
                 <div className="text-xs">Hạn dùng: </div>
-                <div className="text-[#C65000] ">13/08/2024</div>
+                <div className="text-[#C65000] ">31/03/2025</div>
               </div>
             </div>
           </div>
@@ -179,7 +179,7 @@ export default function DashBoardOverview() {
               </div>
               <div className="rounded-lg h-full p-4 bg-sky-100 ">
                 <div className="text-xs">Hạn dùng: </div>
-                <div className="text-sky-600 ">13/08/2024</div>
+                <div className="text-sky-600 ">31/03/2025</div>
               </div>
             </div>
           </div>
@@ -194,7 +194,7 @@ export default function DashBoardOverview() {
               </div>
               <div className="rounded-lg h-full p-4 bg-amber-200">
                 <div className="text-xs">Hạn dùng: </div>
-                <div className="text-amber-600 ">13/08/2024</div>
+                <div className="text-amber-600 ">31/03/2025</div>
               </div>
             </div>
           </div>
